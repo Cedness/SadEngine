@@ -23,8 +23,7 @@ public class Hurensohn implements SadMainLogic {
 		window.setCamera("Camera");
 		
 		content.createMesh("CowMesh", new File("Cow"));
-		content.createPart("CowPart").setMesh("Cow");
-		content.createModel("CowModel").addPart("CowPart");
+		content.createModel("CowModel").setMesh("CowMesh");
 		content.createEntity("Cow").setModel("CowModel");
 		
 		content.getLevel("Level").addEntity("Cow");
@@ -58,7 +57,7 @@ public class Hurensohn implements SadMainLogic {
 	}
 	
 	public void terminate(Sadness sadness) {
-		
+	
 	}
 	
 	public static void main(String[] args) {

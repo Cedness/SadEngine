@@ -26,7 +26,7 @@ public class SadLoop {
 	}
 	
 	private void setup() {
-		new SadIntro(0.3f);
+		new SadIntro(0.4f);
 		engine.setup();
 	}
 	

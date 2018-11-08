@@ -77,8 +77,8 @@ public class SadCamera extends SadObject {
 	}
 	
 	public void update(float width, float height) {
-		SadVector position = this.position.clone();
-		SadVector rotation = this.rotation.clone();
+		SadVector position = new SadVector(this.position);
+		SadVector rotation = new SadVector(this.position);
 		SadEntity entity = getEntity();
 		if (entity != null) {
 			position.add(entity.getPosition());

@@ -24,7 +24,7 @@ public class Cube implements SadMainLogic {
 		SadContent content = sadness.getContent();
 		
 		
-		content.createTexture("Cube", new File("C:\\Users\\Ced\\JavaProjekte\\SadEngine3D\\Core\\src\\res\\textures\\block.jpg"));
+		content.createTexture("Cube", new File("%username%\\GitHub\\SadEngine\\Core\\src\\res\\textures\\block.jpg"));
 		
 		content.createMesh("Cube", new File("C:\\Users\\Ced\\JavaProjekte\\SadEngine3D\\Core\\src\\res\\models\\Rect.obj"));
 		content.createModel("Cube").setMesh("Cube").setTexture("Cube");

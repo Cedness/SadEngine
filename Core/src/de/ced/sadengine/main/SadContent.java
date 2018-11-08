@@ -22,7 +22,6 @@ public class SadContent {
 		contents.put(SadEntity.class, new HashMap<>());
 		contents.put(SadHitbox.class, new HashMap<>());
 		contents.put(SadModel.class, new HashMap<>());
-		contents.put(SadModelPart.class, new HashMap<>());
 		contents.put(SadMesh.class, new HashMap<>());
 		contents.put(SadTexture.class, new HashMap<>());
 		contents.put(SadLevel.class, new HashMap<>());
@@ -131,16 +130,6 @@ public class SadContent {
 	
 	public SadLevel getLevel(String name) {
 		return (SadLevel) get(SadLevel.class, name);
-	}
-	
-	public SadModelPart createPart(String name) {
-		SadModelPart part = new SadModelPart(name, this);
-		put(part);
-		return part;
-	}
-	
-	public SadModelPart getPart(String name) {
-		return (SadModelPart) get(SadModelPart.class, name);
 	}
 	
 	public SadCamera createCamera(String name) {
