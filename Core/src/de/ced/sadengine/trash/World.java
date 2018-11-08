@@ -2,7 +2,7 @@ package de.ced.sadengine.trash;
 
 import de.ced.sadengine.graphics.light.SadLight;
 import de.ced.sadengine.objects.SadMesh;
-import de.ced.sadengine.utils.SadVector;
+import de.ced.sadengine.utils.SadVector3;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +14,7 @@ public class World {
 	private HashMap<SadMesh, List<Entity>> indexEntities = new HashMap<>();
 	private List<Entity> entities = new ArrayList<>();
 	
-	private SadLight light = new SadLight(new SadVector(1f, 0f, 0f), new SadVector(0, 0, -20));
+	private SadLight light = new SadLight(new SadVector3(1f, 0f, 0f), new SadVector3(0, 0, -20));
 	
 	public List<Entity> getEntities() {
 		return entities;

@@ -1,7 +1,7 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.utils.SadVector;
+import de.ced.sadengine.utils.SadVector3;
 
 public class SadWindow extends SadFrame {
 	
@@ -11,21 +11,21 @@ public class SadWindow extends SadFrame {
 	
 	@Override
 	@Deprecated
-	public SadVector getPosition() {
+	public SadVector3 getPosition() {
 		position.set(0, 0, 0);
 		return super.getPosition();
 	}
 	
 	@Override
 	@Deprecated
-	public SadVector getRotation() {
+	public SadVector3 getRotation() {
 		rotation.set(0, 0, 0);
 		return super.getRotation();
 	}
 	
 	@Override
 	@Deprecated
-	public SadVector getScale() {
+	public SadVector3 getScale() {
 		scale.set(1, 1, 1);
 		return super.getScale();
 	}

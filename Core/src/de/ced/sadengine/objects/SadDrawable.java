@@ -1,8 +1,8 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.utils.SadLimitedVector;
-import de.ced.sadengine.utils.SadVector;
+import de.ced.sadengine.utils.SadLimitedVector3;
+import de.ced.sadengine.utils.SadVector3;
 import org.joml.Matrix4f;
 
 import static de.ced.sadengine.utils.SadValue.toRadians;
@@ -17,19 +17,19 @@ public abstract class SadDrawable extends SadObject {
 		super(name, content);
 	}
 	
-	protected SadVector position = new SadVector();
-	protected SadLimitedVector rotation = new SadLimitedVector(0, 360);
-	protected SadVector scale = new SadVector(1f, 1f, 1f);
+	protected SadVector3 position = new SadVector3();
+	protected SadLimitedVector3 rotation = new SadLimitedVector3(0, 360);
+	protected SadVector3 scale = new SadVector3(1f, 1f, 1f);
 	
-	public SadVector getPosition() {
+	public SadVector3 getPosition() {
 		return position;
 	}
 	
-	public SadVector getRotation() {
+	public SadVector3 getRotation() {
 		return rotation;
 	}
 	
-	public SadVector getScale() {
+	public SadVector3 getScale() {
 		return scale;
 	}
 	

@@ -1,33 +1,33 @@
 package de.ced.sadengine.utils;
 
-public class SadLimitedVector extends SadVector {
+public class SadLimitedVector3 extends SadVector3 {
 	
 	private final float min;
 	private final float max;
 	private final float range;
 	
-	public SadLimitedVector(float min, float max) {
+	public SadLimitedVector3(float min, float max) {
 		super();
 		this.min = min;
 		this.max = max;
 		range = max - min;
 	}
 	
-	public SadLimitedVector(float x, float y, float z, float min, float max) {
+	public SadLimitedVector3(float x, float y, float z, float min, float max) {
 		super(x, y, z);
 		this.min = min;
 		this.max = max;
 		range = max - min;
 	}
 	
-	public SadLimitedVector(SadVector vector, float min, float max) {
+	public SadLimitedVector3(SadVector3 vector, float min, float max) {
 		super(vector);
 		this.min = min;
 		this.max = max;
 		range = max - min;
 	}
 	
-	public SadLimitedVector(SadLimitedVector vector) {
+	public SadLimitedVector3(SadLimitedVector3 vector) {
 		super(vector);
 		min = vector.min;
 		max = vector.max;
@@ -35,7 +35,7 @@ public class SadLimitedVector extends SadVector {
 	}
 	
 	@Override
-	protected SadLimitedVector update() {
+	protected SadLimitedVector3 update() {
 		while (x < min)
 			x += range;
 		while (y < min)
@@ -48,6 +48,6 @@ public class SadLimitedVector extends SadVector {
 			y -= range;
 		while (z > max)
 			z -= range;
-		return (SadLimitedVector) super.update();
+		return (SadLimitedVector3) super.update();
 	}
 }

@@ -7,7 +7,7 @@ import de.ced.sadengine.main.SadMainLogic;
 import de.ced.sadengine.main.Sadness;
 import de.ced.sadengine.objects.SadCamera;
 import de.ced.sadengine.objects.SadEntity;
-import de.ced.sadengine.utils.SadVector;
+import de.ced.sadengine.utils.SadVector3;
 
 import java.io.File;
 
@@ -60,7 +60,7 @@ public class Cube implements SadMainLogic {
 	public void update(Sadness sadness) {
 		SadContent content = sadness.getContent();
 		SadEntity cube = content.getEntity("Cube");
-		SadVector cubeRot = cube.getRotation();
+		SadVector3 cubeRot = cube.getRotation();
 		SadInput input = sadness.getInput();
 		float interval = content.getInterval();
 		float speed = 100f;

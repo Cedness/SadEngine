@@ -5,20 +5,20 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SadVector {
+public class SadVector3 {
 	
 	protected float x, y, z;
-	protected List<SadVector> syncedVectors = new ArrayList<>();
+	protected List<SadVector3> syncedVectors = new ArrayList<>();
 	
-	public SadVector() {
+	public SadVector3() {
 		set(0);
 	}
 	
-	public SadVector(float x, float y, float z) {
+	public SadVector3(float x, float y, float z) {
 		set(x, y, z);
 	}
 	
-	public SadVector(SadVector vector) {
+	public SadVector3(SadVector3 vector) {
 		set(vector);
 	}
 	
@@ -38,22 +38,22 @@ public class SadVector {
 		return scalar * scalar;
 	}
 	
-	public SadVector normalize() {
+	public SadVector3 normalize() {
 		return mul(1f / getLength());
 	}
 	
-	public SadVector set(float x, float y, float z) {
+	public SadVector3 set(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		return update();
 	}
 	
-	public SadVector set(float scalar) {
+	public SadVector3 set(float scalar) {
 		return set(scalar, scalar, scalar);
 	}
 	
-	public SadVector set(SadVector vector) {
+	public SadVector3 set(SadVector3 vector) {
 		return set(vector.x, vector.y, vector.z);
 	}
 	
@@ -69,82 +69,82 @@ public class SadVector {
 		return z;
 	}
 	
-	public SadVector x(float x) {
+	public SadVector3 x(float x) {
 		this.x = x;
 		return update();
 	}
 	
-	public SadVector y(float y) {
+	public SadVector3 y(float y) {
 		this.y = y;
 		return update();
 	}
 	
-	public SadVector z(float z) {
+	public SadVector3 z(float z) {
 		this.z = z;
 		return update();
 	}
 	
-	public SadVector mul(float x, float y, float z) {
+	public SadVector3 mul(float x, float y, float z) {
 		this.x *= x;
 		this.y *= y;
 		this.z *= z;
 		return update();
 	}
 	
-	public SadVector mulX(float scalar) {
+	public SadVector3 mulX(float scalar) {
 		x *= scalar;
 		return update();
 	}
 	
-	public SadVector mulY(float scalar) {
+	public SadVector3 mulY(float scalar) {
 		y *= scalar;
 		return update();
 	}
 	
-	public SadVector mulZ(float scalar) {
+	public SadVector3 mulZ(float scalar) {
 		z *= scalar;
 		return update();
 	}
 	
-	public SadVector mul(float scalar) {
+	public SadVector3 mul(float scalar) {
 		return mul(scalar, scalar, scalar);
 	}
 	
-	public SadVector mul(SadVector vector) {
+	public SadVector3 mul(SadVector3 vector) {
 		return mul(vector.x, vector.y, vector.z);
 	}
 	
-	public SadVector add(float x, float y, float z) {
+	public SadVector3 add(float x, float y, float z) {
 		this.x += x;
 		this.y += y;
 		this.z += z;
 		return update();
 	}
 	
-	public SadVector addX(float scalar) {
+	public SadVector3 addX(float scalar) {
 		x += scalar;
 		return update();
 	}
 	
-	public SadVector addY(float scalar) {
+	public SadVector3 addY(float scalar) {
 		y += scalar;
 		return update();
 	}
 	
-	public SadVector addZ(float scalar) {
+	public SadVector3 addZ(float scalar) {
 		z += scalar;
 		return update();
 	}
 	
-	public SadVector add(float scalar) {
+	public SadVector3 add(float scalar) {
 		return add(scalar, scalar, scalar);
 	}
 	
-	public SadVector add(SadVector vector) {
+	public SadVector3 add(SadVector3 vector) {
 		return add(vector.x, vector.y, vector.z);
 	}
 	
-	public boolean contentEquals(SadVector vector) {
+	public boolean contentEquals(SadVector3 vector) {
 		return x == vector.x && y == vector.y && z == vector.z;
 	}
 	
@@ -155,7 +155,7 @@ public class SadVector {
 	 * @param vector The vector to synchronize with. It won't get changed in this method.
 	 * @return This vector
 	 */
-	public SadVector synchronize(SadVector vector) {
+	public SadVector3 synchronize(SadVector3 vector) {
 		set(vector);
 		if (!syncedVectors.contains(vector))
 			syncedVectors.add(vector);
@@ -164,22 +164,22 @@ public class SadVector {
 		return this;
 	}
 	
-	public SadVector unsynchronize(SadVector vector) {
+	public SadVector3 unsynchronize(SadVector3 vector) {
 		syncedVectors.remove(vector);
 		vector.syncedVectors.remove(this);
 		return this;
 	}
 	
-	public SadVector unsynchronizeAll() {
-		for (SadVector vector : syncedVectors) {
+	public SadVector3 unsynchronizeAll() {
+		for (SadVector3 vector : syncedVectors) {
 			vector.syncedVectors.remove(this);
 		}
 		syncedVectors = new ArrayList<>();
 		return this;
 	}
 	
-	protected SadVector update() {
-		for (SadVector vector : syncedVectors) {
+	protected SadVector3 update() {
+		for (SadVector3 vector : syncedVectors) {
 			vector.x = x;
 			vector.y = y;
 			vector.z = z;

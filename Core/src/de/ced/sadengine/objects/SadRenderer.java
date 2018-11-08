@@ -6,7 +6,7 @@ import de.ced.sadengine.input.SadInput;
 import de.ced.sadengine.main.SadContent;
 import de.ced.sadengine.main.SadGlWindow;
 import de.ced.sadengine.shader.SadShader;
-import de.ced.sadengine.utils.SadVector;
+import de.ced.sadengine.utils.SadVector3;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class SadRenderer {
 	
 	private SadShader shader;
 	
-	private SadVector parentScale = new SadVector();
+	private SadVector3 parentScale = new SadVector3();
 	private Matrix4f parentFrameMatrix = new Matrix4f();
 	private Matrix4f frameMatrix = new Matrix4f();
 	
@@ -34,7 +34,7 @@ public class SadRenderer {
 	private Matrix4f modelMatrix = new Matrix4f();
 	private Matrix4f entityMatrix = new Matrix4f();
 	
-	private SadLight light = new SadLight(new SadVector(1, 1, 1), new SadVector(0, 5, 0));
+	private SadLight light = new SadLight(new SadVector3(1, 1, 1), new SadVector3(0, 5, 0));
 	
 	public void setup(SadWindow window, SadContent content, Saddings settings, SadInput input) {
 		this.window = window;

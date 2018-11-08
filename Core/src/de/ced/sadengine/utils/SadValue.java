@@ -4,7 +4,7 @@ public class SadValue {
 	
 	public static final float PI = 3.14159265358979323846f;
 	public static final double PId = 3.14159265358979323846;
-	public static final SadVector UP_VECTOR = new SadVector(0, 1, 0);
+	public static final SadVector3 UP_VECTOR = new SadVector3(0, 1, 0);
 	
 	public static float toRadians(float angdeg) {
 		return angdeg / 180.0f * PI;

@@ -1,7 +1,7 @@
 package de.ced.sadengine.shader;
 
 import de.ced.sadengine.objects.SadTexture;
-import de.ced.sadengine.utils.SadVector;
+import de.ced.sadengine.utils.SadVector3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -52,7 +52,7 @@ public abstract class SadShaderProgram {
 		glUniform1f(location, value);
 	}
 	
-	protected void loadVector(int location, SadVector value) {
+	protected void loadVector(int location, SadVector3 value) {
 		glUniform3f(location,
 				value.x(),
 				value.y(),
