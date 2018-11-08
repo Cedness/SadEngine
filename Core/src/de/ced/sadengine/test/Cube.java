@@ -94,9 +94,4 @@ public class Cube implements SadMainLogic {
 			cube.getScale().mul(1.01f);
 		}
 	}
-	
-	@Override
-	public void terminate(Sadness sadness) {
-		
-	}
 }
