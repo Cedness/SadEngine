@@ -1,0 +1,138 @@
+<component name="libraryTable">
+  <library name="lwjgl">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-assimp" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-bgfx" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-egl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-glfw" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jawt" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jemalloc" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lmdb" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lz4" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nanovg" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nfd" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nuklear" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-odbc" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openal" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opencl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengles" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openvr" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-ovr" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-par" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-remotery" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-rpmalloc" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-sse" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-stb" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyexr" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyfd" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tootle" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vma" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vulkan" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-xxhash" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-yoga" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd" />
+      <root url="jar://$PROJECT_DIR$/lwjgl-3.2.0/joml-1.9.11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-assimp" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-bgfx" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-egl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-glfw" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jawt" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jemalloc" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lmdb" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lz4" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nanovg" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nfd" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nuklear" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-odbc" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openal" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opencl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengl" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengles" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openvr" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-ovr" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-par" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-remotery" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-rpmalloc" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-sse" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-stb" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyexr" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyfd" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tootle" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vma" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vulkan" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-xxhash" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-yoga" />
+      <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-assimp" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-bgfx" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-egl" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-glfw" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jawt" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jemalloc" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lmdb" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lz4" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nanovg" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nfd" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nuklear" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-odbc" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openal" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opencl" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengl" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengles" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openvr" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-ovr" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-par" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-remotery" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-rpmalloc" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-sse" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-stb" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyexr" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyfd" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tootle" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vma" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vulkan" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-xxhash" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-yoga" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-assimp" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-bgfx" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-egl" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-glfw" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jawt" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-jemalloc" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lmdb" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-lz4" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nanovg" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nfd" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-nuklear" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-odbc" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openal" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opencl" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengl" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-opengles" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-openvr" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-ovr" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-par" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-remotery" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-rpmalloc" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-sse" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-stb" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyexr" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tinyfd" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-tootle" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vma" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-vulkan" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-xxhash" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-yoga" recursive="false" type="SOURCES" />
+    <jarDirectory url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd" recursive="false" type="SOURCES" />
+  </library>
+</component>
