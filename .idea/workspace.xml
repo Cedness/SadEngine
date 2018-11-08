@@ -8,11 +8,56 @@
   <component name="ChangeListManager">
     <list default="true" id="72c2b1a8-40e2-4b84-a0ee-dc21d0e113d6" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadCamera.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadCamera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/shader/SadShaderLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/shader/SadShaderLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Hurensohn.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Hurensohn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/de/ced/sadengine/trash/GLSLProgramXXX.java" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/de/ced/sadengine/trash/GLSLProgramXXX.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/Cube.blend" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Cube.blend" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Cow.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Cow.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Cube.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Cube.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Cube.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Cube.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Kiste.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Kiste.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Pawn.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Pawn.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Pumpkin.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Pumpkin.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Rect.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Rect.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/TeaCup.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/TeaCup.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/Teddy.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/Teddy.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/anya1.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/anya1.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/bishop.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/bishop.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/bishop.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/bishop.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/chess/Bishop.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/chess/Bishop.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/chess/King.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/chess/King.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/chess/Knight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/chess/Knight.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/chess/Pawn.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/chess/Pawn.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/chess/Queen.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/chess/Queen.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/chess/Rook.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/chess/Rook.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/circuit_board.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/circuit_board.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/circuit_board_eva_obj/circuit_board_eva_obj.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/circuit_board_eva_obj/circuit_board_eva_obj.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/circuit_board_eva_obj/circuit_board_eva_obj.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/circuit_board_eva_obj/circuit_board_eva_obj.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/circuit_board_eva_obj/circuit_board_eva_obj_0.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/circuit_board_eva_obj/circuit_board_eva_obj_0.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/dragon.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/dragon.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/king.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/king.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/king.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/king.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/knight.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/knight.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/knight.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/knight.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/pawn.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/pawn.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/queen.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/queen.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/queen.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/queen.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/rook.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/rook.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/rook.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/rook.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/models/stall.obj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/models/stall.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/shader/fragment.fs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/shader/fragment.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/shader/ui.fs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/shader/ui.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/shader/ui.vs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/shader/ui.vs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/shader/vertex.vs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/shader/vertex.vs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/shader/world.fs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/shader/world.fs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/shader/world.vs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/src/shader/world.vs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/textures/Wood.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/textures/Wood.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/textures/Wood2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/textures/Wood2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/textures/block.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/textures/block.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/textures/circuit_board.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/textures/circuit_board.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/src/res/textures/stall.png" beforeDir="false" afterPath="$PROJECT_DIR$/Core/res/textures/stall.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -159,8 +204,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+            <state relative-caret-position="176">
+              <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -168,8 +213,35 @@
       <file leaf-file-name="Cube.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="28" column="46" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SadRenderer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+              <caret line="136" column="51" selection-start-line="136" selection-start-column="51" selection-end-line="136" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SadOBJLoader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadOBJLoader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SadTexture.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadTexture.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="51" column="86" selection-start-line="51" selection-start-column="86" selection-end-line="51" selection-end-column="86" />
             </state>
           </provider>
         </entry>
@@ -187,7 +259,7 @@
         <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadLoop.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
-              <caret line="26" column="4" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -195,8 +267,8 @@
       <file leaf-file-name="SadContent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadContent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="201">
+              <caret line="76" column="32" selection-start-line="76" selection-start-column="32" selection-end-line="76" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -210,11 +282,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Hurensohn.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Hurensohn.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Hurensohn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+            <state relative-caret-position="462">
+              <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -256,6 +328,7 @@
       <find>view</find>
       <find>model</find>
       <find>part</find>
+      <find>\\</find>
     </findStrings>
     <replaceStrings>
       <replace>scene</replace>
@@ -285,15 +358,20 @@
       <replace>level</replace>
       <replace>hitbox</replace>
       <replace>model</replace>
+      <replace>/</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Cedric &lt;44872933+cedness@users.noreply.github.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRunnable.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/processing/SadActionUpdater.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/Sadness.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/api/SadEngine3D.java" />
@@ -329,7 +407,6 @@
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadGlWindow.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/OBJLoader.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadOBJLoader.java" />
-        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadChocolate.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/utils/SadLimitedVector3f.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/utils/SadVector3f.java" />
@@ -338,12 +415,14 @@
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/shader/SadShaderProgram.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadModel.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadMesh.java" />
-        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadLoop.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadContent.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadCamera.java" />
-        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java" />
         <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Hurensohn.java" />
+        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java" />
+        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadTexture.java" />
+        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java" />
+        <option value="$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java" />
       </list>
     </option>
   </component>
@@ -456,6 +535,19 @@
               <item name="SadEngine" type="b2602c69:ProjectViewProjectNode" />
               <item name="SadEngine" type="462c0819:PsiDirectoryNode" />
               <item name="Core" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SadEngine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SadEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="Core" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SadEngine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SadEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="Core" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -481,6 +573,13 @@
               <item name="sadengine" type="462c0819:PsiDirectoryNode" />
               <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SadEngine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SadEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="Core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="shader" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -500,10 +599,12 @@
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="de.ced.sadengine.objects" />
-      <recent name="de.ced.sadengine.api" />
-      <recent name="de.ced.sadengine.graphics.objects.layers" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Cedri\Documents\GitHub\SadEngine\Core\res\models" />
+      <recent name="C:\Users\Cedri\Documents\GitHub\SadEngine\Core\res" />
+      <recent name="$PROJECT_DIR$/Core/src" />
+      <recent name="$PROJECT_DIR$/Core" />
+      <recent name="Q:\JavaLWJGL\SadEngine3D\Core\src" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -513,11 +614,10 @@
       <recent name="de.ced.sadengine.graphics.objects.layers" />
       <recent name="de.ced.sadengine.threads" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Core/src" />
-      <recent name="$PROJECT_DIR$/Core" />
-      <recent name="Q:\JavaLWJGL\SadEngine3D\Core\src" />
-      <recent name="Q:\JavaLWJGL\SadEngine3D" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="de.ced.sadengine.objects" />
+      <recent name="de.ced.sadengine.api" />
+      <recent name="de.ced.sadengine.graphics.objects.layers" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -659,6 +759,14 @@
       <option name="presentableId" value="Default" />
       <updated>1537955510051</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fix">
+      <created>1541704381226</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1541704381226</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -671,14 +779,14 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="1" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5005208" side_tool="true" weight="0.19915254" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5005208" side_tool="true" weight="0.19872476" />
       <window_info anchor="right" id="Maven Projects" order="6" sideWeight="0.49931788" weight="0.32977587" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.30818278" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.30818278" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4978308" visible="true" weight="0.15" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4978308" visible="true" weight="0.15" />
       <window_info anchor="right" id="Structure" order="8" sideWeight="0.5005258" side_tool="true" weight="0.24060151" />
       <window_info anchor="right" id="Ant Build" order="1" sideWeight="0.49795362" weight="0.2497332" />
       <window_info id="UI Designer" order="4" />
@@ -696,6 +804,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -836,13 +948,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadTexture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2064">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -882,13 +987,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadOBJLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -967,38 +1065,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadMeshHolder.java" />
-    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadContent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadLoop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="26" column="4" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1018,8 +1088,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Hurensohn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+        <state relative-caret-position="462">
+          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadTexture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="51" column="86" selection-start-line="51" selection-start-column="86" selection-end-line="51" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadOBJLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/main/SadContent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="76" column="32" selection-start-line="76" selection-start-column="32" selection-end-line="76" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/test/Cube.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="28" column="46" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core/src/de/ced/sadengine/objects/SadRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="136" column="51" selection-start-line="136" selection-start-column="51" selection-end-line="136" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -1077,7 +1189,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Core</last-edited>
+          <last-edited>SadEngine3D</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

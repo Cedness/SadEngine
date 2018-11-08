@@ -134,7 +134,7 @@ public class SadRenderer {
 		modelMatrix.identity();
 		
 		boolean textureFound = false;
-		for (int i = parentMatrices.size() - 1; i <= 0; i--) {
+		for (int i = parentMatrices.size() - 1; i >= 0; i--) {
 			modelMatrix.mul(parentMatrices.get(i));
 			if (textureFound)
 				continue;

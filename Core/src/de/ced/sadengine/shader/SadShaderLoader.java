@@ -12,7 +12,7 @@ public class SadShaderLoader {
 	public static int load(String path, int shaderType) {
 		StringBuilder builder = new StringBuilder();
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(SadShaderLoader.class.getResourceAsStream("/res/shader/" + path)));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(SadShaderLoader.class.getResourceAsStream("/shader/" + path)));
 			while (reader.ready()) {
 				builder.append(reader.readLine()).append(System.lineSeparator());
 			}

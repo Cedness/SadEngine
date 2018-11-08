@@ -16,7 +16,7 @@ public class GLSLProgramXXX {
 	private static final float[] MATRIX_BUFFER = new float[16];
 	private int program;
 	private HashMap<String, Integer> uniformVariables = new HashMap<>();
-	private final String shaderDirectory = "/res/shader/";
+	private final String shaderDirectory = "/shader/";
 	
 	public GLSLProgramXXX(String vertexShaderFile, String fragmentShaderFile, String... vertexAttributes) {
 		program = glCreateProgram();
