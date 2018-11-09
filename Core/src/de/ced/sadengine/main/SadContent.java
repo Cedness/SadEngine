@@ -11,10 +11,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
+/**
+ * Contains all the stuff processed by the engine.
+ * Objects in here won't be processed directly, they first have to be added to the SadWindow instance.
+ */
 public class SadContent {
 	
 	private float interval;
+	
+	//The big Q
 	private final HashMap<Class<? extends SadObject>, HashMap<String, SadObject>> contents = new HashMap<>();
+	
 	private final SadActionHandler actionHandler;
 	private final SadClockwork clockwork;
 	
@@ -53,8 +60,14 @@ public class SadContent {
 	private SadObject get(Class<? extends SadObject> clazz, String name) {
 		if (name == null || name.isEmpty())
 			return null;
-		HashMap<String, SadObject> map = contents.get(clazz);
-		return map.getOrDefault(name, null);
+		return contents.get(clazz).getOrDefault(name, null);
+	}
+	
+	private void delete(Class<? extends SadObject> clazz, String name) {
+		SadObject obj = contents.get(clazz).remove(name);
+		if (obj == null)
+			return;
+		obj.release();
 	}
 	
 	public float getInterval() {
@@ -69,6 +82,10 @@ public class SadContent {
 	
 	public SadEntity getEntity(String name) {
 		return (SadEntity) get(SadEntity.class, name);
+	}
+	
+	public void deleteEntity(String name) {
+		delete(SadEntity.class, name);
 	}
 	
 	public SadMesh createMesh(String name, File file) {
@@ -92,6 +109,10 @@ public class SadContent {
 		return (SadMesh) get(SadMesh.class, name);
 	}
 	
+	public void deleteMesh(String name) {
+		delete(SadMesh.class, name);
+	}
+	
 	public SadTexture createTexture(String name, File file) {
 		SadTexture texture = new SadTexture(name, file);
 		put(texture);
@@ -100,6 +121,10 @@ public class SadContent {
 	
 	public SadTexture getTexture(String name) {
 		return (SadTexture) get(SadTexture.class, name);
+	}
+	
+	public void deleteTexture(String name) {
+		delete(SadTexture.class, name);
 	}
 	
 	public SadHitbox createHitbox(String name) {
@@ -112,6 +137,10 @@ public class SadContent {
 		return (SadHitbox) get(SadHitbox.class, name);
 	}
 	
+	public void deleteHitbox(String name) {
+		delete(SadHitbox.class, name);
+	}
+	
 	public SadModel createModel(String name) {
 		SadModel model = new SadModel(name, this);
 		put(model);
@@ -120,6 +149,10 @@ public class SadContent {
 	
 	public SadModel getModel(String name) {
 		return (SadModel) get(SadModel.class, name);
+	}
+	
+	public void deleteModel(String name) {
+		delete(SadModel.class, name);
 	}
 	
 	public SadLevel createLevel(String name) {
@@ -132,6 +165,10 @@ public class SadContent {
 		return (SadLevel) get(SadLevel.class, name);
 	}
 	
+	public void deleteLevel(String name) {
+		delete(SadLevel.class, name);
+	}
+	
 	public SadCamera createCamera(String name) {
 		SadCamera camera = new SadCamera(name, this);
 		put(camera);
@@ -140,6 +177,10 @@ public class SadContent {
 	
 	public SadCamera getCamera(String name) {
 		return (SadCamera) get(SadCamera.class, name);
+	}
+	
+	public void deleteCamera(String name) {
+		delete(SadCamera.class, name);
 	}
 	
 	public SadFrame createFrame(String name) {
@@ -152,6 +193,10 @@ public class SadContent {
 		return (SadFrame) get(SadFrame.class, name);
 	}
 	
+	public void deleteFrame(String name) {
+		delete(SadFrame.class, name);
+	}
+	
 	public SadClock createClock(String name) {
 		SadClock clock = new SadClock(name);
 		put(clock);
@@ -162,6 +207,10 @@ public class SadContent {
 		return (SadClock) get(SadClock.class, name);
 	}
 	
+	public void deleteClock(String name) {
+		delete(SadClock.class, name);
+	}
+	
 	public SadAction createAction(String name, SadActionLogic logic) {
 		SadAction action = new SadAction(name, logic);
 		put(action);
@@ -170,5 +219,9 @@ public class SadContent {
 	
 	public SadAction getAction(String name) {
 		return (SadAction) get(SadAction.class, name);
+	}
+	
+	public void deleteAction(String name) {
+		delete(SadAction.class, name);
 	}
 }

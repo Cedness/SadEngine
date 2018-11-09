@@ -9,7 +9,7 @@ public class Sadness {
 	private final SadWindow window;
 	private final SadInput input;
 	
-	public Sadness() {
+	Sadness() {
 		content = new SadContent(this);
 		window = new SadWindow(content);
 		input = new SadInput();

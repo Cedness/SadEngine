@@ -99,6 +99,7 @@ public class SadTexture extends SadObject {
 		this.reflectivity = reflectivity;
 	}
 	
+	@Override
 	public void release() {
 		if (!bound)
 			return;

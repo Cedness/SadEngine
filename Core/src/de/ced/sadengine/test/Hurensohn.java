@@ -22,7 +22,7 @@ public class Hurensohn implements SadMainLogic {
 		content.createCamera("Camera").setLevel("Level");
 		window.setCamera("Camera");
 		
-		content.createMesh("CowMesh", new File("Cow"));
+		content.createMesh("CowMesh", new File("./Core/res/models/Cow.obj"));
 		content.createModel("CowModel").setMesh("CowMesh");
 		content.createEntity("Cow").setModel("CowModel");
 		

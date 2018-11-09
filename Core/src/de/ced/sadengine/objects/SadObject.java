@@ -2,6 +2,9 @@ package de.ced.sadengine.objects;
 
 import de.ced.sadengine.main.SadContent;
 
+/**
+ * An object a SadContent instance can handle.
+ */
 public abstract class SadObject {
 	
 	protected final String name;
@@ -19,5 +22,8 @@ public abstract class SadObject {
 	
 	public final String getName() {
 		return name;
+	}
+	
+	public void release() {
 	}
 }

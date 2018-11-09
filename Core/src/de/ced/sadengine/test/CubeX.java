@@ -18,7 +18,7 @@ public class CubeX implements SadActionLogic {
 		entity.getPosition().y(1);
 		content.getLevel("Level").addEntity(entity.getName());
 		
-		content.createClock("CubeX").setGoal(1000 * MILLI * SECOND);
+		content.createClock("CubeX").setGoal(1000 * MILLI * SECOND).removeGoal();
 	}
 	
 	@Override

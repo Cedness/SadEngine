@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
 
 /**
- * Represents the mesh of a ModelPart
+ * The mesh of a Model
  */
 public class SadMesh extends SadObject {
 	
@@ -145,6 +145,7 @@ public class SadMesh extends SadObject {
 		//System.out.println(vertexCount);
 	}
 	
+	@Override
 	public void release() {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteVertexArrays(vaoId);
