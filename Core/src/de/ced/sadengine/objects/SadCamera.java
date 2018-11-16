@@ -1,16 +1,13 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.utils.SadLimitedVector3;
 import de.ced.sadengine.utils.SadVector3;
 import org.joml.Matrix4f;
 
 import static de.ced.sadengine.utils.SadValue.UP_VECTOR;
 
-public class SadCamera extends SadObject {
+public class SadCamera extends SadDrawable {
 	
-	protected SadVector3 position = new SadVector3();
-	protected SadLimitedVector3 rotation = new SadLimitedVector3(0, 360);
 	protected float fov = 70f;
 	protected float near = 0.1f;
 	protected float far = 1000f;
@@ -21,19 +18,13 @@ public class SadCamera extends SadObject {
 	protected boolean ortho = false;
 	protected boolean lookingAtPosition = false;
 	protected float distanceToPosition = 1f;
+	protected SadVector3 cursorVector = new SadVector3();
 	protected String level = null;
+	@Deprecated
 	protected String entity = null;
 	
 	public SadCamera(String name, SadContent content) {
 		super(name, content);
-	}
-	
-	public SadVector3 getPosition() {
-		return position;
-	}
-	
-	public SadVector3 getRotation() {
-		return rotation;
 	}
 	
 	public float getFov() {
@@ -41,6 +32,8 @@ public class SadCamera extends SadObject {
 	}
 	
 	public void setFov(float fov) {
+		if (fov <= 0 || fov > 180)
+			return;
 		this.fov = fov;
 	}
 	
@@ -49,6 +42,8 @@ public class SadCamera extends SadObject {
 	}
 	
 	public void setNear(float near) {
+		if (near <= 0 || near >= far)
+			return;
 		this.near = near;
 	}
 	
@@ -57,6 +52,8 @@ public class SadCamera extends SadObject {
 	}
 	
 	public void setFar(float far) {
+		if (far <= near)
+			return;
 		this.far = far;
 	}
 	
@@ -77,13 +74,13 @@ public class SadCamera extends SadObject {
 	}
 	
 	public void update(float width, float height) {
-		SadVector3 position = new SadVector3(this.position);
+		/*SadVector3 position = new SadVector3(this.position);
 		SadVector3 rotation = new SadVector3(this.position);
 		SadEntity entity = getEntity();
 		if (entity != null) {
 			position.add(entity.getPosition());
 			rotation.add(entity.getRotation());
-		}
+		}*/
 		double pitch = Math.toRadians(rotation.x());
 		double yaw = Math.toRadians(rotation.y());
 		double roll = Math.toRadians(rotation.z());
@@ -94,7 +91,16 @@ public class SadCamera extends SadObject {
 		direction.z((float) (cosPitch * Math.cos(yaw)));
 		
 		viewMatrix.setLookAt(position.toVector3f(), position.toVector3f().add(direction.toVector3f(), target.toVector3f()), UP_VECTOR.toVector3f());
-		projectionMatrix.setPerspective((float) Math.toRadians(fov), width / height, near, far);
+		
+		float aspectRatio = width / height;
+		projectionMatrix.identity();
+		if (ortho) {
+			float lr = 1 / scale.x() * aspectRatio;
+			float bt = 1 / scale.y();
+			projectionMatrix.setOrtho(-lr, lr, -bt, bt, near, far);
+		} else {
+			projectionMatrix.setPerspective((float) Math.toRadians(fov), aspectRatio, near, far);
+		}
 	}
 	
 	public boolean isLookingAtPosition() {
@@ -113,6 +119,14 @@ public class SadCamera extends SadObject {
 		this.distanceToPosition = distanceToPosition;
 	}
 	
+	public SadVector3 getCursorVector() {
+		return cursorVector;
+	}
+	
+	void setCursorVector(SadVector3 cursorVector) {
+		this.cursorVector = cursorVector;
+	}
+	
 	public SadLevel getLevel() {
 		return content.getLevel(level);
 	}
@@ -122,10 +136,12 @@ public class SadCamera extends SadObject {
 		return this;
 	}
 	
+	@Deprecated
 	public SadEntity getEntity() {
 		return content.getEntity(entity);
 	}
 	
+	@Deprecated
 	public SadCamera setEntity(String name) {
 		entity = name;
 		return this;

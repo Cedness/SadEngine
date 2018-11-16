@@ -2,6 +2,7 @@ package de.ced.sadengine.shader;
 
 import de.ced.sadengine.graphics.light.SadLight;
 import de.ced.sadengine.objects.SadTexture;
+import de.ced.sadengine.utils.SadVector3;
 import org.joml.Matrix4f;
 
 public class SadShader extends SadShaderProgram {
@@ -9,7 +10,7 @@ public class SadShader extends SadShaderProgram {
 	protected int transformationMatrix;
 	protected int viewMatrix;
 	
-	protected int frameMatrix;
+	protected int frameOffset;
 	
 	protected int diffuseTexture;
 	private int projectionMatrix;
@@ -35,7 +36,7 @@ public class SadShader extends SadShaderProgram {
 		transformationMatrix = super.getUniformLocation("transformationMatrix");
 		viewMatrix = super.getUniformLocation("viewMatrix");
 		
-		frameMatrix = super.getUniformLocation("frameMatrix");
+		frameOffset = super.getUniformLocation("frameOffset");
 		
 		projectionMatrix = super.getUniformLocation("projectionMatrix");
 		
@@ -59,8 +60,8 @@ public class SadShader extends SadShaderProgram {
 		super.loadMatrix(projectionMatrix, matrix);
 	}
 	
-	public void uploadFrameMatrix(Matrix4f matrix) {
-		super.loadMatrix(frameMatrix, matrix);
+	public void uploadFrameOffset(SadVector3 vector) {
+		super.loadVector(frameOffset, vector);
 	}
 	
 	@Deprecated

@@ -6,14 +6,13 @@ import java.util.ArrayList;
 
 /**
  * Represents the model of an entity
- * Contains one or more Meshes stored in ModelParts, each has it's own coordinates (relating to the Entity)
+ * Contains one Mesh and/or more Models
  */
 public class SadModel extends SadDrawable {
 	
 	private ArrayList<String> models = new ArrayList<>();
-	
-	protected String mesh = null;
-	protected String texture = null;
+	private String mesh = null;
+	private String texture = null;
 	
 	public SadModel(String name, SadContent content) {
 		super(name, content);

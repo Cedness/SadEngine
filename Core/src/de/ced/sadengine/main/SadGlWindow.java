@@ -19,7 +19,8 @@ public class SadGlWindow {
 	
 	private GLFWKeyCallback keyCallback;
 	private GLFWMouseButtonCallback mouseCallback;
-	private GLFWCursorPosCallback mouseMovementCallback;
+	private GLFWCursorPosCallback cursorPosCallback;
+	private GLFWCursorEnterCallback cursorEnterCallback;
 	
 	private int width;
 	private int height;
@@ -45,7 +46,8 @@ public class SadGlWindow {
 		
 		glfwSetKeyCallback(glWindow, keyCallback = input.getKeyboardCallback());
 		glfwSetMouseButtonCallback(glWindow, mouseCallback = input.getMouseCallback());
-		glfwSetCursorPosCallback(glWindow, mouseMovementCallback = input.getCursorCallback());
+		glfwSetCursorPosCallback(glWindow, cursorPosCallback = input.getCursorPosCallback());
+		glfwSetCursorEnterCallback(glWindow, cursorEnterCallback = input.getCursorEnterCallback());
 		
 		glfwSetFramebufferSizeCallback(glWindow, (window, width, height) -> {
 			settings.setWidth(width);

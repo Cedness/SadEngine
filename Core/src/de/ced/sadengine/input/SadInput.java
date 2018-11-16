@@ -1,6 +1,7 @@
 package de.ced.sadengine.input;
 
 import de.ced.sadengine.main.SadGlWindow;
+import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 
 public class SadInput {
@@ -80,7 +81,11 @@ public class SadInput {
 		return keyboardCallback;
 	}
 	
-	public GLFWCursorPosCallback getCursorCallback() {
-		return cursor.getCallback();
+	public GLFWCursorPosCallback getCursorPosCallback() {
+		return cursor.getPosCallback();
+	}
+	
+	public GLFWCursorEnterCallback getCursorEnterCallback() {
+		return cursor.getEnterCallback();
 	}
 }

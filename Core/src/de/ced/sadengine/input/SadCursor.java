@@ -2,6 +2,7 @@ package de.ced.sadengine.input;
 
 import de.ced.sadengine.main.SadGlWindow;
 import de.ced.sadengine.utils.SadVector3;
+import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -9,15 +10,18 @@ import static org.lwjgl.glfw.GLFW.*;
 public class SadCursor {
 	
 	private SadGlWindow window;
-	private GLFWCursorPosCallback callback;
+	private GLFWCursorPosCallback posCallback;
+	private GLFWCursorEnterCallback enterCallback;
 	private SadVector3 position = new SadVector3(), positionLast = new SadVector3();
 	private boolean hidden, hiddenLast;
 	private boolean locked, lockedLast;
+	private boolean inside, insideChanged;
 	
 	public void setup(SadGlWindow window) {
 		this.window = window;
-		callback = new CursorCallback();
-		//callback = new SadCursorCallback(window, position, positionLast);
+		posCallback = new CursorPosCallback();
+		enterCallback = new CursorEnterCallback();
+		//posCallback = new SadCursorCallback(window, position, positionLast);
 	}
 	
 	void update() {
@@ -31,6 +35,9 @@ public class SadCursor {
 			lockedLast = locked;
 			glfwSetInputMode(window.getGlWindow(), GLFW_CURSOR, locked ? GLFW_CURSOR_DISABLED : (hidden ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL));
 		}
+		
+		if (insideChanged)
+			insideChanged = false;
 		
 		//System.out.println(position.x() + " " + position.y());
 	}
@@ -55,18 +62,50 @@ public class SadCursor {
 		return position;
 	}
 	
-	GLFWCursorPosCallback getCallback() {
-		return callback;
+	public SadVector3 getNormalizedPosition() {
+		return new SadVector3(position).mul(
+				1f / (window.getWidth() / 2f),
+				1f / (window.getHeight() / 2f),
+				0);
 	}
 	
-	class CursorCallback extends GLFWCursorPosCallback {
+	public boolean isInWindow() {
+		return inside;
+	}
+	
+	public boolean hasJustEntered() {
+		return inside && insideChanged;
+	}
+	
+	public boolean hasJustLeft() {
+		return !inside && insideChanged;
+	}
+	
+	GLFWCursorPosCallback getPosCallback() {
+		return posCallback;
+	}
+	
+	GLFWCursorEnterCallback getEnterCallback() {
+		return enterCallback;
+	}
+	
+	class CursorPosCallback extends GLFWCursorPosCallback {
 		@Override
 		public void invoke(long glWindow, double xPos, double yPos) {
-			position.x((float) (2 * (xPos - window.getWidth() / 2f)));
-			position.y((float) (2 * -(yPos - window.getHeight() / 2f)));
-			position.z(0);
+			position.set(
+					(float) (xPos - window.getWidth() / 2f),
+					(float) -(yPos - window.getHeight() / 2f),
+					0);
 			positionLast.set(position);
 			//System.out.println(xPos + "" + yPos);
+		}
+	}
+	
+	class CursorEnterCallback extends GLFWCursorEnterCallback {
+		@Override
+		public void invoke(long glWindow, boolean entered) {
+			inside = entered;
+			insideChanged = true;
 		}
 	}
 }

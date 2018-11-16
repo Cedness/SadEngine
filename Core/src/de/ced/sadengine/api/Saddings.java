@@ -2,7 +2,7 @@ package de.ced.sadengine.api;
 
 public final class Saddings {
 	
-	private String name = "SadEngine3D";
+	private String name = "SadEngine";
 	private int width = 1280;
 	private int height = 720;
 	private boolean resized = false;

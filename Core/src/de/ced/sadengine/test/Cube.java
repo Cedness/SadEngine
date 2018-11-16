@@ -24,7 +24,7 @@ public class Cube implements SadMainLogic {
 		SadContent content = sadness.getContent();
 		
 		
-		content.createTexture("Cube", new File("./Core/res/textures/block.jpg"));
+		content.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
 		
 		content.createMesh("Cube", new File("./Core/res/models/Rect.obj"));
 		content.createModel("Cube").setMesh("Cube").setTexture("Cube");
@@ -33,9 +33,12 @@ public class Cube implements SadMainLogic {
 		content.createLevel("Level").addEntity("Cube");
 		SadCamera camera = content.createCamera("Camera").setLevel("Level");
 		
-		camera.getPosition().set(0, 0, -5);
+		camera.getPosition().set(0, 0, -2.8f);
 		
-		float scale = 1f;
+		//sadness.getWindow().setCamera("Camera");
+		
+		
+		float scale = 0.5f;
 		content.createFrame("Frame").setCamera("Camera").getScale().mul(scale);
 		content.createFrame("FrameL").setCamera("Camera").getScale().mul(scale);
 		content.createFrame("FrameR").setCamera("Camera").getScale().mul(scale);
@@ -45,12 +48,16 @@ public class Cube implements SadMainLogic {
 		content.getFrame("FrameR").getRotation().z(90);
 		content.getFrame("FrameR").getPosition().x(offset);
 		
+		camera.setOrtho(true);
+		camera.getScale().set(scale);
+		content.getFrame("Frame").getPosition().x(0);
 		sadness.getWindow().addFrame("Frame");
-		sadness.getWindow().addFrame("FrameL");
-		sadness.getWindow().addFrame("FrameR");
+		//sadness.getWindow().addFrame("FrameL");
+		//sadness.getWindow().addFrame("FrameR");
 		
-		//sadness.getInput().getCursor().setHidden(true);
-		//sadness.getInput().getCursor().setLocked(true);
+		
+		sadness.getInput().getCursor().setHidden(true);
+		sadness.getInput().getCursor().setLocked(true);
 		sadness.getInput().getCursor().getPosition().set(0, 0, 0);
 		
 		content.createAction("CubeX", new CubeX());
@@ -83,8 +90,8 @@ public class Cube implements SadMainLogic {
 			cubeRot.x(cubeRot.x() - interval * speed);
 		}
 		
-		cubeRot.x(input.getCursor().getPosition().y() / 8f);
-		cube.getPosition().x(input.getCursor().getPosition().x() / -200f);
+		cubeRot.x(input.getCursor().getPosition().y() / 4f);
+		cube.getPosition().x(input.getCursor().getPosition().x() / -100f);
 		
 		if (input.isPressed(KEY_Q)) {
 			cube.getScale().mul(0.99f);
@@ -93,5 +100,21 @@ public class Cube implements SadMainLogic {
 		if (input.isPressed(KEY_E)) {
 			cube.getScale().mul(1.01f);
 		}
+		
+		SadCamera camera = content.getCamera("Camera");
+		if (input.isJustReleased(KEY_O)) {
+			camera.setOrtho(!camera.isOrtho());
+		}
+		
+		if (input.isPressed(KEY_KP_ADD)) {
+			camera.setFov(camera.getFov() + 1);
+		}
+		
+		if (input.isPressed(KEY_KP_SUBTRACT)) {
+			camera.setFov(camera.getFov() - 1);
+		}
+		
+		
+		//System.out.println(content.getCamera("Camera").getCursorVector());
 	}
 }

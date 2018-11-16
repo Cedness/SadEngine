@@ -20,25 +20,24 @@ public class SadRenderer {
 	
 	private SadWindow window;
 	private SadContent content;
+	private SadInput input;
 	
-	private SadGlWindow glWindow = new SadGlWindow();
-	
+	private SadGlWindow glWindow;
 	private SadShader shader;
 	
-	private SadVector3 parentScale = new SadVector3();
-	private Matrix4f parentFrameMatrix = new Matrix4f();
-	private Matrix4f frameMatrix = new Matrix4f();
-	
 	private SadTexture lastTexture = null;
-	
 	private Matrix4f modelMatrix = new Matrix4f();
 	private Matrix4f entityMatrix = new Matrix4f();
-	
 	private SadLight light = new SadLight(new SadVector3(1, 1, 1), new SadVector3(0, 5, 0));
+	
+	private SadVector3 cursor;
 	
 	public void setup(SadWindow window, SadContent content, Saddings settings, SadInput input) {
 		this.window = window;
 		this.content = content;
+		this.input = input;
+		
+		glWindow = new SadGlWindow();
 		
 		glWindow.setup(settings, input);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -55,10 +54,9 @@ public class SadRenderer {
 	public void render() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		parentScale.set(1, 1, 1);
-		parentFrameMatrix.identity();
+		cursor = input.getCursor().getNormalizedPosition();
+		
 		renderFrame(window);
-		renderSubframes(window);
 	}
 	
 	/**
@@ -67,11 +65,27 @@ public class SadRenderer {
 	 * @param frame the frame to be rendered
 	 */
 	private void renderFrame(SadFrame frame) {
+		renderCamera(frame);
 		
+		renderSubframes(frame);
+	}
+	
+	private void renderCamera(SadFrame frame) {
 		//This frame
 		SadCamera camera = frame.getCamera();
 		if (camera == null)
 			return;
+		
+		SadVector3 vector = camera.getCursorVector();
+		//System.out.println("Cursor                            " + cursor);
+		float fov = camera.getFov();
+		float aspectRatio = (float) glWindow.getWidth() / (float) glWindow.getHeight();
+		//System.out.println(Math.toRadians(fov) * cursor.x() * aspectRatio);
+		vector.set(
+				(float) Math.tan(Math.toRadians(fov) * cursor.x() * aspectRatio),
+				(float) Math.tan(Math.toRadians(fov) * cursor.y()),
+				1);
+		
 		SadLevel level = camera.getLevel();
 		if (level == null)
 			return;
@@ -79,25 +93,40 @@ public class SadRenderer {
 		
 		shader.enable(true);
 		
+		/*
 		frameMatrix.identity();
 		frameMatrix.translate(frame.getPosition().x(), frame.getPosition().y(), 0);
 		frameMatrix.rotateZ((float) Math.toRadians(frame.getRotation().z()));
 		frameMatrix.scale(frame.getScale().x(), frame.getScale().y(), 1);
+		*/
 		
-		camera.update(frame.getScale().x() * glWindow.getWidth(), frame.getScale().y() * glWindow.getHeight());
+		camera.update(glWindow.getWidth(), glWindow.getHeight());
 		
-		shader.uploadFrameMatrix(frameMatrix);
+		//shader.uploadFrameOffset(new SadVector3(frame.getPosition().x(), frame.getPosition().y(), frame.getScale().x()));
+		
+		//shader.uploadFrameMatrix(frameMatrix);
 		shader.uploadProjectionMatrix(camera.getProjectionMatrix());
 		shader.uploadViewMatrix(camera.getViewMatrix());
 		shader.uploadLight(light);
 		
+		/*
+		Vector3f vector = new Vector3f();
+		Matrix4f invProj = new Matrix4f(camera.getProjectionMatrix()).invert();
+		Matrix4f invView = new Matrix4f(camera.getViewMatrix()).invert();
+		vector.mulProject(invProj);
+		vector.mulPosition(invView);
+		*/
+		
 		HashMap<String, ArrayList<String>> index = level.getIndex();
 		
 		for (String modelName : index.keySet()) {
-			renderModel(content.getModel(modelName), new ArrayList<>(), new ArrayList<>(), index.get(modelName));
+			parentMatrices = new ArrayList<>();
+			parentTextures = new ArrayList<>();
+			renderModel(content.getModel(modelName), index.get(modelName));
 		}
 		
 		shader.enable(false);
+		
 	}
 	
 	private void renderSubframes(SadFrame frame) {
@@ -108,7 +137,10 @@ public class SadRenderer {
 		}
 	}
 	
-	private void renderModel(SadModel model, List<Matrix4f> parentMatrices, List<SadTexture> parentTextures, List<String> entityNames) {
+	private List<Matrix4f> parentMatrices;
+	private List<SadTexture> parentTextures;
+	
+	private void renderModel(SadModel model, List<String> entityNames) {
 		
 		if (model == null)
 			return;
@@ -116,17 +148,17 @@ public class SadRenderer {
 		parentMatrices.add(model.writeToMatrix(new Matrix4f()));
 		parentTextures.add(model.getTexture());
 		
-		renderMesh(model, parentMatrices, parentTextures, entityNames);
+		renderMesh(model, entityNames);
 		
 		for (String subModel : model.getModels()) {
-			renderMesh(model.getModel(subModel), parentMatrices, parentTextures, entityNames);
+			renderModel(model.getModel(subModel), entityNames);
 		}
 		
 		parentMatrices.remove(parentMatrices.size() - 1);
 		parentTextures.remove(model.getTexture());
 	}
 	
-	private void renderMesh(SadModel model, List<Matrix4f> parentMatrices, List<SadTexture> parentTextures, List<String> entityNames) {
+	private void renderMesh(SadModel model, List<String> entityNames) {
 		SadMesh mesh = model.getMesh();
 		if (mesh == null)
 			return;

@@ -186,4 +186,9 @@ public class SadVector3 {
 		}
 		return this;
 	}
+	
+	@Override
+	public String toString() {
+		return x + " " + y + " " + z;
+	}
 }

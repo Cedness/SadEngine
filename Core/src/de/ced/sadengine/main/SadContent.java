@@ -119,12 +119,32 @@ public class SadContent {
 		return texture;
 	}
 	
+	public SadTexture createTexture(String name, File file, boolean alpha) {
+		SadTexture texture = new SadTexture(name, file, alpha);
+		put(texture);
+		return texture;
+	}
+	
 	public SadTexture getTexture(String name) {
 		return (SadTexture) get(SadTexture.class, name);
 	}
 	
 	public void deleteTexture(String name) {
 		delete(SadTexture.class, name);
+	}
+	
+	public SadFont createFont(String name, File atlas, File data) {
+		SadFont font = new SadFont(name, atlas, data);
+		put(font);
+		return font;
+	}
+	
+	public SadFont getFont(String name) {
+		return (SadFont) get(SadFont.class, name);
+	}
+	
+	public void deleteFont(String name) {
+		delete(SadFont.class, name);
 	}
 	
 	public SadHitbox createHitbox(String name) {

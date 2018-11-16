@@ -1,19 +1,27 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.main.SadContent;
+import de.ced.sadengine.utils.SadVector3;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Screen space in the window
+ */
 public class SadFrame extends SadDrawable {
 	
+	//private final SadInput input;
+	
 	private String camera = null;
+	private String parent = null; //TODO
 	private ArrayList<String> frames = new ArrayList<>();
 	//false: low = back  high = front
 	private boolean orderInverted = false;
 	
 	public SadFrame(String name, SadContent content) {
 		super(name, content);
+		//this.input = input;
 	}
 	
 	
@@ -26,6 +34,16 @@ public class SadFrame extends SadDrawable {
 	public SadFrame setCamera(String name) {
 		camera = name;
 		return this;
+	}
+	
+	
+	//CursorVector
+	
+	public SadVector3 getCursorVector() {
+		SadCamera camera = getCamera();
+		//if (camera == null)
+		return null;
+		
 	}
 	
 	

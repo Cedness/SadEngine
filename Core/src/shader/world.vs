@@ -14,7 +14,7 @@ out vec3 outToCamera;
 
 uniform mat4 transformationMatrix;
 
-uniform mat4 frameMatrix;
+uniform vec3 frameOffset;
 
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
@@ -27,7 +27,10 @@ void main() {
     outPosition = worldPosition.xyz;
     outTextureCoordinates = textureCoordinates;
 
-    gl_Position = projectionMatrix * viewMatrix * frameMatrix * worldPosition;
+    vec4 framePosition = projectionMatrix * viewMatrix * worldPosition;
+
+    gl_Position = framePosition;
+    //gl_Position = (framePosition * vec4(frameOffset.z, frameOffset.z, 1.0, 1.0)) + vec4(frameOffset.xy, 0.0, 0.0);
 
     outNormal = (transformationMatrix * vec4(normal, 0.0)).xyz;
     outToLight = lightPosition - worldPosition.xyz;
