@@ -191,4 +191,18 @@ public class SadVector3 {
 	public String toString() {
 		return x + " " + y + " " + z;
 	}
+	
+	@Deprecated
+	public void joe() {
+		String test = "lolrofl";
+		
+		char[] testArray = test.toCharArray();
+		
+		//for (int i = 0; i < testArray.length; i++) {
+		//char reee = testArray[i];
+		
+		for (char reee : testArray) {
+			int value = reee - 93;
+		}
+	}
 }
