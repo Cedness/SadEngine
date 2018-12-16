@@ -1,5 +1,6 @@
 package de.ced.sadengine.main;
 
+import de.ced.sadengine.io.SadResourceLoader;
 import de.ced.sadengine.objects.*;
 import de.ced.sadengine.objects.action.SadAction;
 import de.ced.sadengine.objects.action.SadActionHandler;
@@ -114,13 +115,13 @@ public class SadContent {
 	}
 	
 	public SadTexture createTexture(String name, File file) {
-		SadTexture texture = new SadTexture(name, file);
+		SadTexture texture = SadResourceLoader.loadTexture(name, file);
 		put(texture);
 		return texture;
 	}
 	
 	public SadTexture createTexture(String name, File file, boolean alpha) {
-		SadTexture texture = new SadTexture(name, file, alpha);
+		SadTexture texture = SadResourceLoader.loadTexture(name, file, alpha);
 		put(texture);
 		return texture;
 	}

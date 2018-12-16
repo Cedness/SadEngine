@@ -74,9 +74,6 @@ public abstract class SadShaderProgram {
 	}
 	
 	protected void loadTexture(int location, SadTexture texture, int textureSlot) {
-		if (texture != null)
-			texture.bind();
-		//System.out.println(texture.getName());
 		glUniform1i(location, textureSlot);
 		glActiveTexture(GL_TEXTURE0 + textureSlot);
 		glBindTexture(GL_TEXTURE_2D, texture != null ? texture.getID() : 0);
