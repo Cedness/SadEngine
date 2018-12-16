@@ -48,9 +48,15 @@ public class SadContent {
 		clockwork.increaseClocks(interval);
 	}
 	
+	public float getInterval() {
+		return interval;
+	}
+	
 	SadActionHandler getActionHandler() {
 		return actionHandler;
 	}
+	
+	//Basic metods
 	
 	private void put(SadObject object) {
 		if (object.getName() == null || object.getName().isEmpty())
@@ -71,9 +77,7 @@ public class SadContent {
 		obj.release();
 	}
 	
-	public float getInterval() {
-		return interval;
-	}
+	//Individual methods
 	
 	public SadEntity createEntity(String name) {
 		SadEntity entity = new SadEntity(name, this);
@@ -92,7 +96,7 @@ public class SadContent {
 	public SadMesh createMesh(String name, File file) {
 		SadMesh mesh = null;
 		try {
-			mesh = SadOBJLoader.loadObj(name, file);
+			mesh = SadResourceLoader.loadMesh(name, file);
 		} catch (FileNotFoundException e) {
 			System.out.println("OBJFile " + file.getAbsolutePath() + " not found.");
 			e.printStackTrace();

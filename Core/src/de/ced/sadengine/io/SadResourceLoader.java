@@ -1,21 +1,167 @@
 package de.ced.sadengine.io;
 
+import de.ced.sadengine.objects.SadMesh;
 import de.ced.sadengine.objects.SadTexture;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_FALSE;
+import static org.lwjgl.opengl.GL11.GL_LINEAR;
+import static org.lwjgl.opengl.GL11.GL_REPEAT;
+import static org.lwjgl.opengl.GL11.GL_RGB;
+import static org.lwjgl.opengl.GL11.GL_RGBA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL11.glTexImage2D;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL20.*;
 
 public class SadResourceLoader {
+	
+	//Shader
+	
+	public static int loadShader(String path, int shaderType) {
+		StringBuilder builder = new StringBuilder();
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(SadResourceLoader.class.getResourceAsStream("/shader/" + path)));
+			while (reader.ready()) {
+				builder.append(reader.readLine()).append(System.lineSeparator());
+			}
+			reader.close();
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		}
+		
+		int id = glCreateShader(shaderType);
+		glShaderSource(id, builder);
+		glCompileShader(id);
+		if (glGetShaderi(id, GL_COMPILE_STATUS) == GL_FALSE)
+			throw new RuntimeException("Failed to compile SadShader" + System.lineSeparator() + glGetShaderInfoLog(id));
+		
+		return id;
+	}
+	
+	//Mesh
+	
+	public static SadMesh loadMesh(String name, File file) throws FileNotFoundException, NumberFormatException {
+		InputStream stream = new FileInputStream(file);
+		if (stream == null)
+			System.out.println("lol");
+		InputStreamReader streamReader = new InputStreamReader(stream);
+		BufferedReader reader = new BufferedReader(streamReader);
+		
+		List<Integer> indices = new ArrayList<>();
+		List<Vector3f> positions = new ArrayList<>();
+		List<Vector2f> textureCoordinates = new ArrayList<>();
+		List<Vector3f> normals = new ArrayList<>();
+		
+		String line = null;
+		String[] parts;
+		try {
+			while (reader.ready()) {
+				line = reader.readLine();
+				parts = line.split(" ");
+				
+				if (line.startsWith("v ")) {
+					positions.add(new Vector3f(
+							Float.parseFloat(parts[1]),
+							Float.parseFloat(parts[2]),
+							Float.parseFloat(parts[3])
+					));
+				} else if (line.startsWith("vt ")) {
+					textureCoordinates.add(new Vector2f(
+							Float.parseFloat(parts[1]),
+							Float.parseFloat(parts[2])
+					));
+				} else if (line.startsWith("vn ")) {
+					normals.add(new Vector3f(
+							Float.parseFloat(parts[1]),
+							Float.parseFloat(parts[2]),
+							Float.parseFloat(parts[3])
+					));
+				}
+			}
+			
+			
+			boolean isTextured = textureCoordinates.size() > 0;
+			boolean hasNormals = normals.size() > 0;
+			
+			
+			float[] positionsArray = new float[positions.size() * 3];
+			float[] textureCoordinatesArray = isTextured ? new float[positions.size() * 2] : null;
+			float[] normalsArray = new float[positions.size() * 3];
+			
+			streamReader = new InputStreamReader(new FileInputStream(file));
+			reader = new BufferedReader(streamReader);
+			
+			while (reader.ready()) {
+				line = reader.readLine();
+				if (!line.startsWith("f"))
+					continue;
+				
+				parts = line.split(" ");
+				
+				for (int i = 1; i < parts.length; i++) {
+					String[] part = parts[i].split("/");
+					
+					int index = Integer.parseInt(part[0]) - 1;
+					indices.add(index);
+					
+					if (isTextured) {
+						Vector2f textureCoordinate = textureCoordinates.get(Integer.parseInt(part[1]) - 1);
+						textureCoordinatesArray[index * 2] = textureCoordinate.x;
+						textureCoordinatesArray[index * 2 + 1] = textureCoordinate.y;
+					}
+					
+					if (hasNormals) {
+						Vector3f normal = normals.get(Integer.parseInt(part[2]) - 1);
+						normalsArray[index * 3] = normal.x;
+						normalsArray[index * 3 + 1] = normal.y;
+						normalsArray[index * 3 + 2] = normal.z;
+					}
+				}
+			}
+			
+			reader.close();
+			
+			int[] indicesArray = new int[indices.size()];
+			
+			for (int i = 0; i < positions.size(); i++) {
+				positionsArray[i * 3] = positions.get(i).x;
+				positionsArray[i * 3 + 1] = positions.get(i).y;
+				positionsArray[i * 3 + 2] = positions.get(i).z;
+			}
+			
+			for (int i = 0; i < indices.size(); i++) {
+				indicesArray[i] = indices.get(i);
+			}
+			
+			return isTextured ? hasNormals ?
+					new SadMesh(name, indicesArray, positionsArray, textureCoordinatesArray, normalsArray) :
+					new SadMesh(name, indicesArray, positionsArray, textureCoordinatesArray) :
+					new SadMesh(name, indicesArray, positionsArray);
+			
+		} catch (IOException | NumberFormatException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 	
 	//Texture
 	

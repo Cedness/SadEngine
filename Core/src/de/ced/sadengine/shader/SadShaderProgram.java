@@ -1,5 +1,6 @@
 package de.ced.sadengine.shader;
 
+import de.ced.sadengine.io.SadResourceLoader;
 import de.ced.sadengine.objects.SadTexture;
 import de.ced.sadengine.utils.SadVector3;
 import org.joml.Matrix3f;
@@ -17,8 +18,8 @@ public abstract class SadShaderProgram {
 	private int fragmentShader;
 	
 	public SadShaderProgram(String vertexFile, String fragmentFile) {
-		vertexShader = SadShaderLoader.load(vertexFile, GL_VERTEX_SHADER);
-		fragmentShader = SadShaderLoader.load(fragmentFile, GL_FRAGMENT_SHADER);
+		vertexShader = SadResourceLoader.loadShader(vertexFile, GL_VERTEX_SHADER);
+		fragmentShader = SadResourceLoader.loadShader(fragmentFile, GL_FRAGMENT_SHADER);
 		program = glCreateProgram();
 		
 		glAttachShader(program, vertexShader);
