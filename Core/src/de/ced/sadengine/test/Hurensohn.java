@@ -1,8 +1,8 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.api.SadEngine3D;
 import de.ced.sadengine.input.SadInput;
 import de.ced.sadengine.main.SadContent;
+import de.ced.sadengine.main.SadEngine;
 import de.ced.sadengine.main.SadMainLogic;
 import de.ced.sadengine.main.Sadness;
 import de.ced.sadengine.objects.SadEntity;
@@ -19,7 +19,7 @@ public class Hurensohn implements SadMainLogic {
 		SadWindow window = sadness.getWindow();
 		
 		content.createLevel("Level");
-		content.createCamera("Camera").setLevel("Level");
+		content.createCamera("Camera").setLevel("Level").setOrtho(true);
 		window.setCamera("Camera");
 		
 		content.createMesh("CowMesh", new File("./Core/res/models/Cow.obj"));
@@ -61,6 +61,6 @@ public class Hurensohn implements SadMainLogic {
 	}
 	
 	public static void main(String[] args) {
-		SadEngine3D.start(new Hurensohn());
+		new SadEngine(new Hurensohn());
 	}
 }

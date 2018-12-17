@@ -1,13 +1,13 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.api.SadEngine3D;
+import de.ced.sadengine.main.SadEngine;
 import de.ced.sadengine.main.SadMainLogic;
 import de.ced.sadengine.main.Sadness;
 
 public class Main implements SadMainLogic {
 	
 	public static void main(String[] args) {
-		SadEngine3D.start(new Main());
+		new SadEngine(new Main());
 	}
 	
 	@Override

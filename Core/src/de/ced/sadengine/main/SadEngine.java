@@ -1,78 +1,29 @@
 package de.ced.sadengine.main;
 
 import de.ced.sadengine.api.Saddings;
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.objects.SadRenderer;
-import de.ced.sadengine.objects.SadWindow;
-
-import static de.ced.sadengine.utils.SadValue.KEY_ESCAPE;
+import de.ced.sadengine.utils.SadIntro;
 
 public class SadEngine {
 	
-	private final SadLoop loop;
+	public static SadEngine INSTANCE = null;
 	
-	private final SadMainLogic logic;
-	private final Saddings settings;
-	private final Sadness sadness;
-	private final SadWindow window;
-	private final SadContent content;
-	private final SadInput input;
-	private final SadRenderer renderer;
-	
-	public SadEngine(SadMainLogic logic, Saddings settings, SadLoop loop) {
-		this.logic = logic;
-		this.settings = settings;
-		
-		sadness = new Sadness();
-		content = sadness.getContent();
-		window = sadness.getWindow();
-		input = sadness.getInput();
-		
-		renderer = new SadRenderer();
-		this.loop = loop;
+	public SadEngine(SadMainLogic logic) {
+		this(logic, new Saddings());
 	}
 	
-	public void setup() {
-		renderer.setup(window, content, settings, input);
-		input.update();
-		logic.setup(sadness);
-		content.getActionHandler().setup();
-		input.update();
-	}
-	
-	public void render() {
-		renderer.render();
-	}
-	
-	public void finishRender() {
-		renderer.updateWindow();
-	}
-	
-	public void update() {
-		float secInterval = 1.0f / (float) settings.getUps();
+	public SadEngine(SadMainLogic logic, Saddings saddings) {
+		if (INSTANCE != null)
+			return;
 		
-		content.update(secInterval);
-		logic.update(sadness);
-		content.getActionHandler().update();
-		logic.updateFinally(sadness);
-		input.update();
+		SadIntro.show(0.5f);
 		
-		if (input.isPressed(KEY_ESCAPE))
-			loop.stop();
-	}
-	
-	public void finishUpdate() {
-	
-	}
-	
-	public void terminate() {
-		logic.terminate(sadness);
-		content.getActionHandler().terminate();
-		logic.preTerminate(sadness);
+		System.out.println("Initializing Thread Handler...");
+		SadThreadHandler threadHandler = new SadThreadHandler();
 		
-		renderer.release();
+		System.out.println("Initializing GL Thread...");
+		SadGLThread glThread = new SadGLThread(threadHandler, logic, saddings);
+		threadHandler.addThread(glThread);
 		
-		System.out.println("SadEngine3D");
-		System.out.println("(ɔ) 2018 by Ced");
+		threadHandler.start();
 	}
 }

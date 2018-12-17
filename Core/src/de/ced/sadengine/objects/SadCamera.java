@@ -31,30 +31,33 @@ public class SadCamera extends SadDrawable {
 		return fov;
 	}
 	
-	public void setFov(float fov) {
+	public SadCamera setFov(float fov) {
 		if (fov <= 0 || fov > 180)
-			return;
+			return this;
 		this.fov = fov;
+		return this;
 	}
 	
 	public float getNear() {
 		return near;
 	}
 	
-	public void setNear(float near) {
+	public SadCamera setNear(float near) {
 		if (near <= 0 || near >= far)
-			return;
+			return this;
 		this.near = near;
+		return this;
 	}
 	
 	public float getFar() {
 		return far;
 	}
 	
-	public void setFar(float far) {
+	public SadCamera setFar(float far) {
 		if (far <= near)
-			return;
+			return this;
 		this.far = far;
+		return this;
 	}
 	
 	public Matrix4f getProjectionMatrix() {
@@ -69,8 +72,9 @@ public class SadCamera extends SadDrawable {
 		return ortho;
 	}
 	
-	public void setOrtho(boolean ortho) {
+	public SadCamera setOrtho(boolean ortho) {
 		this.ortho = ortho;
+		return this;
 	}
 	
 	public void update(float width, float height) {
@@ -107,16 +111,18 @@ public class SadCamera extends SadDrawable {
 		return lookingAtPosition;
 	}
 	
-	public void setLookingAtPosition(boolean lookingAtPosition) {
+	public SadCamera setLookingAtPosition(boolean lookingAtPosition) {
 		this.lookingAtPosition = lookingAtPosition;
+		return this;
 	}
 	
 	public float getDistanceToPosition() {
 		return distanceToPosition;
 	}
 	
-	public void setDistanceToPosition(float distanceToPosition) {
+	public SadCamera setDistanceToPosition(float distanceToPosition) {
 		this.distanceToPosition = distanceToPosition;
+		return this;
 	}
 	
 	public SadVector3 getCursorVector() {

@@ -1,8 +1,8 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.api.SadEngine3D;
 import de.ced.sadengine.input.SadInput;
 import de.ced.sadengine.main.SadContent;
+import de.ced.sadengine.main.SadEngine;
 import de.ced.sadengine.main.SadMainLogic;
 import de.ced.sadengine.main.Sadness;
 import de.ced.sadengine.objects.SadCamera;
@@ -16,7 +16,7 @@ import static de.ced.sadengine.utils.SadValue.*;
 public class Cube implements SadMainLogic {
 	
 	public static void main(String[] args) {
-		SadEngine3D.start(new Cube());
+		new SadEngine(new Cube());
 	}
 	
 	@Override
