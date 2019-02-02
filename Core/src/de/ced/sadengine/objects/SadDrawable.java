@@ -43,6 +43,10 @@ public abstract class SadDrawable extends SadObject {
 		return matrix;
 	}
 	
+	public Matrix4f writeToMatrix() {
+		return writeToMatrix(new Matrix4f());
+	}
+	
 	/*
 	protected boolean physicsEnabled = false;
 	protected SadPhysics physics = new SadPhysics();

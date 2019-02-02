@@ -1,27 +1,29 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.utils.SadVector3;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
+import static org.lwjgl.opengl.GL30.glDeleteRenderbuffers;
 
-/**
- * Screen space in the window
- */
-public class SadFrame extends SadDrawable {
+public class SadFrame extends SadTexture {
 	
-	//private final SadInput input;
+	private final SadContent content;
+	private final int fboID;
+	private final int depthID;
+	protected int width;
+	protected int height;
+	private boolean rendered = false;
+	private int geniousParadoxPreventer = 0;
 	
-	private String camera = null;
-	private String parent = null; //TODO
-	private ArrayList<String> frames = new ArrayList<>();
-	//false: low = back  high = front
-	private boolean orderInverted = false;
+	private String camera;
 	
-	public SadFrame(String name, SadContent content) {
-		super(name, content);
-		//this.input = input;
+	public SadFrame(String name, SadContent content, int fboID, int textureID, int depthID, int width, int height) {
+		super(name, textureID);
+		this.content = content;
+		this.fboID = fboID;
+		this.depthID = depthID;
+		this.width = width;
+		this.height = height;
 	}
 	
 	
@@ -37,83 +39,42 @@ public class SadFrame extends SadDrawable {
 	}
 	
 	
-	//CursorVector
-	
-	public SadVector3 getCursorVector() {
-		SadCamera camera = getCamera();
-		//if (camera == null)
-		return null;
-		
+	public int getFboID() {
+		return fboID;
 	}
 	
-	
-	//Frames
-	
-	public void addFrame(String name) {
-		if (hasFrame(name))
-			return;
-		frames.add(name);
+	public int getDepthID() {
+		return depthID;
 	}
 	
-	public void removeFrame(String name) {
-		if (!hasFrame(name))
-			return;
-		frames.remove(name);
+	public int getWidth() {
+		return width;
 	}
 	
-	public SadFrame getFrame(String name) {
-		if (!hasFrame(name))
-			return null;
-		return content.getFrame(name);
+	public int getHeight() {
+		return height;
 	}
 	
-	public boolean hasFrame(String name) {
-		return frames.contains(name);
+	public boolean isRendered() {
+		return rendered;
 	}
 	
-	public List<String> getFrames() {
-		return frames;
+	public void setRendered(boolean rendered) {
+		this.rendered = rendered;
 	}
 	
-	public void clearAllFrames() {
-		frames = new ArrayList<>();
+	public int getGeniousParadoxPreventer() {
+		return geniousParadoxPreventer;
 	}
 	
-	
-	//Frame order
-	
-	public int getRank(String name) {
-		if (!hasFrame(name))
-			return -1;
-		return frames.indexOf(name);
+	public void setGeniousParadoxPreventer(int geniousParadoxPreventer) {
+		this.geniousParadoxPreventer = geniousParadoxPreventer;
 	}
 	
-	public void swapRanks(String name1, String name2) {
-		if (!hasFrame(name1) || !hasFrame(name2))
-			return;
-		int indexOfName2 = frames.indexOf(name2);
-		frames.set(frames.indexOf(name1), name2);
-		frames.set(indexOfName2, name1);
-	}
-	
-	public void setRank(String name, int rank) {
-		if (!hasFrame(name))
-			return;
-		int min = 0;
-		int max = frames.size();
-		frames.remove(name);
-		frames.add(rank < max ? (rank > min ? rank : min) : max - 1, name);
-	}
-	
-	public int size() {
-		return frames.size();
-	}
-	
-	public boolean isOrderInverted() {
-		return orderInverted;
-	}
-	
-	public void setOrderInverted(boolean orderInverted) {
-		this.orderInverted = orderInverted;
+	@Override
+	public void release() {
+		super.release();
+		glDeleteFramebuffers(fboID);
+		glDeleteRenderbuffers(depthID);
 	}
 }

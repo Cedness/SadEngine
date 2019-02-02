@@ -1,15 +1,17 @@
 package de.ced.sadengine.main;
 
-import de.ced.sadengine.io.SadResourceLoader;
+import de.ced.sadengine.io.SadGL;
 import de.ced.sadengine.objects.*;
 import de.ced.sadengine.objects.action.SadAction;
 import de.ced.sadengine.objects.action.SadActionHandler;
 import de.ced.sadengine.objects.action.SadActionLogic;
 import de.ced.sadengine.objects.time.SadClock;
 import de.ced.sadengine.objects.time.SadClockwork;
+import de.ced.sadengine.utils.SadVector3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -19,6 +21,7 @@ import java.util.HashMap;
 public class SadContent {
 	
 	private float interval;
+	private SadVector3 clearColor = new SadVector3(0.1f, 0.1f, 0.1f);
 	
 	//The big Q
 	private final HashMap<Class<? extends SadObject>, HashMap<String, SadObject>> contents = new HashMap<>();
@@ -52,6 +55,10 @@ public class SadContent {
 		return interval;
 	}
 	
+	public SadVector3 getClearColor() {
+		return clearColor;
+	}
+	
 	SadActionHandler getActionHandler() {
 		return actionHandler;
 	}
@@ -70,11 +77,12 @@ public class SadContent {
 		return contents.get(clazz).getOrDefault(name, null);
 	}
 	
-	private void delete(Class<? extends SadObject> clazz, String name) {
+	private boolean delete(Class<? extends SadObject> clazz, String name) {
 		SadObject obj = contents.get(clazz).remove(name);
 		if (obj == null)
-			return;
+			return false;
 		obj.release();
+		return true;
 	}
 	
 	//Individual methods
@@ -96,7 +104,7 @@ public class SadContent {
 	public SadMesh createMesh(String name, File file) {
 		SadMesh mesh = null;
 		try {
-			mesh = SadResourceLoader.loadMesh(name, file);
+			mesh = SadGL.loadMesh(name, file);
 		} catch (FileNotFoundException e) {
 			System.out.println("OBJFile " + file.getAbsolutePath() + " not found.");
 			e.printStackTrace();
@@ -119,23 +127,28 @@ public class SadContent {
 	}
 	
 	public SadTexture createTexture(String name, File file) {
-		SadTexture texture = SadResourceLoader.loadTexture(name, file);
+		deleteFrame(name);
+		SadTexture texture = SadGL.loadTexture(name, file);
 		put(texture);
 		return texture;
 	}
 	
 	public SadTexture createTexture(String name, File file, boolean alpha) {
-		SadTexture texture = SadResourceLoader.loadTexture(name, file, alpha);
+		deleteFrame(name);
+		SadTexture texture = SadGL.loadTexture(name, file, alpha);
 		put(texture);
 		return texture;
 	}
 	
 	public SadTexture getTexture(String name) {
-		return (SadTexture) get(SadTexture.class, name);
+		SadTexture texture = (SadTexture) get(SadTexture.class, name);
+		return texture != null ? texture : getFrame(name);
 	}
 	
 	public void deleteTexture(String name) {
-		delete(SadTexture.class, name);
+		if (delete(SadTexture.class, name))
+			return;
+		deleteFrame(name);
 	}
 	
 	public SadFont createFont(String name, File atlas, File data) {
@@ -208,8 +221,10 @@ public class SadContent {
 		delete(SadCamera.class, name);
 	}
 	
-	public SadFrame createFrame(String name) {
-		SadFrame frame = new SadFrame(name, this);
+	public SadFrame createFrame(String name, int width, int height) {
+		deleteTexture(name);
+		SadFrame frame = new SadFrame(name, this, SadGL.createFrameBuffer(), SadGL.createTextureAttachment(width, height),
+				SadGL.createDepthBufferAttachment(width, height), width, height);
 		put(frame);
 		return frame;
 	}
@@ -220,6 +235,10 @@ public class SadContent {
 	
 	public void deleteFrame(String name) {
 		delete(SadFrame.class, name);
+	}
+	
+	public Collection<SadObject> getFrames() {
+		return contents.get(SadFrame.class).values();
 	}
 	
 	public SadClock createClock(String name) {

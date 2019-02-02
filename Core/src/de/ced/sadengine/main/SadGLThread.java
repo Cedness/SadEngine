@@ -133,9 +133,9 @@ public class SadGLThread extends SadThread {
 	
 	@Override
 	public void terminate() {
-		logic.terminate(sadness);
-		content.getActionHandler().terminate();
 		logic.preTerminate(sadness);
+		content.getActionHandler().terminate();
+		logic.terminate(sadness);
 		
 		renderer.release();
 		

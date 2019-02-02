@@ -2,6 +2,7 @@ package de.ced.sadengine.main;
 
 import de.ced.sadengine.api.Saddings;
 import de.ced.sadengine.input.SadInput;
+import de.ced.sadengine.utils.SadVector3;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
@@ -91,7 +92,10 @@ public class SadGlWindow {
 		return glWindow;
 	}
 	
-	public void update() {
+	public void update(SadContent content) {
+		SadVector3 cC = content.getClearColor();
+		glClearColor(cC.x(), cC.y(), cC.z(), 1f);
+		
 		glfwSwapBuffers(glWindow);
 		glfwPollEvents();
 	}

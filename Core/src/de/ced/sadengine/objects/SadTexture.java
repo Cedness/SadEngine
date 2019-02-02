@@ -4,18 +4,18 @@ import static org.lwjgl.opengl.GL11.glDeleteTextures;
 
 public class SadTexture extends SadObject {
 	
-	private final int id;
+	private final int textureID;
 	
 	private float lightDamper;
 	private float reflectivity;
 	
-	public SadTexture(String name, int id) {
+	public SadTexture(String name, int textureID) {
 		super(name);
-		this.id = id;
+		this.textureID = textureID;
 	}
 	
-	public int getID() {
-		return id;
+	public int getTextureID() {
+		return textureID;
 	}
 	
 	public float getLightDamper() {
@@ -36,6 +36,6 @@ public class SadTexture extends SadObject {
 	
 	@Override
 	public void release() {
-		glDeleteTextures(id);
+		glDeleteTextures(textureID);
 	}
 }

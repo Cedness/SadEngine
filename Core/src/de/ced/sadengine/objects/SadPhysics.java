@@ -11,8 +11,9 @@ public class SadPhysics {
 		return mass;
 	}
 	
-	public void setMass(float mass) {
+	public SadPhysics setMass(float mass) {
 		this.mass = mass;
+		return this;
 	}
 	
 	public Vector3f getVelocity() {

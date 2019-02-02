@@ -23,11 +23,13 @@ public class Cube implements SadMainLogic {
 	public void setup(Sadness sadness) {
 		SadContent content = sadness.getContent();
 		
+		content.getClearColor().set(0.5f);
 		
 		content.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
 		
-		content.createMesh("Cube", new File("./Core/res/models/Rect.obj"));
-		content.createModel("Cube").setMesh("Cube").setTexture("Cube");
+		content.createMesh("Cube", new File("./Core/res/models/Cube.obj"));
+		content.createModel("Cube").setMesh("Cube");
+		//.setTexture("Cube");
 		content.createEntity("Cube").setModel("Cube");
 		
 		content.createLevel("Level").addEntity("Cube");
@@ -37,11 +39,11 @@ public class Cube implements SadMainLogic {
 		
 		//sadness.getWindow().setCamera("Camera");
 		
-		
+		/*
 		float scale = 0.5f;
-		content.createFrame("Frame").setCamera("Camera").getScale().mul(scale);
-		content.createFrame("FrameL").setCamera("Camera").getScale().mul(scale);
-		content.createFrame("FrameR").setCamera("Camera").getScale().mul(scale);
+		content.createFrame("Frame", width, height).setCamera("Camera").getScale().mul(scale);
+		content.createFrame("FrameL", width, height).setCamera("Camera").getScale().mul(scale);
+		content.createFrame("FrameR", width, height).setCamera("Camera").getScale().mul(scale);
 		float offset = 4f;
 		content.getFrame("FrameL").getRotation().z(-90);
 		content.getFrame("FrameL").getPosition().x(-offset);
@@ -52,6 +54,7 @@ public class Cube implements SadMainLogic {
 		camera.getScale().set(scale);
 		content.getFrame("Frame").getPosition().x(0);
 		sadness.getWindow().addFrame("Frame");
+		*/
 		//sadness.getWindow().addFrame("FrameL");
 		//sadness.getWindow().addFrame("FrameR");
 		

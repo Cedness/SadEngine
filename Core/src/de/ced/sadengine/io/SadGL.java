@@ -1,5 +1,7 @@
 package de.ced.sadengine.io;
 
+import de.ced.sadengine.main.SadGlWindow;
+import de.ced.sadengine.objects.SadFrame;
 import de.ced.sadengine.objects.SadMesh;
 import de.ced.sadengine.objects.SadTexture;
 import org.joml.Vector2f;
@@ -30,16 +32,31 @@ import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
+import static org.lwjgl.opengl.GL20.glCompileShader;
+import static org.lwjgl.opengl.GL20.glCreateShader;
+import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
+import static org.lwjgl.opengl.GL20.glGetShaderi;
+import static org.lwjgl.opengl.GL20.glShaderSource;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL30.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL30.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL30.GL_DEPTH_COMPONENT;
+import static org.lwjgl.opengl.GL30.GL_DEPTH_COMPONENT32;
+import static org.lwjgl.opengl.GL30.GL_FLOAT;
+import static org.lwjgl.opengl.GL30.glClear;
+import static org.lwjgl.opengl.GL30.glDrawBuffer;
+import static org.lwjgl.opengl.GL30.glViewport;
+import static org.lwjgl.opengl.GL32.glFramebufferTexture;
 
-public class SadResourceLoader {
+public class SadGL {
 	
 	//Shader
 	
 	public static int loadShader(String path, int shaderType) {
 		StringBuilder builder = new StringBuilder();
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(SadResourceLoader.class.getResourceAsStream("/shader/" + path)));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(SadGL.class.getResourceAsStream("/shader/" + path)));
 			while (reader.ready()) {
 				builder.append(reader.readLine()).append(System.lineSeparator());
 			}
@@ -235,5 +252,57 @@ public class SadResourceLoader {
 		buffer.flip();
 		newBuffer.put(buffer);
 		return newBuffer;
+	}
+	
+	//FrameBuffer
+	
+	public static int createFrameBuffer() {
+		int frameBuffer = glGenFramebuffers();
+		glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0);
+		return frameBuffer;
+	}
+	
+	public static int createTextureAttachment(int width, int height) {
+		int texture = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, (ByteBuffer) null);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture, 0);
+		return texture;
+	}
+	
+	public static int createDepthTextureAttachment(int width, int height) {
+		int depthTexture = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, depthTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (ByteBuffer) null);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
+		return depthTexture;
+	}
+	
+	public static int createDepthBufferAttachment(int width, int height) {
+		int depthBuffer = glGenRenderbuffers();
+		glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+		return depthBuffer;
+	}
+	
+	public static void bindFrameBuffer(SadFrame frame) {
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, frame.getFboID());
+		glViewport(0, 0, frame.getWidth(), frame.getHeight());
+	}
+	
+	public static void unbindFrameBuffer(SadGlWindow glWindow) {
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, glWindow.getWidth(), glWindow.getHeight());
+	}
+	
+	public static void clear() {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 }

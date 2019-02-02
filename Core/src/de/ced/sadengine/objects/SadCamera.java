@@ -20,8 +20,6 @@ public class SadCamera extends SadDrawable {
 	protected float distanceToPosition = 1f;
 	protected SadVector3 cursorVector = new SadVector3();
 	protected String level = null;
-	@Deprecated
-	protected String entity = null;
 	
 	public SadCamera(String name, SadContent content) {
 		super(name, content);
@@ -139,17 +137,6 @@ public class SadCamera extends SadDrawable {
 	
 	public SadCamera setLevel(String name) {
 		level = name;
-		return this;
-	}
-	
-	@Deprecated
-	public SadEntity getEntity() {
-		return content.getEntity(entity);
-	}
-	
-	@Deprecated
-	public SadCamera setEntity(String name) {
-		entity = name;
 		return this;
 	}
 	

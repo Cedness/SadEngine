@@ -51,7 +51,7 @@ public class GLSLProgramXXX {
 		int location = uniformVariables.get(variable);
 		glUniform1i(location, textureSlot);
 		glActiveTexture(GL_TEXTURE0 + textureSlot);
-		glBindTexture(GL_TEXTURE_2D, texture != null ? texture.getID() : 0);
+		glBindTexture(GL_TEXTURE_2D, texture != null ? texture.getTextureID() : 0);
 	}
 	
 	public void setMatrix(String variable, Matrix4f matrix) {

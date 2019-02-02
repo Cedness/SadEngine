@@ -60,6 +60,10 @@ public class SadLevel extends SadObject {
 		return content.getEntity(name);
 	}
 	
+	public ArrayList<String> getEntities() {
+		return entities;
+	}
+	
 	public boolean hasEntity(String name) {
 		return entities.contains(name);
 	}

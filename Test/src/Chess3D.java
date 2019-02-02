@@ -2,12 +2,12 @@ import de.ced.chess_api.Chess;
 import de.ced.chess_api.Game;
 import de.ced.chess_api.Piece;
 import de.ced.chess_api.PieceType;
-import de.ced.sadengine.api.SadEngine3D;
 import de.ced.sadengine.input.SadInput;
 import de.ced.sadengine.main.SadContent;
+import de.ced.sadengine.main.SadEngine;
+import de.ced.sadengine.main.SadMainLogic;
 import de.ced.sadengine.main.Sadness;
 import de.ced.sadengine.objects.*;
-import de.ced.sadengine.objects.action.SadActionLogic;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class Chess3D implements SadActionLogic {
+public class Chess3D implements SadMainLogic {
 	
 	private final float pieceScale = 0.05f;
 	
@@ -120,6 +120,6 @@ public class Chess3D implements SadActionLogic {
 	}
 	
 	public static void main(String[] args) {
-		SadEngine3D.start(new Chess3D());
+		new SadEngine(new Chess3D());
 	}
 }
