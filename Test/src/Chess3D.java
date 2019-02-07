@@ -2,11 +2,10 @@ import de.ced.chess_api.Chess;
 import de.ced.chess_api.Game;
 import de.ced.chess_api.Piece;
 import de.ced.chess_api.PieceType;
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadEngine;
-import de.ced.sadengine.main.SadMainLogic;
-import de.ced.sadengine.main.Sadness;
+import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.objects.SadEngine;
+import de.ced.sadengine.objects.SadMainLogic;
+import de.ced.sadengine.objects.Sadness;
 import de.ced.sadengine.objects.*;
 
 import java.io.File;

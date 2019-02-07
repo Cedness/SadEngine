@@ -1,11 +1,11 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.main.SadContent;
+import de.ced.sadengine.utils.SadVector;
 
 import static org.lwjgl.opengl.GL30.glDeleteFramebuffers;
 import static org.lwjgl.opengl.GL30.glDeleteRenderbuffers;
 
-public class SadFrame extends SadTexture {
+public class SadFrame extends SadTexture implements SadFrameI {
 	
 	private final SadContent content;
 	private final int fboID;
@@ -17,7 +17,9 @@ public class SadFrame extends SadTexture {
 	
 	private String camera;
 	
-	public SadFrame(String name, SadContent content, int fboID, int textureID, int depthID, int width, int height) {
+	private SadVector color = new SadVector(4);
+	
+	SadFrame(String name, SadContent content, int fboID, int textureID, int depthID, int width, int height) {
 		super(name, textureID);
 		this.content = content;
 		this.fboID = fboID;
@@ -29,44 +31,54 @@ public class SadFrame extends SadTexture {
 	
 	//Camera
 	
+	@Override
 	public SadCamera getCamera() {
 		return content.getCamera(camera);
 	}
 	
+	@Override
 	public SadFrame setCamera(String name) {
 		camera = name;
 		return this;
 	}
 	
+	@Override
+	public SadVector getColor() {
+		return color;
+	}
 	
-	public int getFboID() {
+	int getFboID() {
 		return fboID;
 	}
 	
-	public int getDepthID() {
+	int getDepthID() {
 		return depthID;
 	}
 	
+	@Override
 	public int getWidth() {
 		return width;
 	}
 	
+	@Override
 	public int getHeight() {
 		return height;
 	}
 	
-	public boolean isRendered() {
+	boolean isRendered() {
 		return rendered;
 	}
 	
-	public void setRendered(boolean rendered) {
+	void setRendered(boolean rendered) {
 		this.rendered = rendered;
 	}
 	
+	@Override
 	public int getGeniousParadoxPreventer() {
 		return geniousParadoxPreventer;
 	}
 	
+	@Override
 	public void setGeniousParadoxPreventer(int geniousParadoxPreventer) {
 		this.geniousParadoxPreventer = geniousParadoxPreventer;
 	}

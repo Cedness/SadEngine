@@ -1,56 +1,140 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadEngine;
-import de.ced.sadengine.main.SadMainLogic;
-import de.ced.sadengine.main.Sadness;
-import de.ced.sadengine.objects.SadWindow;
+import de.ced.sadengine.objects.*;
+import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.utils.SadVector;
 
 import java.io.File;
 
-public class Main implements SadMainLogic {
+import static de.ced.sadengine.utils.SadValue.*;
+
+public class Main extends SadEngine {
+	
+	private int x = 0;
+	
+	private Main() {
+		start();
+	}
 	
 	@Override
 	public void setup(Sadness sadness) {
-		SadContent content = sadness.getContent();
+		SadContent c = sadness.getContent();
 		SadWindow window = sadness.getWindow();
-		content.getClearColor().set(0.5f);
-		content.createCamera("camera");
+		c.createCamera("camera");
 		window.setCamera("camera");
-		content.createLevel("level");
-		content.getCamera("camera").setLevel("level");
-		content.getCamera("camera").getPosition().set(0, 0, -5);
+		c.createLevel("level");
+		c.getCamera("camera").setLevel("level");
+		c.getCamera("camera").getPosition().set(0, 0, -5);
 		
-		content.createFrame("frame", 800, 600);
-		content.createCamera("camera2");
-		content.getFrame("frame").setCamera("camera2");
-		content.createLevel("level2");
-		content.getCamera("camera2").setLevel("level2");
-		content.getCamera("camera2").getPosition().set(0, 0, -5);
+		c.createFrame("frame", 1280, 720);
+		c.createCamera("camera2");
+		c.getFrame("frame").setCamera("camera2");
+		c.getFrame("frame").getColor().set(0.4f, 0.4f, 0.4f, 1f);
+		c.createLevel("level2");
+		c.getCamera("camera2").setLevel("level2");
+		c.getCamera("camera").setLookingAtPosition(false);
+		c.getCamera("camera").setDistanceToPosition(10);
+		c.getCamera("camera2").getPosition().set(0, 0, -5);
 		
 		
-		content.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
-		content.createMesh("Cube", new File("./Core/res/models/Rect.obj"));
-		content.createModel("Cube").setMesh("Cube").setTexture("Cube");
-		content.createEntity("Cube").setModel("Cube");
+		c.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
+		c.createMesh("Cube", new File("./Core/res/models/Rect.obj"));
+		c.createMesh("mesh", new File("./Core/res/models/dragon.obj"));
+		c.createModel("Cube").setMesh("Cube").getScale().setLength(2f).set(4f, 2f, 2f);
+		c.createEntity("Cube").setModel("Cube").getPosition().z(3);
 		
-		content.createModel("Portal").setMesh("Cube").setTexture("frame");
-		content.createEntity("Portal").setModel("Portal");
+		c.createModel("Portal").setMesh("Cube").setTexture("frame");
+		c.createEntity("Portal").setModel("Portal");
+		c.getEntity("Portal").getRotation().z(180);
+		c.getEntity("Portal").getModel().setRenderBack(true);
+		c.getEntity("Portal").getScale().set(16, 9, 0).setLength(12);
 		
-		content.getLevel("level2").addEntity("Cube");
+		c.createModel("TwoStepsModel").setTexture("Cube").setMesh("Cube");
+		c.createEntity("TwoSteps").setModel("TwoStepsModel").getPosition().set(0, -1, -2);
+		c.getLevel("level").addEntity("TwoSteps");
 		
-		content.getLevel("level").addEntity("Portal");
+		c.getLevel("level2").addEntity("Portal");
+		c.getLevel("level2").addEntity("Cube");
 		
+		c.getLevel("level").addEntity("Portal");
 	}
 	
 	@Override
 	public void update(Sadness sadness) {
-		SadContent content = sadness.getContent();
+		SadContent c = sadness.getContent();
+		SadInput i = sadness.getInput();
 		
-		content.getEntity("Cube").getPosition().addX(0.1f);
+		c.getEntity("Cube").getRotation().addY(1f);
+		
+		//c.getEntity("Portal").getRotation().add(1);
+		
+		//c.getCamera("camera2").getRotation().set(c.getEntity("Portal").getRotation()).negate();
+		
+		if (i.isJustReleased(KEY_O))
+			c.getCamera("camera").setOrtho(!c.getCamera("camera").isOrtho());
+		
+		if (i.isJustReleased(KEY_T))
+			c.getCamera("camera").setLookingAtPosition(!c.getCamera("camera").isLookingAtPosition());
+		
+		SadVector r = c.getEntity("Portal").getRotation();
+		float vP = (i.isPressed(KEY_KP_0) ? 30f : 10f) * c.getInterval();
+		
+		if (i.isPressed(KEY_KP_1))
+			r.addX(-vP);
+		if (i.isPressed(KEY_KP_2))
+			r.addY(-vP);
+		if (i.isPressed(KEY_KP_3))
+			r.addZ(-vP);
+		if (i.isPressed(KEY_KP_4))
+			r.addX(vP);
+		if (i.isPressed(KEY_KP_5))
+			r.addY(vP);
+		if (i.isPressed(KEY_KP_6))
+			r.addZ(vP);
+		
+		SadCamera camera = c.getCamera("camera");
+		SadVector pC = camera.getPosition();
+		SadVector dC = camera.getYawDirection().mul(0.1f);
+		SadVector dCN = new SadVector(-dC.z(), dC.y(), dC.x());
+		
+		float vC = 15f * c.getInterval();
+		
+		if (i.isPressed(KEY_D))
+			pC.add(dCN);
+		if (i.isPressed(KEY_A))
+			pC.add(dCN.negate());
+		if (i.isPressed(KEY_S))
+			pC.add(dC.clone().negate());
+		if (i.isPressed(KEY_W))
+			pC.add(dC);
+		
+		SadVector rC = camera.getRotation();
+		float vrC = 40f * c.getInterval();
+		
+		if (i.isPressed(KEY_LEFT))
+			rC.addY(vrC);
+		if (i.isPressed(KEY_RIGHT))
+			rC.addY(-vrC);
+		if (i.isPressed(KEY_UP))
+			rC.addX(vrC);
+		if (i.isPressed(KEY_DOWN))
+			rC.addX(-vrC);
+		
+		SadCamera camera2 = c.getCamera("camera2");
+		SadEntity portal = c.getEntity("Portal");
+		//camera2.getRotation().set(camera.getRotation());
+		//camera2.setDistanceToPosition(camera.getPosition().clone().negate().add(portal.getPosition()).getLength());
+		
+		
+		if (x++ >= 100) {
+			x = 0;
+			//System.out.println(camera2.getPosition());
+			System.out.println(camera.getRotation());
+			System.out.println(camera.getDistanceToPosition());
+		}
 	}
 	
 	public static void main(String[] args) {
-		new SadEngine(new Main());
+		new Main();
 	}
 }

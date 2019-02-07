@@ -1,10 +1,8 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.main.SadContent;
-
-public class SadHitbox extends SadDrawable {
+public class SadHitbox extends SadPositionable {
 	
-	public SadHitbox(String name, SadContent content) {
+	SadHitbox(String name, SadContent content) {
 		super(name, content);
 	}
 }

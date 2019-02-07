@@ -1,13 +1,9 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.Sadness;
-import de.ced.sadengine.objects.SadEntity;
-import de.ced.sadengine.objects.SadMesh;
-import de.ced.sadengine.objects.SadModel;
+import de.ced.sadengine.objects.*;
 import de.ced.sadengine.objects.action.SadActionLogic;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.utils.SadVector;
 
 import java.io.File;
 
@@ -36,7 +32,7 @@ public class CubeX implements SadActionLogic {
 		SadEntity entity = content.getEntity("CubeX");
 		System.out.println("lol");
 		float speed = 3f;
-		SadVector3 pos = entity.getPosition();
+		SadVector pos = entity.getPosition();
 		if (input.isPressed(KEY_LEFT)) {
 			pos.x(pos.x() + content.getInterval() * speed);
 		}

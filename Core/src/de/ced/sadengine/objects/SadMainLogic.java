@@ -1,9 +1,10 @@
-package de.ced.sadengine.main;
+package de.ced.sadengine.objects;
 
 /**
  * The main logic given to the engine.
  * Only one instance of this per instance of the engine is allowed.
  */
+@SuppressWarnings("unused")
 public interface SadMainLogic extends SadIllogic {
 	
 	/**

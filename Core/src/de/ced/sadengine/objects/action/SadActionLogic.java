@@ -1,8 +1,9 @@
 package de.ced.sadengine.objects.action;
 
-import de.ced.sadengine.main.SadIllogic;
-import de.ced.sadengine.main.Sadness;
+import de.ced.sadengine.objects.SadIllogic;
+import de.ced.sadengine.objects.Sadness;
 
+@SuppressWarnings("unused")
 public interface SadActionLogic extends SadIllogic {
 	
 	/**

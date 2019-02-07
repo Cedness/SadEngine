@@ -28,5 +28,9 @@ void main() {
     vec3 preReflectedLight = lightColor * pow(max(dot(reflect(-normalizedToLight, normalizedNormal), normalizedToCamera), 0.0), shineDamper);
     vec4 reflectedLight = vec4(preReflectedLight, 1.0);
 
+    if (tex.a < 0.5) {
+        discard;
+    }
+
     outColor = tex;
 }

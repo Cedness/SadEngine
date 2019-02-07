@@ -1,4 +1,4 @@
-package de.ced.sadengine.graphics.light;
+package de.ced.sadengine.objects.light;
 
 public enum LightingType {
 	SUN,

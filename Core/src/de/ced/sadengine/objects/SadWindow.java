@@ -1,8 +1,5 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadGlWindow;
-
 public class SadWindow extends SadFrame {
 	
 	public SadWindow(SadContent content) {

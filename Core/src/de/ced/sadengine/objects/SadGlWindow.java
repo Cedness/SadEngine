@@ -1,8 +1,6 @@
-package de.ced.sadengine.main;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.api.Saddings;
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.objects.input.SadInput;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
@@ -14,6 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class SadGlWindow {
 	
 	private long glWindow;
@@ -65,6 +64,7 @@ public class SadGlWindow {
 			
 			GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 			
+			//noinspection ConstantConditions
 			glfwSetWindowPos(glWindow,
 					(vidmode.width() - pWidth.get(0)) / 2,
 					(vidmode.height() - pHeight.get(0)) / 2
@@ -92,10 +92,7 @@ public class SadGlWindow {
 		return glWindow;
 	}
 	
-	public void update(SadContent content) {
-		SadVector3 cC = content.getClearColor();
-		glClearColor(cC.x(), cC.y(), cC.z(), 1f);
-		
+	public void update() {
 		glfwSwapBuffers(glWindow);
 		glfwPollEvents();
 	}
@@ -110,9 +107,5 @@ public class SadGlWindow {
 	
 	public int getHeight() {
 		return height;
-	}
-	
-	public boolean shouldClose() {
-		return glfwWindowShouldClose(glWindow);
 	}
 }

@@ -1,11 +1,9 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.main.SadContent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SadLevel extends SadObject {
+public class SadLevel extends SadObject implements SadLevelI {
 	
 	private ArrayList<String> entities = new ArrayList<>();
 	private HashMap<String, ArrayList<String>> index = new HashMap<>();
@@ -14,6 +12,8 @@ public class SadLevel extends SadObject {
 		super(name, content);
 	}
 	
+	@SuppressWarnings("ConstantConditions")
+	@Override
 	public SadLevel addEntity(String name) {
 		if (content.getEntity(name) == null || hasEntity(name))
 			return this;
@@ -22,6 +22,7 @@ public class SadLevel extends SadObject {
 		return this;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	private void addToIndex(String entity) {
 		String model = content.getEntity(entity).getModel().getName();
 		
@@ -31,10 +32,11 @@ public class SadLevel extends SadObject {
 		index.get(model).add(entity);
 	}
 	
-	public HashMap<String, ArrayList<String>> getIndex() {
+	HashMap<String, ArrayList<String>> getIndex() {
 		return index;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	private void removeFromIndex(String entity) {
 		String model = content.getEntity(entity).getModel().getName();
 		
@@ -47,6 +49,7 @@ public class SadLevel extends SadObject {
 		}
 	}
 	
+	@Override
 	public void removeEntity(String name) {
 		if (!hasEntity(name))
 			return;
@@ -54,20 +57,20 @@ public class SadLevel extends SadObject {
 		entities.remove(name);
 	}
 	
+	@SuppressWarnings("ConstantConditions")
+	@Override
 	public SadEntity getEntity(String name) {
 		if (!hasEntity(name))
 			return null;
 		return content.getEntity(name);
 	}
 	
-	public ArrayList<String> getEntities() {
-		return entities;
-	}
-	
+	@Override
 	public boolean hasEntity(String name) {
 		return entities.contains(name);
 	}
 	
+	@Override
 	public SadLevel clearAllEntities() {
 		entities = new ArrayList<>();
 		index = new HashMap<>();

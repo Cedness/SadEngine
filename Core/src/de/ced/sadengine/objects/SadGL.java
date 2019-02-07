@@ -1,9 +1,6 @@
-package de.ced.sadengine.io;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.main.SadGlWindow;
-import de.ced.sadengine.objects.SadFrame;
-import de.ced.sadengine.objects.SadMesh;
-import de.ced.sadengine.objects.SadTexture;
+import de.ced.sadengine.utils.SadVector;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
@@ -19,14 +16,11 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
-import static org.lwjgl.opengl.GL11.GL_REPEAT;
 import static org.lwjgl.opengl.GL11.GL_RGB;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glGenTextures;
@@ -40,12 +34,16 @@ import static org.lwjgl.opengl.GL20.glGetShaderi;
 import static org.lwjgl.opengl.GL20.glShaderSource;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL30.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL30.GL_CULL_FACE;
 import static org.lwjgl.opengl.GL30.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL30.GL_DEPTH_COMPONENT;
 import static org.lwjgl.opengl.GL30.GL_DEPTH_COMPONENT32;
 import static org.lwjgl.opengl.GL30.GL_FLOAT;
 import static org.lwjgl.opengl.GL30.glClear;
+import static org.lwjgl.opengl.GL30.glClearColor;
+import static org.lwjgl.opengl.GL30.glDisable;
 import static org.lwjgl.opengl.GL30.glDrawBuffer;
+import static org.lwjgl.opengl.GL30.glEnable;
 import static org.lwjgl.opengl.GL30.glViewport;
 import static org.lwjgl.opengl.GL32.glFramebufferTexture;
 
@@ -214,10 +212,10 @@ public class SadGL {
 		int id = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, id);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, alpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, decodedImage);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		
 		STBImage.stbi_image_free(decodedImage);
 		
@@ -266,7 +264,7 @@ public class SadGL {
 	public static int createTextureAttachment(int width, int height) {
 		int texture = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, (ByteBuffer) null);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer) null);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture, 0);
@@ -294,15 +292,28 @@ public class SadGL {
 	public static void bindFrameBuffer(SadFrame frame) {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebuffer(GL_FRAMEBUFFER, frame.getFboID());
+		glBindRenderbuffer(GL_RENDERBUFFER, frame.getDepthID());
 		glViewport(0, 0, frame.getWidth(), frame.getHeight());
 	}
 	
 	public static void unbindFrameBuffer(SadGlWindow glWindow) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 		glViewport(0, 0, glWindow.getWidth(), glWindow.getHeight());
 	}
 	
-	public static void clear() {
+	public static void enableBackRendering() {
+		glEnable(GL_CULL_FACE);
+	}
+	
+	public static void disableBackRendering() {
+		glDisable(GL_CULL_FACE);
+	}
+	
+	public static void clear(SadFrame frame) {
+		bindFrameBuffer(frame);
+		SadVector c = frame.getColor();
+		glClearColor(c.get(0), c.get(1), c.get(2), c.get(3));
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 }

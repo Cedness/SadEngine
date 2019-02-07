@@ -1,5 +1,6 @@
-package de.ced.sadengine.api;
+package de.ced.sadengine.objects;
 
+@SuppressWarnings({"unused", "WeakerAccess"})
 public final class Saddings {
 	
 	private String name = "SadEngine";

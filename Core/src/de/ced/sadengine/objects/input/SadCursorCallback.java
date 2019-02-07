@@ -1,16 +1,16 @@
-package de.ced.sadengine.input;
+package de.ced.sadengine.objects.input;
 
-import de.ced.sadengine.main.SadGlWindow;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.objects.SadGlWindow;
+import de.ced.sadengine.utils.SadVector;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 
 public class SadCursorCallback extends GLFWCursorPosCallback {
 	
 	private final SadGlWindow window;
-	private final SadVector3 position;
-	private final SadVector3 positionLast;
+	private final SadVector position;
+	private final SadVector positionLast;
 	
-	public SadCursorCallback(SadGlWindow window, SadVector3 position, SadVector3 positionLast) {
+	public SadCursorCallback(SadGlWindow window, SadVector position, SadVector positionLast) {
 		this.window = window;
 		this.position = position;
 		this.positionLast = positionLast;

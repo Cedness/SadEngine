@@ -1,8 +1,8 @@
 package de.ced.sadengine.trash;
 
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadMainLogic;
-import de.ced.sadengine.main.Sadness;
+import de.ced.sadengine.objects.SadMainLogic;
+import de.ced.sadengine.objects.Sadness;
+import de.ced.sadengine.objects.SadContent;
 
 public class ForestGump implements SadMainLogic {
 	

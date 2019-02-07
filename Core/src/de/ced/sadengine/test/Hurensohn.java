@@ -1,18 +1,17 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadEngine;
-import de.ced.sadengine.main.SadMainLogic;
-import de.ced.sadengine.main.Sadness;
-import de.ced.sadengine.objects.SadEntity;
-import de.ced.sadengine.objects.SadWindow;
+import de.ced.sadengine.objects.*;
+import de.ced.sadengine.objects.input.SadInput;
 
 import java.io.File;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class Hurensohn implements SadMainLogic {
+public class Hurensohn extends SadEngine {
+	
+	public Hurensohn() {
+		start();
+	}
 	
 	public void setup(Sadness sadness) {
 		SadContent content = sadness.getContent();
@@ -58,9 +57,5 @@ public class Hurensohn implements SadMainLogic {
 	
 	public void terminate(Sadness sadness) {
 	
-	}
-	
-	public static void main(String[] args) {
-		new SadEngine(new Hurensohn());
 	}
 }

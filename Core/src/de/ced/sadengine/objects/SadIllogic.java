@@ -1,4 +1,4 @@
-package de.ced.sadengine.main;
+package de.ced.sadengine.objects;
 
 /**
  * Just for inheritance.

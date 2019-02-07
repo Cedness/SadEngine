@@ -1,10 +1,24 @@
 package de.ced.sadengine.utils;
 
+import org.joml.Vector3f;
+
 public class SadValue {
 	
 	public static final float PI = 3.14159265358979323846f;
 	public static final double PId = 3.14159265358979323846;
-	public static final SadVector3 UP_VECTOR = new SadVector3(0, 1, 0);
+	public static final Vector3f UP_VECTOR = new Vector3f(0, 1, 0);
+	
+	public static float abs(float v) {
+		return v < 0 ? v * -1f : v;
+	}
+	
+	public static float pow(float v) {
+		return v * v;
+	}
+	
+	public static float sqrt(float v) {
+		return (float) Math.sqrt(v);
+	}
 	
 	public static float toRadians(float angdeg) {
 		return angdeg / 180.0f * PI;
@@ -12,6 +26,30 @@ public class SadValue {
 	
 	public static float toDegrees(float angrad) {
 		return angrad * 180.0f / PI;
+	}
+	
+	public static float sin(float radAngle) {
+		return (float) Math.sin(radAngle);
+	}
+	
+	public static float cos(float radAngle) {
+		return (float) Math.cos(radAngle);
+	}
+	
+	public static float tan(float radAngle) {
+		return (float) Math.tan(radAngle);
+	}
+	
+	public static float asin(float radAngle) {
+		return (float) Math.asin(radAngle);
+	}
+	
+	public static float acos(float radAngle) {
+		return (float) Math.acos(radAngle);
+	}
+	
+	public static float atan(float radAngle) {
+		return (float) Math.atan(radAngle);
 	}
 	
 	public static final float

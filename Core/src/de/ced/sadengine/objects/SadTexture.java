@@ -2,7 +2,7 @@ package de.ced.sadengine.objects;
 
 import static org.lwjgl.opengl.GL11.glDeleteTextures;
 
-public class SadTexture extends SadObject {
+public class SadTexture extends SadObject implements SadTextureI {
 	
 	private final int textureID;
 	
@@ -18,20 +18,26 @@ public class SadTexture extends SadObject {
 		return textureID;
 	}
 	
+	@Override
 	public float getLightDamper() {
 		return lightDamper;
 	}
 	
-	public void setLightDamper(float lightDamper) {
+	@Override
+	public SadTexture setLightDamper(float lightDamper) {
 		this.lightDamper = lightDamper;
+		return this;
 	}
 	
+	@Override
 	public float getReflectivity() {
 		return reflectivity;
 	}
 	
-	public void setReflectivity(float reflectivity) {
+	@Override
+	public SadTexture setReflectivity(float reflectivity) {
 		this.reflectivity = reflectivity;
+		return this;
 	}
 	
 	@Override

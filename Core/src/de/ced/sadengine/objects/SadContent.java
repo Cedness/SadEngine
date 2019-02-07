@@ -1,29 +1,22 @@
-package de.ced.sadengine.main;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.io.SadGL;
-import de.ced.sadengine.objects.*;
 import de.ced.sadengine.objects.action.SadAction;
 import de.ced.sadengine.objects.action.SadActionHandler;
 import de.ced.sadengine.objects.action.SadActionLogic;
 import de.ced.sadengine.objects.time.SadClock;
 import de.ced.sadengine.objects.time.SadClockwork;
-import de.ced.sadengine.utils.SadVector3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collection;
 import java.util.HashMap;
 
 /**
  * Contains all the stuff processed by the engine.
  * Objects in here won't be processed directly, they first have to be added to the SadWindow instance.
  */
-public class SadContent {
+public class SadContent implements SadContentI {
 	
 	private float interval;
-	private SadVector3 clearColor = new SadVector3(0.1f, 0.1f, 0.1f);
-	
-	//The big Q
 	private final HashMap<Class<? extends SadObject>, HashMap<String, SadObject>> contents = new HashMap<>();
 	
 	private final SadActionHandler actionHandler;
@@ -45,22 +38,19 @@ public class SadContent {
 		clockwork = new SadClockwork(contents.get(SadClock.class));
 	}
 	
-	public void update(float secInterval) {
+	void update(float secInterval) {
 		interval = secInterval;
 		
 		clockwork.increaseClocks(interval);
 	}
 	
-	public float getInterval() {
-		return interval;
-	}
-	
-	public SadVector3 getClearColor() {
-		return clearColor;
-	}
-	
 	SadActionHandler getActionHandler() {
 		return actionHandler;
+	}
+	
+	@Override
+	public float getInterval() {
+		return interval;
 	}
 	
 	//Basic metods
@@ -87,20 +77,24 @@ public class SadContent {
 	
 	//Individual methods
 	
+	@Override
 	public SadEntity createEntity(String name) {
 		SadEntity entity = new SadEntity(name, this);
 		put(entity);
 		return entity;
 	}
 	
+	@Override
 	public SadEntity getEntity(String name) {
 		return (SadEntity) get(SadEntity.class, name);
 	}
 	
+	@Override
 	public void deleteEntity(String name) {
 		delete(SadEntity.class, name);
 	}
 	
+	@Override
 	public SadMesh createMesh(String name, File file) {
 		SadMesh mesh = null;
 		try {
@@ -118,14 +112,17 @@ public class SadContent {
 		return mesh;
 	}
 	
+	@Override
 	public SadMesh getMesh(String name) {
 		return (SadMesh) get(SadMesh.class, name);
 	}
 	
+	@Override
 	public void deleteMesh(String name) {
 		delete(SadMesh.class, name);
 	}
 	
+	@Override
 	public SadTexture createTexture(String name, File file) {
 		deleteFrame(name);
 		SadTexture texture = SadGL.loadTexture(name, file);
@@ -133,6 +130,7 @@ public class SadContent {
 		return texture;
 	}
 	
+	@Override
 	public SadTexture createTexture(String name, File file, boolean alpha) {
 		deleteFrame(name);
 		SadTexture texture = SadGL.loadTexture(name, file, alpha);
@@ -140,87 +138,105 @@ public class SadContent {
 		return texture;
 	}
 	
+	@Override
 	public SadTexture getTexture(String name) {
 		SadTexture texture = (SadTexture) get(SadTexture.class, name);
 		return texture != null ? texture : getFrame(name);
 	}
 	
+	@Override
 	public void deleteTexture(String name) {
 		if (delete(SadTexture.class, name))
 			return;
 		deleteFrame(name);
 	}
 	
+	@Override
 	public SadFont createFont(String name, File atlas, File data) {
 		SadFont font = new SadFont(name, atlas, data);
 		put(font);
 		return font;
 	}
 	
+	@Override
 	public SadFont getFont(String name) {
 		return (SadFont) get(SadFont.class, name);
 	}
 	
+	@Override
 	public void deleteFont(String name) {
 		delete(SadFont.class, name);
 	}
 	
+	@Override
 	public SadHitbox createHitbox(String name) {
 		SadHitbox hitbox = new SadHitbox(name, this);
 		put(hitbox);
 		return hitbox;
 	}
 	
+	@Override
 	public SadHitbox getHitbox(String name) {
 		return (SadHitbox) get(SadHitbox.class, name);
 	}
 	
+	@Override
 	public void deleteHitbox(String name) {
 		delete(SadHitbox.class, name);
 	}
 	
+	@Override
 	public SadModel createModel(String name) {
 		SadModel model = new SadModel(name, this);
 		put(model);
 		return model;
 	}
 	
+	@Override
 	public SadModel getModel(String name) {
 		return (SadModel) get(SadModel.class, name);
 	}
 	
+	@Override
 	public void deleteModel(String name) {
 		delete(SadModel.class, name);
 	}
 	
+	@Override
 	public SadLevel createLevel(String name) {
 		SadLevel level = new SadLevel(name, this);
 		put(level);
 		return level;
 	}
 	
+	@Override
 	public SadLevel getLevel(String name) {
 		return (SadLevel) get(SadLevel.class, name);
 	}
 	
+	@Override
 	public void deleteLevel(String name) {
 		delete(SadLevel.class, name);
 	}
 	
+	@Override
 	public SadCamera createCamera(String name) {
 		SadCamera camera = new SadCamera(name, this);
 		put(camera);
 		return camera;
 	}
 	
+	@Override
 	public SadCamera getCamera(String name) {
 		return (SadCamera) get(SadCamera.class, name);
 	}
 	
+	@Override
 	public void deleteCamera(String name) {
 		delete(SadCamera.class, name);
 	}
 	
+	@Override
 	public SadFrame createFrame(String name, int width, int height) {
 		deleteTexture(name);
 		SadFrame frame = new SadFrame(name, this, SadGL.createFrameBuffer(), SadGL.createTextureAttachment(width, height),
@@ -229,42 +245,46 @@ public class SadContent {
 		return frame;
 	}
 	
+	@Override
 	public SadFrame getFrame(String name) {
 		return (SadFrame) get(SadFrame.class, name);
 	}
 	
+	@Override
 	public void deleteFrame(String name) {
 		delete(SadFrame.class, name);
 	}
 	
-	public Collection<SadObject> getFrames() {
-		return contents.get(SadFrame.class).values();
-	}
-	
+	@Override
 	public SadClock createClock(String name) {
 		SadClock clock = new SadClock(name);
 		put(clock);
 		return clock;
 	}
 	
+	@Override
 	public SadClock getClock(String name) {
 		return (SadClock) get(SadClock.class, name);
 	}
 	
+	@Override
 	public void deleteClock(String name) {
 		delete(SadClock.class, name);
 	}
 	
+	@Override
 	public SadAction createAction(String name, SadActionLogic logic) {
 		SadAction action = new SadAction(name, logic);
 		put(action);
 		return action;
 	}
 	
+	@Override
 	public SadAction getAction(String name) {
 		return (SadAction) get(SadAction.class, name);
 	}
 	
+	@Override
 	public void deleteAction(String name) {
 		delete(SadAction.class, name);
 	}

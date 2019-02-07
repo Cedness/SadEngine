@@ -1,7 +1,7 @@
-package de.ced.sadengine.input;
+package de.ced.sadengine.objects.input;
 
-import de.ced.sadengine.main.SadGlWindow;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.objects.SadGlWindow;
+import de.ced.sadengine.utils.SadVector;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 
@@ -12,7 +12,7 @@ public class SadCursor {
 	private SadGlWindow window;
 	private GLFWCursorPosCallback posCallback;
 	private GLFWCursorEnterCallback enterCallback;
-	private SadVector3 position = new SadVector3(), positionLast = new SadVector3();
+	private SadVector position = new SadVector(3), positionLast = new SadVector(3);
 	private boolean hidden, hiddenLast;
 	private boolean locked, lockedLast;
 	private boolean inside, insideChanged;
@@ -58,12 +58,12 @@ public class SadCursor {
 		this.locked = locked;
 	}
 	
-	public SadVector3 getPosition() {
+	public SadVector getPosition() {
 		return position;
 	}
 	
-	public SadVector3 getNormalizedPosition() {
-		return new SadVector3(position).mul(
+	public SadVector getNormalizedPosition() {
+		return new SadVector(position).mul(
 				1f / (window.getWidth() / 2f),
 				1f / (window.getHeight() / 2f),
 				0);

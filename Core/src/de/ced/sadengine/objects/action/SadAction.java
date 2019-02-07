@@ -2,7 +2,7 @@ package de.ced.sadengine.objects.action;
 
 import de.ced.sadengine.objects.SadRunnable;
 
-public class SadAction extends SadRunnable {
+public class SadAction extends SadRunnable implements SadActionI {
 	
 	private final SadActionLogic logic;
 	private boolean runningLast = false;

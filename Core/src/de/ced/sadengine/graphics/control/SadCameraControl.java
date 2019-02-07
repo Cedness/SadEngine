@@ -1,8 +1,8 @@
 package de.ced.sadengine.graphics.control;
 
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.main.SadContent;
+import de.ced.sadengine.objects.input.SadInput;
 import de.ced.sadengine.objects.SadCamera;
+import de.ced.sadengine.objects.SadContent;
 
 public abstract class SadCameraControl {
 	

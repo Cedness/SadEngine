@@ -1,7 +1,7 @@
 package de.ced.sadengine.objects.action;
 
-import de.ced.sadengine.main.Sadness;
 import de.ced.sadengine.objects.SadObject;
+import de.ced.sadengine.objects.Sadness;
 
 import java.util.HashMap;
 

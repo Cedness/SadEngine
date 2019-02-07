@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL30.*;
 /**
  * The mesh of a Model
  */
-public class SadMesh extends SadObject {
+public class SadMesh extends SadObject implements SadMeshI {
 	
 	private int[] indices = null;
 	private float[] positions;
@@ -123,7 +123,7 @@ public class SadMesh extends SadObject {
 		vboIds = new int[]{positionVBO, textureCoordsVBO, normalsVBO};
 	}
 	
-	public void loadVao(boolean load) {
+	void loadVao(boolean load) {
 		if (load) {
 			glBindVertexArray(vaoId);
 			for (int i = 0; i < vboIds.length; i++) {
@@ -137,7 +137,7 @@ public class SadMesh extends SadObject {
 		}
 	}
 	
-	public void draw() {
+	void draw() {
 		if (useIndexBuffer)
 			glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);
 		else

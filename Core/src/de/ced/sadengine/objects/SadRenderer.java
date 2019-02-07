@@ -1,13 +1,9 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.api.Saddings;
-import de.ced.sadengine.graphics.light.SadLight;
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.io.SadGL;
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadGlWindow;
+import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.objects.light.SadLight;
 import de.ced.sadengine.shader.SadShader;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.utils.SadVector;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -21,16 +17,16 @@ public class SadRenderer {
 	
 	private SadWindow window;
 	private SadContent content;
+	@SuppressWarnings({"FieldCanBeLocal", "unused"})
 	private SadInput input;
 	
 	private SadGlWindow glWindow;
 	private SadShader shader;
 	
-	private SadLight light = new SadLight(new SadVector3(1, 1, 1), new SadVector3(0, 5, 0));
+	@SuppressWarnings("deprecation")
+	private SadLight light = new SadLight(new SadVector(1f, 1f, 1f), new SadVector(0f, 5f, 0f));
 	
-	//private SadVector3 cursor;
-	
-	public void setup(SadWindow window, SadContent content, Saddings settings, SadInput input) {
+	void setup(SadWindow window, SadContent content, Saddings settings, SadInput input) {
 		this.window = window;
 		this.content = content;
 		this.input = input;
@@ -45,11 +41,11 @@ public class SadRenderer {
 		shader = new SadShader();
 	}
 	
-	public void updateWindow() {
-		glWindow.update(content);
+	void updateWindow() {
+		glWindow.update();
 	}
 	
-	public void render() {
+	void render() {
 		renderFrame(window);
 	}
 	
@@ -67,7 +63,7 @@ public class SadRenderer {
 		
 		if (geniousParadoxPreventer == 0) {
 			SadGL.bindFrameBuffer(frame);
-			SadGL.clear();
+			SadGL.clear(frame);
 			frame.setRendered(false);
 		}
 		
@@ -80,10 +76,12 @@ public class SadRenderer {
 		boolean renderOnlyFrames = frame.isRendered();
 		
 		SadGL.bindFrameBuffer(frame);
+		lastTexture = null;
 		shader.enable(true);
 		camera.update(frame.getWidth(), frame.getHeight());
 		shader.uploadProjectionMatrix(camera.getProjectionMatrix());
 		shader.uploadViewMatrix(camera.getViewMatrix());
+		//noinspection deprecation
 		shader.uploadLight(light);
 		HashMap<String, ArrayList<String>> index = level.getIndex();
 		for (String modelName : index.keySet()) {
@@ -160,6 +158,9 @@ public class SadRenderer {
 			}
 		}
 		
+		boolean renderBack = model.isRenderBack();
+		if (renderBack)
+			SadGL.enableBackRendering();
 		mesh.loadVao(true);
 		
 		for (String entityName : entityNames) {
@@ -167,6 +168,8 @@ public class SadRenderer {
 		}
 		
 		mesh.loadVao(false);
+		if (renderBack)
+			SadGL.disableBackRendering();
 	}
 	
 	private void renderEntity(SadEntity entity, SadMesh mesh) {
@@ -182,6 +185,7 @@ public class SadRenderer {
 		
 		glfwSetWindowShouldClose(glWindow.getGlWindow(), true);
 		glfwTerminate();
+		//noinspection ConstantConditions
 		glfwSetErrorCallback(null).free();
 	}
 	/*
@@ -221,7 +225,7 @@ public class SadRenderer {
 		//frameMatrix.rotateZ((float) Math.toRadians(frame.getRotation().z()));
 		//frameMatrix.scale(frame.getScale().x(), frame.getScale().y(), 1);
 		
-		camera.update(glWindow.getWidth(),glWindow.getHeight());
+		camera.end(glWindow.getWidth(),glWindow.getHeight());
 	
 		//shader.uploadFrameOffset(new SadVector3(frame.getPosition().x(), frame.getPosition().y(), frame.getScale().x()));
 		

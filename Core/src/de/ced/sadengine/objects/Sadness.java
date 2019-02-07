@@ -1,7 +1,6 @@
-package de.ced.sadengine.main;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.objects.SadWindow;
+import de.ced.sadengine.objects.input.SadInput;
 
 public class Sadness {
 	

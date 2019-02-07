@@ -2,9 +2,9 @@ package de.ced.sadengine.objects;
 
 import java.io.File;
 
-public class SadFont extends SadObject {
+public class SadFont extends SadObject implements SadFontI {
 	
-	public SadFont(String name, File atlas, File data) {
+	SadFont(String name, File atlas, File data) {
 		super(name);
 	}
 }

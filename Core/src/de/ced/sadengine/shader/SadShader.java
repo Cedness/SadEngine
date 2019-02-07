@@ -1,8 +1,8 @@
 package de.ced.sadengine.shader;
 
-import de.ced.sadengine.graphics.light.SadLight;
 import de.ced.sadengine.objects.SadTexture;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.objects.light.SadLight;
+import de.ced.sadengine.utils.SadVector;
 import org.joml.Matrix4f;
 
 public class SadShader extends SadShaderProgram {
@@ -60,7 +60,7 @@ public class SadShader extends SadShaderProgram {
 		super.loadMatrix(projectionMatrix, matrix);
 	}
 	
-	public void uploadFrameOffset(SadVector3 vector) {
+	public void uploadFrameOffset(SadVector vector) {
 		super.loadVector(frameOffset, vector);
 	}
 	

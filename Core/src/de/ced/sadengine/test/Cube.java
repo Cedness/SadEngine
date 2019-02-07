@@ -1,29 +1,22 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.main.SadContent;
-import de.ced.sadengine.main.SadEngine;
-import de.ced.sadengine.main.SadMainLogic;
-import de.ced.sadengine.main.Sadness;
-import de.ced.sadengine.objects.SadCamera;
-import de.ced.sadengine.objects.SadEntity;
-import de.ced.sadengine.utils.SadVector3;
+import de.ced.sadengine.objects.*;
+import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.utils.SadVector;
 
 import java.io.File;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class Cube implements SadMainLogic {
+public class Cube extends SadEngine {
 	
-	public static void main(String[] args) {
-		new SadEngine(new Cube());
+	public Cube() {
+		start();
 	}
 	
 	@Override
 	public void setup(Sadness sadness) {
 		SadContent content = sadness.getContent();
-		
-		content.getClearColor().set(0.5f);
 		
 		content.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
 		
@@ -70,7 +63,7 @@ public class Cube implements SadMainLogic {
 	public void update(Sadness sadness) {
 		SadContent content = sadness.getContent();
 		SadEntity cube = content.getEntity("Cube");
-		SadVector3 cubeRot = cube.getRotation();
+		SadVector cubeRot = cube.getRotation();
 		SadInput input = sadness.getInput();
 		float interval = content.getInterval();
 		float speed = 100f;

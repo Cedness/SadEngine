@@ -1,13 +1,16 @@
-package de.ced.sadengine.main;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.api.Saddings;
-import de.ced.sadengine.input.SadInput;
-import de.ced.sadengine.objects.SadRenderer;
-import de.ced.sadengine.objects.SadWindow;
+import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.utils.SadIntro;
+import de.ced.threadpool.Task;
+import de.ced.threadpool.ThreadPool;
 
+import static de.ced.sadengine.utils.SadIntro.Stage.ALPHA;
 import static de.ced.sadengine.utils.SadValue.KEY_ESCAPE;
 
-public class SadGLThread extends SadThread {
+public class SadLoop implements Task {
+	
+	private final ThreadPool threadPool;
 	
 	private final SadMainLogic logic;
 	private final Saddings settings;
@@ -20,6 +23,7 @@ public class SadGLThread extends SadThread {
 	private static final long LOOP_SECOND = 1000;
 	
 	private double interval;
+	@SuppressWarnings("FieldCanBeLocal")
 	private long t1, t2;
 	private double currentOffset = interval;
 	
@@ -28,8 +32,16 @@ public class SadGLThread extends SadThread {
 	
 	private float secInterval;
 	
-	public SadGLThread(SadThreadHandler threadHandler, SadMainLogic logic, Saddings settings) {
-		super("GL-Thread", threadHandler);
+	private final SadHelpTask helpTask;
+	private final SadLogicTask logicTask;
+	private final SadInputTask inputTask;
+	private final SadRenderTask renderTask;
+	
+	SadLoop(SadMainLogic logic, Saddings settings) {
+		ThreadPool threadPool = new ThreadPool(new boolean[]{false, false});
+		threadPool.lockWorker(0, true);
+		threadPool.addTask(new SadIntro(ALPHA, "0.8.1"));
+		this.threadPool = threadPool;
 		this.logic = logic;
 		this.settings = settings;
 		sadness = new Sadness();
@@ -37,11 +49,15 @@ public class SadGLThread extends SadThread {
 		window = sadness.getWindow();
 		input = sadness.getInput();
 		renderer = new SadRenderer();
+		
 		interval = LOOP_SECOND / (double) settings.getUps();
-		setAction(new SadHelpTA(), new boolean[]{true, false, false, false});
-		setAction(new SadLogicTA(), new boolean[]{false, true, false, false});
-		setAction(new SadInputTA(), new boolean[]{false, false, true, false});
-		setAction(new SadRenderTA(), new boolean[]{false, false, false, true});
+		
+		helpTask = new SadHelpTask();
+		logicTask = new SadLogicTask();
+		inputTask = new SadInputTask();
+		renderTask = new SadRenderTask();
+		
+		threadPool.addTask(this, 0);
 	}
 	
 	@Override
@@ -51,14 +67,15 @@ public class SadGLThread extends SadThread {
 		logic.setup(sadness);
 		content.getActionHandler().setup();
 		input.update();
-		super.run();
+		
+		threadPool.addTask(helpTask, 0);
 	}
 	
 	private long now() {
 		return System.currentTimeMillis();
 	}
 	
-	public class SadHelpTA extends SadThreadAction {
+	public class SadHelpTask implements Task {
 		@Override
 		public void run() {
 			if (currentOffset < interval) {
@@ -72,11 +89,11 @@ public class SadGLThread extends SadThread {
 			
 			currentOffset -= interval;
 			
-			done = true;
+			threadPool.addTask(logicTask, 0);
 		}
 	}
 	
-	public class SadLogicTA extends SadThreadAction {
+	public class SadLogicTask implements Task {
 		@Override
 		public void run() {
 			content.update(secInterval);
@@ -84,33 +101,40 @@ public class SadGLThread extends SadThread {
 			content.getActionHandler().update();
 			logic.updateFinally(sadness);
 			
-			done = true;
+			threadPool.addTask(inputTask, 0);
 		}
 	}
 	
-	public class SadInputTA extends SadThreadAction {
+	public class SadInputTask implements Task {
 		@Override
 		public void run() {
 			input.update();
 			
-			if (input.isPressed(KEY_ESCAPE))
-				threadHandler.interrupt();
+			if (input.isPressed(KEY_ESCAPE)) {
+				logic.preTerminate(sadness);
+				content.getActionHandler().terminate();
+				logic.terminate(sadness);
+				
+				renderer.release();
+				
+				System.out.println("SadEngine3D");
+				System.out.println("(ɔ) 2018-2019 by Ced");
+				
+				threadPool.destroy();
+				return;
+			}
 			
-			done = true;
+			threadPool.addTask(renderTask, 0);
 		}
 	}
 	
-	public class SadRenderTA extends SadThreadAction {
+	public class SadRenderTask implements Task {
 		@Override
 		public void run() {
 			if (currentOffset < interval) {
 				
-				//RENDER
-				System.out.println(getName() + ": Rendering");
-				
 				if (currentFrame == 0) {
 					renderer.render();
-					//System.out.println("renderLayer");
 				}
 				
 				currentFrame++;
@@ -118,28 +142,13 @@ public class SadGLThread extends SadThread {
 					currentFrame = 0;
 				
 				renderer.updateWindow();
-				
-				//
-				
 			}
 			
 			t2 = now();
 			
 			currentOffset += (t2 - t1);
 			
-			done = true;
+			threadPool.addTask(helpTask, 0);
 		}
-	}
-	
-	@Override
-	public void terminate() {
-		logic.preTerminate(sadness);
-		content.getActionHandler().terminate();
-		logic.terminate(sadness);
-		
-		renderer.release();
-		
-		System.out.println("SadEngine3D");
-		System.out.println("(ɔ) 2018 by Ced");
 	}
 }

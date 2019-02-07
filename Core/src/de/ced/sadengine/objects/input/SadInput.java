@@ -1,6 +1,6 @@
-package de.ced.sadengine.input;
+package de.ced.sadengine.objects.input;
 
-import de.ced.sadengine.main.SadGlWindow;
+import de.ced.sadengine.objects.SadGlWindow;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 

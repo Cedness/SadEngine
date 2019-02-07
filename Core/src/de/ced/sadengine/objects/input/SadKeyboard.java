@@ -1,4 +1,4 @@
-package de.ced.sadengine.input;
+package de.ced.sadengine.objects.input;
 
 import org.lwjgl.glfw.GLFWKeyCallback;
 
