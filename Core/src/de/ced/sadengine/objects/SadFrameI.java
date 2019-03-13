@@ -3,11 +3,11 @@ package de.ced.sadengine.objects;
 import de.ced.sadengine.utils.SadVector;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
-public interface SadFrameI extends SadTextureI {
+interface SadFrameI extends SadTextureI {
 	
 	SadCamera getCamera();
 	
-	SadFrame setCamera(String name);
+	SadFrame setCamera(SadCamera camera);
 	
 	SadVector getColor();
 	

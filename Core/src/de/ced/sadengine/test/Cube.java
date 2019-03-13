@@ -1,21 +1,13 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.*;
-import de.ced.sadengine.objects.input.SadInput;
-import de.ced.sadengine.utils.SadVector;
-
-import java.io.File;
-
-import static de.ced.sadengine.utils.SadValue.*;
+import de.ced.sadengine.objects.SadEngine;
+import de.ced.sadengine.objects.Sadness;
 
 public class Cube extends SadEngine {
 	
-	public Cube() {
-		start();
-	}
-	
 	@Override
 	public void setup(Sadness sadness) {
+		/*
 		SadContent content = sadness.getContent();
 		
 		content.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
@@ -32,7 +24,7 @@ public class Cube extends SadEngine {
 		
 		//sadness.getWindow().setCamera("Camera");
 		
-		/*
+		///*
 		float scale = 0.5f;
 		content.createFrame("Frame", width, height).setCamera("Camera").getScale().mul(scale);
 		content.createFrame("FrameL", width, height).setCamera("Camera").getScale().mul(scale);
@@ -47,7 +39,7 @@ public class Cube extends SadEngine {
 		camera.getScale().set(scale);
 		content.getFrame("Frame").getPosition().x(0);
 		sadness.getWindow().addFrame("Frame");
-		*/
+		// * /
 		//sadness.getWindow().addFrame("FrameL");
 		//sadness.getWindow().addFrame("FrameR");
 		
@@ -57,10 +49,12 @@ public class Cube extends SadEngine {
 		sadness.getInput().getCursor().getPosition().set(0, 0, 0);
 		
 		content.createAction("CubeX", new CubeX());
+		*/
 	}
 	
 	@Override
 	public void update(Sadness sadness) {
+		/*
 		SadContent content = sadness.getContent();
 		SadEntity cube = content.getEntity("Cube");
 		SadVector cubeRot = cube.getRotation();
@@ -109,7 +103,7 @@ public class Cube extends SadEngine {
 		if (input.isPressed(KEY_KP_SUBTRACT)) {
 			camera.setFov(camera.getFov() - 1);
 		}
-		
+		*/
 		
 		//System.out.println(content.getCamera("Camera").getCursorVector());
 	}

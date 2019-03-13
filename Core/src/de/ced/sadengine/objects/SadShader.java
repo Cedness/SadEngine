@@ -1,31 +1,31 @@
-package de.ced.sadengine.shader;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.objects.SadTexture;
 import de.ced.sadengine.objects.light.SadLight;
 import de.ced.sadengine.utils.SadVector;
 import org.joml.Matrix4f;
 
-public class SadShader extends SadShaderProgram {
+@SuppressWarnings("unused")
+class SadShader extends SadShaderProgram {
 	
-	protected int transformationMatrix;
-	protected int viewMatrix;
-	
-	protected int frameOffset;
-	
-	protected int diffuseTexture;
+	private int transformationMatrix;
+	private int viewMatrix;
 	private int projectionMatrix;
+	
+	private int diffuseTexture;
+	private int textureActive;
+	private int color;
 	
 	private int lightColor;
 	private int lightPosition;
 	private int lightDamper;
 	private int reflectivity;
 	
-	public SadShader() {
+	SadShader() {
 		super("world.vs", "world.fs");
 	}
 	
 	@Override
-	protected void bindAttributes() {
+	protected void bindAllAttributes() {
 		super.bindAttribute(0, "position");
 		super.bindAttribute(1, "textureCoordinates");
 		super.bindAttribute(2, "normal");
@@ -34,13 +34,13 @@ public class SadShader extends SadShaderProgram {
 	@Override
 	protected void getAllUniformLocations() {
 		transformationMatrix = super.getUniformLocation("transformationMatrix");
+		
 		viewMatrix = super.getUniformLocation("viewMatrix");
-		
-		frameOffset = super.getUniformLocation("frameOffset");
-		
 		projectionMatrix = super.getUniformLocation("projectionMatrix");
 		
 		diffuseTexture = super.getUniformLocation("diffuseTexture");
+		textureActive = super.getUniformLocation("textureActive");
+		color = super.getUniformLocation("color");
 		
 		lightColor = super.getUniformLocation("lightColor");
 		lightPosition = super.getUniformLocation("lightPosition");
@@ -48,36 +48,38 @@ public class SadShader extends SadShaderProgram {
 		reflectivity = super.getUniformLocation("reflectivity");
 	}
 	
-	public void uploadTransformationMatrix(Matrix4f matrix) {
+	void uploadTransformationMatrix(Matrix4f matrix) {
 		super.loadMatrix(transformationMatrix, matrix);
 	}
 	
-	public void uploadViewMatrix(Matrix4f matrix) {
+	void uploadViewMatrix(Matrix4f matrix) {
 		super.loadMatrix(viewMatrix, matrix);
 	}
 	
-	public void uploadProjectionMatrix(Matrix4f matrix) {
+	void uploadProjectionMatrix(Matrix4f matrix) {
 		super.loadMatrix(projectionMatrix, matrix);
 	}
 	
-	public void uploadFrameOffset(SadVector vector) {
-		super.loadVector(frameOffset, vector);
-	}
-	
+	@SuppressWarnings("DeprecatedIsStillUsed")
 	@Deprecated
-	public void uploadLight(SadLight light) {
-		super.loadVector(lightColor, light.getColor());
-		super.loadVector(lightPosition, light.getPosition());
+	void uploadLight(SadLight light) {
+		super.loadVector3(lightColor, light.getColor());
+		super.loadVector3(lightPosition, light.getPosition());
 	}
 	
-	public void uploadShine(float lightDamper, float reflectivity) {
+	void uploadShine(float lightDamper, float reflectivity) {
 		super.loadFloat(this.lightDamper, lightDamper);
 		super.loadFloat(this.reflectivity, reflectivity);
 	}
 	
-	public void uploadTexture(SadTexture texture, int textureSlot) {
+	void uploadTexture(SadTexture texture, @SuppressWarnings("SameParameterValue") int textureSlot) {
 		super.loadTexture(diffuseTexture, texture, textureSlot);
+		super.loadBoolean(textureActive, texture != null);
 		//if (texture != null)
 		//	uploadShine(texture.getLightDamper(), texture.getReflectivity());
+	}
+	
+	void uploadColor(SadVector color) {
+		super.loadVector4(this.color, color);
 	}
 }

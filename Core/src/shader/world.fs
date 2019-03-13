@@ -11,6 +11,9 @@ in vec3 outToCamera;
 out vec4 outColor;
 
 uniform sampler2D diffuseTexture;
+uniform float textureActive;
+
+uniform vec4 color;
 
 uniform vec3 lightColor;
 uniform float shineDamper;
@@ -28,9 +31,16 @@ void main() {
     vec3 preReflectedLight = lightColor * pow(max(dot(reflect(-normalizedToLight, normalizedNormal), normalizedToCamera), 0.0), shineDamper);
     vec4 reflectedLight = vec4(preReflectedLight, 1.0);
 
-    if (tex.a < 0.5) {
+
+    vec4 final = color;
+
+    if (textureActive > 0.0) {
+        final = final * tex;
+    }
+
+    if (final.a < 0.5) {
         discard;
     }
 
-    outColor = tex;
+    outColor = final;
 }

@@ -61,7 +61,7 @@ public class World {
 		entities.remove(entity);
 		if (indexEntities.get(entity.getMesh()).size() <= 1) {
 			indexEntities.remove(entity.getMesh());
-			entity.getMesh().release();
+			//entity.getMesh().release();
 		} else {
 			indexEntities.get(entity.getMesh()).remove(entity);
 		}
@@ -85,7 +85,7 @@ public class World {
 	
 	public void release() {
 		for (SadMesh mesh : indexEntities.keySet()) {
-			mesh.release();
+			//mesh.release();
 		}
 		indexEntities = new HashMap<>();
 		entities = new ArrayList<>();

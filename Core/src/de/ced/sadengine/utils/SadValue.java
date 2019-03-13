@@ -2,6 +2,7 @@ package de.ced.sadengine.utils;
 
 import org.joml.Vector3f;
 
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class SadValue {
 	
 	public static final float PI = 3.14159265358979323846f;
@@ -10,6 +11,14 @@ public class SadValue {
 	
 	public static float abs(float v) {
 		return v < 0 ? v * -1f : v;
+	}
+	
+	public static float min(float v1, float v2) {
+		return v1 < v2 ? v1 : v2;
+	}
+	
+	public static float max(float v1, float v2) {
+		return v1 > v2 ? v1 : v2;
 	}
 	
 	public static float pow(float v) {

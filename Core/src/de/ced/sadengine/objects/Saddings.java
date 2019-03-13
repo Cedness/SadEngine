@@ -10,7 +10,6 @@ public final class Saddings {
 	private boolean fullscreen = false;
 	private int monitor = 0;
 	private int ups = 60;
-	private int fpsDivider = 1;
 	private boolean antialiasing = true;
 	
 	public String getName() {
@@ -70,18 +69,6 @@ public final class Saddings {
 	
 	public Saddings setUps(int ups) {
 		this.ups = ups;
-		return this;
-	}
-	
-	public int getFpsDivider() {
-		return fpsDivider;
-	}
-	
-	public Saddings setFpsDivider(int fpsDivider) {
-		if (fpsDivider < 1)
-			fpsDivider = 1;
-		
-		this.fpsDivider = fpsDivider;
 		return this;
 	}
 	

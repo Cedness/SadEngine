@@ -1,13 +1,13 @@
 package de.ced.sadengine.objects;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
-public interface SadEntityI extends SadPositionableI {
+interface SadEntityI extends SadPositionableI {
 	
 	SadModel getModel();
 	
-	SadEntity setModel(String name);
+	SadEntity setModel(SadModel model);
 	
-	SadHitbox getHitbox();
+	SadBody getBody();
 	
-	SadEntity setHitbox(String name);
+	SadEntity setBody(SadBody body);
 }

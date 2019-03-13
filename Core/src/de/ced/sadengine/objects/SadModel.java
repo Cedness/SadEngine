@@ -1,6 +1,9 @@
 package de.ced.sadengine.objects;
 
+import de.ced.sadengine.utils.SadVector;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the model of an entity
@@ -8,70 +11,58 @@ import java.util.ArrayList;
  */
 public class SadModel extends SadPositionable implements SadModelI {
 	
-	private ArrayList<String> models = new ArrayList<>();
-	private String mesh = null;
-	private String texture = null;
+	private ArrayList<SadModel> models = new ArrayList<>();
+	private SadMesh mesh = null;
+	private SadTexture texture = null;
+	private SadVector color = new SadVector(1f, 1f, 1f, 1f);
 	private boolean renderBack = false;
 	
-	SadModel(String name, SadContent content) {
-		super(name, content);
-	}
-	
 	@Override
-	public SadModel addModel(String name) {
-		if (hasModel(name))
+	public SadModel addModel(SadModel model) {
+		if (hasModel(model))
 			return this;
-		models.add(name);
+		models.add(model);
 		return this;
 	}
 	
 	@Override
-	public SadModel removeModel(String name) {
-		if (!hasModel(name))
+	public SadModel removeModel(SadModel model) {
+		if (!hasModel(model))
 			return this;
-		models.remove(name);
+		models.remove(model);
 		return this;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
-	public SadModel getModel(String name) {
-		if (!hasModel(name))
-			return null;
-		return content.getModel(name);
+	public boolean hasModel(SadModel model) {
+		return models.contains(model);
 	}
 	
 	@Override
-	public boolean hasModel(String name) {
-		return models.contains(name);
-	}
-	
-	@Override
-	public ArrayList<String> getModels() {
+	public List<SadModel> getModels() {
 		return models;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public SadMesh getMesh() {
-		return content.getMesh(mesh);
+		return mesh;
 	}
 	
 	@Override
-	public SadModel setMesh(String name) {
-		mesh = name;
+	public SadModel setMesh(SadMesh mesh) {
+		this.mesh = mesh;
 		return this;
 	}
 	
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public SadTexture getTexture() {
-		return content.getTexture(texture);
+		return texture;
 	}
 	
 	@Override
-	public SadModel setTexture(String name) {
-		texture = name;
+	public SadModel setTexture(SadTexture texture) {
+		this.texture = texture;
 		return this;
 	}
 	
@@ -83,5 +74,10 @@ public class SadModel extends SadPositionable implements SadModelI {
 	@Override
 	public void setRenderBack(boolean renderBack) {
 		this.renderBack = renderBack;
+	}
+	
+	@Override
+	public SadVector getColor() {
+		return color;
 	}
 }

@@ -4,10 +4,6 @@ public abstract class SadRunnable extends SadObject implements SadRunnableI {
 	
 	private boolean running = true;
 	
-	public SadRunnable(String name) {
-		super(name);
-	}
-	
 	@Override
 	public boolean isRunning() {
 		return running;

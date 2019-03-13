@@ -7,9 +7,11 @@ import de.ced.sadengine.objects.time.SadClock;
 import java.io.File;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
-public interface SadContentI {
+interface SadContentI {
 	
 	float getInterval();
+	
+	SadPositionable getPositionable(String name);
 	
 	SadEntity createEntity(String name);
 	
@@ -25,8 +27,6 @@ public interface SadContentI {
 	
 	SadTexture createTexture(String name, File file);
 	
-	SadTexture createTexture(String name, File file, boolean alpha);
-	
 	SadTexture getTexture(String name);
 	
 	void deleteTexture(String name);
@@ -37,9 +37,9 @@ public interface SadContentI {
 	
 	void deleteFont(String name);
 	
-	SadHitbox createHitbox(String name);
+	SadBody createHitbox(String name);
 	
-	SadHitbox getHitbox(String name);
+	SadBody getBody(String name);
 	
 	void deleteHitbox(String name);
 	
@@ -66,6 +66,12 @@ public interface SadContentI {
 	SadFrame getFrame(String name);
 	
 	void deleteFrame(String name);
+	
+	SadTransformer createTransformer(String name);
+	
+	SadTransformer getTransformer(String name);
+	
+	void deleteTransformer(String name);
 	
 	SadClock createClock(String name);
 	

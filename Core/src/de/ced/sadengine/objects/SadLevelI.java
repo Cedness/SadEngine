@@ -1,15 +1,21 @@
 package de.ced.sadengine.objects;
 
+import java.util.List;
+
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
-public interface SadLevelI extends SadObjectI {
+interface SadLevelI extends SadObjectI {
 	
-	SadLevel addEntity(String name);
+	SadLevel addEntity(SadEntity entity);
 	
-	void removeEntity(String name);
+	void removeEntity(SadEntity entity);
 	
-	SadEntity getEntity(String name);
+	List<SadEntity> getEntities();
 	
-	boolean hasEntity(String name);
+	boolean hasEntity(SadEntity entity);
 	
 	SadLevel clearAllEntities();
+	
+	SadMovement getMovement();
+	
+	SadLevel setMovement(SadMovement movement);
 }

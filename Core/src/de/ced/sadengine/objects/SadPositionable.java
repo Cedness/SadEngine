@@ -1,23 +1,16 @@
 package de.ced.sadengine.objects;
 
+import de.ced.sadengine.utils.SadRotationVector;
 import de.ced.sadengine.utils.SadVector;
-import org.joml.Matrix4f;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
 public abstract class SadPositionable extends SadObject implements SadPositionableI {
 	
-	@SuppressWarnings("unused")
-	public SadPositionable(String name) {
-		super(name);
-	}
-	
-	SadPositionable(String name, SadContent content) {
-		super(name, content);
-	}
+	private boolean usePitchWhenMoving;
 	
 	SadVector position = new SadVector(3);
-	SadVector rotation = new SadVector(3);
+	SadVector rotation = new SadRotationVector(3);
 	SadVector scale = new SadVector(1f, 1f, 1f);
 	
 	@Override
@@ -69,18 +62,15 @@ public abstract class SadPositionable extends SadObject implements SadPositionab
 		return getDirection(new SadVector(3));
 	}
 	
-	Matrix4f writeToMatrix(Matrix4f matrix) {
-		matrix.translate(position.toVector3f());
-		matrix.rotateXYZ(
-				toRadians(rotation.x()),
-				toRadians(rotation.y()),
-				toRadians(rotation.z()));
-		matrix.scale(scale.toVector3f());
-		return matrix;
+	@Override
+	public boolean isUsePitchWhenMoving() {
+		return usePitchWhenMoving;
 	}
 	
-	Matrix4f writeToMatrix() {
-		return writeToMatrix(new Matrix4f());
+	@Override
+	public SadPositionable setUsePitchWhenMoving(boolean usePitchWhenMoving) {
+		this.usePitchWhenMoving = usePitchWhenMoving;
+		return this;
 	}
 	
 	/*

@@ -1,25 +1,29 @@
 package de.ced.sadengine.objects;
 
 /**
- * An object a SadContent instance can handle.
+ * An object which can be handled by an instance of SadContent.
  */
 public abstract class SadObject implements SadObjectI {
 	
-	protected final String name;
-	protected final SadContent content;
+	protected String name;
 	
-	public SadObject(String name) {
-		this.name = name;
-		content = null;
+	public SadObject() {
+		this.name = String.valueOf(hashCode());
 	}
 	
-	public SadObject(String name, SadContent content) {
-		this.name = name;
-		this.content = content;
-	}
-	
-	public final String getName() {
+	@Override
+	public String getName() {
 		return name;
+	}
+	
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@Override
+	public final String toString() {
+		return getName();
 	}
 	
 	void release() {

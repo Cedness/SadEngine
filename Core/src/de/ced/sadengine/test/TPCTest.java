@@ -1,9 +1,7 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.*;
-import de.ced.sadengine.objects.input.SadInput;
-
-import java.io.File;
+import de.ced.sadengine.objects.SadEngine;
+import de.ced.sadengine.objects.Sadness;
 
 public class TPCTest extends SadEngine {
 	
@@ -13,6 +11,7 @@ public class TPCTest extends SadEngine {
 	
 	@Override
 	public void setup(Sadness sadness) {
+		/*
 		SadContent c = sadness.getContent();
 		SadWindow w = sadness.getWindow();
 		SadInput i = sadness.getInput();
@@ -28,6 +27,7 @@ public class TPCTest extends SadEngine {
 		SadModel model = c.createModel("model");
 		model.setMesh(rect.getName()).setTexture(wood.getName());
 		entity.setModel(model.getName());
+		*/
 	}
 	
 	public static void main(String[] args) {

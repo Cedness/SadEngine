@@ -1,12 +1,7 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.*;
-import de.ced.sadengine.objects.input.SadInput;
-import de.ced.sadengine.utils.SadVector;
-
-import java.io.File;
-
-import static de.ced.sadengine.utils.SadValue.*;
+import de.ced.sadengine.objects.SadEngine;
+import de.ced.sadengine.objects.Sadness;
 
 public class Main extends SadEngine {
 	
@@ -18,6 +13,7 @@ public class Main extends SadEngine {
 	
 	@Override
 	public void setup(Sadness sadness) {
+		/*
 		SadContent c = sadness.getContent();
 		SadWindow window = sadness.getWindow();
 		c.createCamera("camera");
@@ -37,19 +33,19 @@ public class Main extends SadEngine {
 		c.getCamera("camera2").getPosition().set(0, 0, -5);
 		
 		
-		c.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
-		c.createMesh("Cube", new File("./Core/res/models/Rect.obj"));
+		c.createTexture("CubeT", new File("./Core/res/textures/Wood.jpg"));
+		c.createMesh("CubeM", new File("./Core/res/models/Rect.obj"));
 		c.createMesh("mesh", new File("./Core/res/models/dragon.obj"));
-		c.createModel("Cube").setMesh("Cube").getScale().setLength(2f).set(4f, 2f, 2f);
-		c.createEntity("Cube").setModel("Cube").getPosition().z(3);
+		c.createModel("CubeMo").setMesh("CubeM").getScale().setLength(2f).set(4f, 2f, 2f);
+		c.createEntity("Cube").setModel("CubeMo").getPosition().z(3);
 		
-		c.createModel("Portal").setMesh("Cube").setTexture("frame");
-		c.createEntity("Portal").setModel("Portal");
+		c.createModel("PortalM").setMesh("CubeM").setTexture("frame");
+		c.createEntity("Portal").setModel("PortalM");
 		c.getEntity("Portal").getRotation().z(180);
 		c.getEntity("Portal").getModel().setRenderBack(true);
 		c.getEntity("Portal").getScale().set(16, 9, 0).setLength(12);
 		
-		c.createModel("TwoStepsModel").setTexture("Cube").setMesh("Cube");
+		c.createModel("TwoStepsModel").setTexture("CubeT").setMesh("CubeM");
 		c.createEntity("TwoSteps").setModel("TwoStepsModel").getPosition().set(0, -1, -2);
 		c.getLevel("level").addEntity("TwoSteps");
 		
@@ -57,14 +53,17 @@ public class Main extends SadEngine {
 		c.getLevel("level2").addEntity("Cube");
 		
 		c.getLevel("level").addEntity("Portal");
+		*/
 	}
 	
 	@Override
 	public void update(Sadness sadness) {
+		/*
 		SadContent c = sadness.getContent();
 		SadInput i = sadness.getInput();
 		
 		c.getEntity("Cube").getRotation().addY(1f);
+		c.getEntity("TwoSteps").getRotation().addY(1f);
 		
 		//c.getEntity("Portal").getRotation().add(1);
 		
@@ -132,6 +131,7 @@ public class Main extends SadEngine {
 			System.out.println(camera.getRotation());
 			System.out.println(camera.getDistanceToPosition());
 		}
+		*/
 	}
 	
 	public static void main(String[] args) {

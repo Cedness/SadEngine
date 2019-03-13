@@ -2,19 +2,17 @@ package de.ced.sadengine.objects;
 
 import de.ced.sadengine.objects.action.SadAction;
 import de.ced.sadengine.objects.action.SadActionHandler;
-import de.ced.sadengine.objects.action.SadActionLogic;
 import de.ced.sadengine.objects.time.SadClock;
 import de.ced.sadengine.objects.time.SadClockwork;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
  * Contains all the stuff processed by the engine.
  * Objects in here won't be processed directly, they first have to be added to the SadWindow instance.
  */
-public class SadContent implements SadContentI {
+public class SadContent {
 	
 	private float interval;
 	private final HashMap<Class<? extends SadObject>, HashMap<String, SadObject>> contents = new HashMap<>();
@@ -22,15 +20,16 @@ public class SadContent implements SadContentI {
 	private final SadActionHandler actionHandler;
 	private final SadClockwork clockwork;
 	
-	public SadContent(Sadness sadness) {
+	SadContent(Sadness sadness) {
 		contents.put(SadEntity.class, new HashMap<>());
-		contents.put(SadHitbox.class, new HashMap<>());
+		contents.put(SadBody.class, new HashMap<>());
 		contents.put(SadModel.class, new HashMap<>());
 		contents.put(SadMesh.class, new HashMap<>());
 		contents.put(SadTexture.class, new HashMap<>());
 		contents.put(SadLevel.class, new HashMap<>());
 		contents.put(SadCamera.class, new HashMap<>());
 		contents.put(SadFrame.class, new HashMap<>());
+		contents.put(SadTransformer.class, new HashMap<>());
 		contents.put(SadClock.class, new HashMap<>());
 		contents.put(SadAction.class, new HashMap<>());
 		
@@ -44,21 +43,16 @@ public class SadContent implements SadContentI {
 		clockwork.increaseClocks(interval);
 	}
 	
-	SadActionHandler getActionHandler() {
-		return actionHandler;
-	}
-	
-	@Override
-	public float getInterval() {
-		return interval;
-	}
-	
 	//Basic metods
 	
 	private void put(SadObject object) {
-		if (object.getName() == null || object.getName().isEmpty())
+		String name = object.getName();
+		if (name == null || name.isEmpty())
 			return;
-		contents.get(object.getClass()).put(object.getName(), object);
+		for (HashMap<String, SadObject> map : contents.values()) {
+			map.remove(name);
+		}
+		contents.get(object.getClass()).put(name, object);
 	}
 	
 	private SadObject get(Class<? extends SadObject> clazz, String name) {
@@ -75,7 +69,44 @@ public class SadContent implements SadContentI {
 		return true;
 	}
 	
+	//Internal methods
+	
+	SadActionHandler getActionHandler() {
+		return actionHandler;
+	}
+	
+	Collection<SadObject> getLevels() {
+		return contents.get(SadLevel.class).values();
+	}
+	
+	Collection<SadObject> getCameras() {
+		return contents.get(SadCamera.class).values();
+	}
+	
+	Collection<SadObject> getTransformers() {
+		return contents.get(SadTransformer.class).values();
+	}
+	
 	//Individual methods
+	
+	//@Override
+	public float getInterval() {
+		return interval;
+	}
+	
+	/*
+	
+	@Override
+	public SadPositionable getPositionable(String name) {
+		for (Class<? extends SadObject> clazz : contents.keySet()) {
+			if (SadPositionable.class.isAssignableFrom(clazz)) {
+				SadObject object = contents.get(clazz).getOrDefault(name, null);
+				if (object != null)
+					return (SadPositionable) object;
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public SadEntity createEntity(String name) {
@@ -96,16 +127,7 @@ public class SadContent implements SadContentI {
 	
 	@Override
 	public SadMesh createMesh(String name, File file) {
-		SadMesh mesh = null;
-		try {
-			mesh = SadGL.loadMesh(name, file);
-		} catch (FileNotFoundException e) {
-			System.out.println("OBJFile " + file.getAbsolutePath() + " not found.");
-			e.printStackTrace();
-		} catch (NumberFormatException e) {
-			System.out.println("OBJFile " + file.getAbsolutePath() + " is invalid.");
-			e.printStackTrace();
-		}
+		SadMesh mesh = SadGL.loadMesh(name, file);
 		if (mesh == null)
 			return null;
 		put(mesh);
@@ -131,14 +153,6 @@ public class SadContent implements SadContentI {
 	}
 	
 	@Override
-	public SadTexture createTexture(String name, File file, boolean alpha) {
-		deleteFrame(name);
-		SadTexture texture = SadGL.loadTexture(name, file, alpha);
-		put(texture);
-		return texture;
-	}
-	
-	@Override
 	public SadTexture getTexture(String name) {
 		SadTexture texture = (SadTexture) get(SadTexture.class, name);
 		return texture != null ? texture : getFrame(name);
@@ -151,6 +165,7 @@ public class SadContent implements SadContentI {
 		deleteFrame(name);
 	}
 	
+	@Deprecated
 	@Override
 	public SadFont createFont(String name, File atlas, File data) {
 		SadFont font = new SadFont(name, atlas, data);
@@ -158,31 +173,33 @@ public class SadContent implements SadContentI {
 		return font;
 	}
 	
+	@Deprecated
 	@Override
 	public SadFont getFont(String name) {
 		return (SadFont) get(SadFont.class, name);
 	}
 	
+	@Deprecated
 	@Override
 	public void deleteFont(String name) {
 		delete(SadFont.class, name);
 	}
 	
 	@Override
-	public SadHitbox createHitbox(String name) {
-		SadHitbox hitbox = new SadHitbox(name, this);
+	public SadBody createHitbox(String name) {
+		SadBody hitbox = new SadBody(name);
 		put(hitbox);
 		return hitbox;
 	}
 	
 	@Override
-	public SadHitbox getHitbox(String name) {
-		return (SadHitbox) get(SadHitbox.class, name);
+	public SadBody getBody(String name) {
+		return (SadBody) get(SadBody.class, name);
 	}
 	
 	@Override
 	public void deleteHitbox(String name) {
-		delete(SadHitbox.class, name);
+		delete(SadBody.class, name);
 	}
 	
 	@Override
@@ -256,6 +273,23 @@ public class SadContent implements SadContentI {
 	}
 	
 	@Override
+	public SadTransformer createTransformer(String name) {
+		SadTransformer transformer = new SadTransformer(name, this);
+		put(transformer);
+		return transformer;
+	}
+	
+	@Override
+	public SadTransformer getTransformer(String name) {
+		return (SadTransformer) get(SadTransformer.class, name);
+	}
+	
+	@Override
+	public void deleteTransformer(String name) {
+		delete(SadTransformer.class, name);
+	}
+	
+	@Override
 	public SadClock createClock(String name) {
 		SadClock clock = new SadClock(name);
 		put(clock);
@@ -288,4 +322,5 @@ public class SadContent implements SadContentI {
 	public void deleteAction(String name) {
 		delete(SadAction.class, name);
 	}
+	*/
 }

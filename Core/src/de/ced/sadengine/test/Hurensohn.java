@@ -1,11 +1,7 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.*;
-import de.ced.sadengine.objects.input.SadInput;
-
-import java.io.File;
-
-import static de.ced.sadengine.utils.SadValue.*;
+import de.ced.sadengine.objects.SadEngine;
+import de.ced.sadengine.objects.Sadness;
 
 public class Hurensohn extends SadEngine {
 	
@@ -14,6 +10,7 @@ public class Hurensohn extends SadEngine {
 	}
 	
 	public void setup(Sadness sadness) {
+		/*
 		SadContent content = sadness.getContent();
 		SadWindow window = sadness.getWindow();
 		
@@ -31,9 +28,11 @@ public class Hurensohn extends SadEngine {
 		
 		content.getCamera("Camera").getPosition().set(0, 0, -10);
 		//camera.getRotation().x -= 30f;
+		*/
 	}
 	
 	public void update(Sadness sadness) {
+		/*
 		SadContent content = sadness.getContent();
 		SadInput input = sadness.getInput();
 		
@@ -53,6 +52,7 @@ public class Hurensohn extends SadEngine {
 		if (input.isPressed(KEY_DOWN)) {
 			cow.getScale().mul(0.99f);
 		}
+		*/
 	}
 	
 	public void terminate(Sadness sadness) {

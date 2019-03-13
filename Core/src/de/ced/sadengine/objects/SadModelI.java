@@ -1,29 +1,31 @@
 package de.ced.sadengine.objects;
 
-import java.util.ArrayList;
+import de.ced.sadengine.utils.SadVector;
+
+import java.util.List;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
-public interface SadModelI extends SadPositionableI {
+interface SadModelI extends SadPositionableI {
 	
-	SadModel addModel(String name);
+	SadModel addModel(SadModel model);
 	
-	SadModel removeModel(String name);
+	SadModel removeModel(SadModel model);
 	
-	SadModel getModel(String name);
+	boolean hasModel(SadModel model);
 	
-	boolean hasModel(String name);
-	
-	ArrayList<String> getModels();
+	List<SadModel> getModels();
 	
 	SadMesh getMesh();
 	
-	SadModel setMesh(String name);
+	SadModel setMesh(SadMesh mesh);
 	
 	SadTexture getTexture();
 	
-	SadModel setTexture(String name);
+	SadModel setTexture(SadTexture texture);
 	
 	boolean isRenderBack();
 	
 	void setRenderBack(boolean renderBack);
+	
+	SadVector getColor();
 }

@@ -7,25 +7,26 @@ import static org.lwjgl.opengl.GL30.glDeleteRenderbuffers;
 
 public class SadFrame extends SadTexture implements SadFrameI {
 	
-	private final SadContent content;
 	private final int fboID;
 	private final int depthID;
-	protected int width;
-	protected int height;
 	private boolean rendered = false;
 	private int geniousParadoxPreventer = 0;
 	
-	private String camera;
+	private SadCamera camera;
 	
 	private SadVector color = new SadVector(4);
 	
-	SadFrame(String name, SadContent content, int fboID, int textureID, int depthID, int width, int height) {
-		super(name, textureID);
-		this.content = content;
-		this.fboID = fboID;
-		this.depthID = depthID;
-		this.width = width;
-		this.height = height;
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public SadFrame(int width, int height) {
+		super(new int[]{SadGL.createTextureAttachment(width, height), width, height, 3});
+		this.fboID = SadGL.createFrameBuffer();
+		this.depthID = SadGL.createDepthBufferAttachment(width, height);
+	}
+	
+	SadFrame() {
+		super(new int[]{0, 1280, 720, 3});
+		fboID = 0;
+		depthID = 0;
 	}
 	
 	
@@ -33,12 +34,12 @@ public class SadFrame extends SadTexture implements SadFrameI {
 	
 	@Override
 	public SadCamera getCamera() {
-		return content.getCamera(camera);
+		return camera;
 	}
 	
 	@Override
-	public SadFrame setCamera(String name) {
-		camera = name;
+	public SadFrame setCamera(SadCamera camera) {
+		this.camera = camera;
 		return this;
 	}
 	
@@ -53,16 +54,6 @@ public class SadFrame extends SadTexture implements SadFrameI {
 	
 	int getDepthID() {
 		return depthID;
-	}
-	
-	@Override
-	public int getWidth() {
-		return width;
-	}
-	
-	@Override
-	public int getHeight() {
-		return height;
 	}
 	
 	boolean isRendered() {
@@ -84,7 +75,7 @@ public class SadFrame extends SadTexture implements SadFrameI {
 	}
 	
 	@Override
-	public void release() {
+	void release() {
 		super.release();
 		glDeleteFramebuffers(fboID);
 		glDeleteRenderbuffers(depthID);

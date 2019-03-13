@@ -1,7 +1,17 @@
 package de.ced.sadengine.objects;
 
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public interface SadTextureI extends SadObjectI {
+interface SadTextureI extends SadObjectI {
+	
+	int getWidth();
+	
+	int getHeight();
+	
+	boolean isTransparent();
+	
+	boolean isRenderBack();
+	
+	void setRenderBack(boolean forceRenderBack);
 	
 	float getReflectivity();
 	

@@ -5,12 +5,12 @@ import de.ced.sadengine.objects.input.SadInput;
 public class Sadness {
 	
 	private final SadContent content;
-	private final SadWindow window;
+	private final SadFrame window;
 	private final SadInput input;
 	
 	Sadness() {
 		content = new SadContent(this);
-		window = new SadWindow(content);
+		window = new SadFrame();
 		input = new SadInput();
 	}
 	
@@ -18,7 +18,7 @@ public class Sadness {
 		return content;
 	}
 	
-	public SadWindow getWindow() {
+	public SadFrame getWindow() {
 		return window;
 	}
 	

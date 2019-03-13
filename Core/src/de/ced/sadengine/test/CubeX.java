@@ -1,18 +1,13 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.*;
+import de.ced.sadengine.objects.Sadness;
 import de.ced.sadengine.objects.action.SadActionLogic;
-import de.ced.sadengine.objects.input.SadInput;
-import de.ced.sadengine.utils.SadVector;
-
-import java.io.File;
-
-import static de.ced.sadengine.utils.SadValue.*;
 
 public class CubeX implements SadActionLogic {
 	
 	@Override
 	public void setup(Sadness sadness) {
+		/*
 		SadContent content = sadness.getContent();
 		System.out.println("LUUUUUUUL");
 		SadMesh mesh = content.createMesh("CubeX", new File("./Core/res/models/Cube.obj"));
@@ -22,10 +17,12 @@ public class CubeX implements SadActionLogic {
 		content.getLevel("Level").addEntity(entity.getName());
 		
 		content.createClock("CubeX").setGoal(1000 * MILLI * SECOND).removeGoal();
+		*/
 	}
 	
 	@Override
 	public void update(Sadness sadness) {
+		/*
 		SadContent content = sadness.getContent();
 		SadInput input = sadness.getInput();
 		

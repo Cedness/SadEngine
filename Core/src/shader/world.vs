@@ -14,8 +14,6 @@ out vec3 outToCamera;
 
 uniform mat4 transformationMatrix;
 
-uniform vec3 frameOffset;
-
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 

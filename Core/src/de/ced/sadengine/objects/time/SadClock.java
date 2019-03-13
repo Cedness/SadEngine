@@ -10,10 +10,6 @@ public class SadClock extends SadRunnable {
 	
 	private float time = 0f;
 	
-	public SadClock(String name) {
-		super(name);
-	}
-	
 	@Override
 	public SadClock setRunning(boolean running) {
 		super.setRunning(running);

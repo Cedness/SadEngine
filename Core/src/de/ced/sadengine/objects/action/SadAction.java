@@ -8,8 +8,7 @@ public class SadAction extends SadRunnable implements SadActionI {
 	private boolean runningLast = false;
 	private boolean setupDone = false;
 	
-	public SadAction(String name, SadActionLogic logic) {
-		super(name);
+	public SadAction(SadActionLogic logic) {
 		this.logic = logic;
 	}
 	

@@ -2,8 +2,8 @@ package de.ced.sadengine.objects;
 
 import de.ced.sadengine.utils.SadVector;
 
-@SuppressWarnings("unused")
-public interface SadPositionableI {
+@SuppressWarnings({"unused", "UnusedReturnValue"})
+interface SadPositionableI extends SadObjectI {
 	
 	SadVector getPosition();
 	
@@ -18,4 +18,8 @@ public interface SadPositionableI {
 	SadVector getDirection(SadVector direction);
 	
 	SadVector getDirection();
+	
+	boolean isUsePitchWhenMoving();
+	
+	SadPositionable setUsePitchWhenMoving(boolean usePitchWhenMoving);
 }

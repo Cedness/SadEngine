@@ -15,6 +15,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class SadGlWindow {
 	
+	private SadEngine engine;
 	private long glWindow;
 	
 	private GLFWKeyCallback keyCallback;
@@ -22,10 +23,9 @@ public class SadGlWindow {
 	private GLFWCursorPosCallback cursorPosCallback;
 	private GLFWCursorEnterCallback cursorEnterCallback;
 	
-	private int width;
-	private int height;
-	
-	public long setup(Saddings settings, SadInput input) {
+	public long setup(SadEngine engine, SadInput input) {
+		this.engine = engine;
+		
 		GLFWErrorCallback.createPrint(System.err).set();
 		
 		if (!glfwInit())
@@ -35,10 +35,10 @@ public class SadGlWindow {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 		
-		if (settings.isAntialiasing())
+		if (engine.isAntialiasing())
 			glfwWindowHint(GLFW_SAMPLES, 4);
 		
-		glWindow = glfwCreateWindow(settings.getWidth(), settings.getHeight(), settings.getName(), NULL, NULL);
+		glWindow = glfwCreateWindow(engine.width(), engine.height(), engine.getName(), NULL, NULL);
 		if (glWindow == NULL)
 			throw new RuntimeException("Failed to create window");
 		
@@ -50,10 +50,8 @@ public class SadGlWindow {
 		glfwSetCursorEnterCallback(glWindow, cursorEnterCallback = input.getCursorEnterCallback());
 		
 		glfwSetFramebufferSizeCallback(glWindow, (window, width, height) -> {
-			settings.setWidth(width);
-			settings.setHeight(height);
-			this.width = width;
-			this.height = height;
+			engine.setWidth(width);
+			engine.setHeight(height);
 		});
 		
 		try (MemoryStack stack = stackPush()) {
@@ -101,11 +99,21 @@ public class SadGlWindow {
 		return glWindow;
 	}
 	
+	@Deprecated
 	public int getWidth() {
-		return width;
+		return engine.width();
 	}
 	
+	@Deprecated
 	public int getHeight() {
-		return height;
+		return engine.height();
+	}
+	
+	boolean shouldClose() {
+		return glfwWindowShouldClose(glWindow);
+	}
+	
+	void close() {
+		glfwSetWindowShouldClose(glWindow, true);
 	}
 }

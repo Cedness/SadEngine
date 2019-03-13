@@ -1,35 +1,52 @@
 package de.ced.sadengine.objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SadEntity extends SadPositionable implements SadEntityI {
 	
-	private String model;
-	private String hitbox;
+	private List<SadLevel> levels = new ArrayList<>();
 	
-	public SadEntity(String name, SadContent content) {
-		super(name, content);
+	private SadModel model;
+	private SadBody body;
+	
+	List<SadLevel> getLevels() {
+		return levels;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public SadModel getModel() {
-		return content.getModel(model);
+		return model;
 	}
 	
 	@Override
-	public SadEntity setModel(String name) {
-		model = name;
+	public SadEntity setModel(SadModel model) {
+		for (SadLevel level : levels) {
+			level.removeEntity(this);
+		}
+		
+		this.model = model;
+		
+		for (SadLevel level : levels) {
+			level.addEntity(this);
+		}
+		
 		return this;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
-	public SadHitbox getHitbox() {
-		return content.getHitbox(hitbox);
+	public SadBody getBody() {
+		return body;
 	}
 	
 	@Override
-	public SadEntity setHitbox(String name) {
-		hitbox = name;
+	public SadEntity setBody(SadBody body) {
+		this.body = body;
+		return this;
+	}
+	
+	public SadEntity updateBody() {
+		
 		return this;
 	}
 }

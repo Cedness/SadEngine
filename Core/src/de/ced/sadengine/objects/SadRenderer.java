@@ -2,7 +2,7 @@ package de.ced.sadengine.objects;
 
 import de.ced.sadengine.objects.input.SadInput;
 import de.ced.sadengine.objects.light.SadLight;
-import de.ced.sadengine.shader.SadShader;
+import de.ced.sadengine.utils.SadRotationVector;
 import de.ced.sadengine.utils.SadVector;
 import org.joml.Matrix4f;
 
@@ -10,15 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static de.ced.sadengine.utils.SadValue.toRadians;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 
-public class SadRenderer {
-	
-	private SadWindow window;
-	private SadContent content;
-	@SuppressWarnings({"FieldCanBeLocal", "unused"})
-	private SadInput input;
+public class SadRenderer extends SadProcessor {
 	
 	private SadGlWindow glWindow;
 	private SadShader shader;
@@ -26,27 +21,32 @@ public class SadRenderer {
 	@SuppressWarnings("deprecation")
 	private SadLight light = new SadLight(new SadVector(1f, 1f, 1f), new SadVector(0f, 5f, 0f));
 	
-	void setup(SadWindow window, SadContent content, Saddings settings, SadInput input) {
-		this.window = window;
-		this.content = content;
-		this.input = input;
+	private SadTexture lastTexture = null;
+	private Matrix4f matrix = new Matrix4f();
+	private List<SadModel> parentModels;
+	private List<SadTexture> parentTextures;
+	
+	private SadVector position = new SadVector(3);
+	private SadVector rotation = new SadRotationVector(3);
+	private SadVector scale = new SadVector(3);
+	
+	private SadVector entityPosition = new SadVector(3);
+	private SadVector entityRotation = new SadRotationVector(3);
+	private SadVector entityScale = new SadVector(3);
+	
+	SadRenderer(SadFrame window, SadContent content, SadInput input, SadEngine engine) {
+		super(window, content, input, engine);
 		
 		glWindow = new SadGlWindow();
-		
-		glWindow.setup(settings, input);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		window.setup(glWindow);
+		glWindow.setup(engine, input);
 		
 		shader = new SadShader();
 	}
 	
-	void updateWindow() {
-		glWindow.update();
-	}
-	
-	void render() {
+	@Override
+	void invoke() {
 		renderFrame(window);
+		glWindow.update();
 	}
 	
 	private void renderFrame(SadFrame frame) {
@@ -68,8 +68,8 @@ public class SadRenderer {
 		}
 		
 		if (geniousParadoxPreventer <= 3) {
-			for (String modelName : level.getIndex().keySet()) {
-				renderModelFrames(content.getModel(modelName));
+			for (SadModel model : level.getIndex().keySet()) {
+				renderModelFrames(model);
 			}
 		}
 		
@@ -83,11 +83,11 @@ public class SadRenderer {
 		shader.uploadViewMatrix(camera.getViewMatrix());
 		//noinspection deprecation
 		shader.uploadLight(light);
-		HashMap<String, ArrayList<String>> index = level.getIndex();
-		for (String modelName : index.keySet()) {
-			parentMatrices = new ArrayList<>();
+		HashMap<SadModel, ArrayList<SadEntity>> index = level.getIndex();
+		for (SadModel model : index.keySet()) {
+			parentModels = new ArrayList<>();
 			parentTextures = new ArrayList<>();
-			renderModel(content.getModel(modelName), index.get(modelName), renderOnlyFrames);
+			renderModel(model, index.get(model), renderOnlyFrames);
 		}
 		shader.enable(false);
 		
@@ -102,44 +102,46 @@ public class SadRenderer {
 		SadTexture texture = model.getTexture();
 		if (texture instanceof SadFrame)
 			renderFrame((SadFrame) texture);
-		for (String modelName : model.getModels()) {
-			renderModelFrames(model.getModel(modelName));
+		for (SadModel sadModel : model.getModels()) {
+			renderModelFrames(sadModel);
 		}
 	}
 	
-	private SadTexture lastTexture = null;
-	private Matrix4f modelMatrix = new Matrix4f();
-	private Matrix4f entityMatrix = new Matrix4f();
-	private List<Matrix4f> parentMatrices;
-	private List<SadTexture> parentTextures;
-	
-	private void renderModel(SadModel model, List<String> entityNames, boolean renderOnlyFrames) {
+	private void renderModel(SadModel model, List<SadEntity> entities, boolean renderOnlyFrames) {
 		if (model == null)
 			return;
 		
-		parentMatrices.add(model.writeToMatrix());
+		parentModels.add(model);
 		parentTextures.add(model.getTexture());
 		
-		renderMesh(model, entityNames, renderOnlyFrames);
+		renderMesh(model, entities, renderOnlyFrames);
 		
-		for (String subModel : model.getModels()) {
-			renderModel(model.getModel(subModel), entityNames, renderOnlyFrames);
+		for (SadModel subModel : model.getModels()) {
+			renderModel(subModel, entities, renderOnlyFrames);
 		}
 		
-		parentMatrices.remove(parentMatrices.size() - 1);
+		parentModels.remove(parentModels.size() - 1);
 		parentTextures.remove(model.getTexture());
 	}
 	
-	private void renderMesh(SadModel model, List<String> entityNames, boolean renderOnlyFrames) {
+	private void renderMesh(SadModel model, List<SadEntity> entities, boolean renderOnlyFrames) {
 		SadMesh mesh = model.getMesh();
 		if (mesh == null)
 			return;
 		
-		modelMatrix.identity();
 		
 		boolean textureFound = false;
-		for (int i = parentMatrices.size() - 1; i >= 0; i--) {
-			modelMatrix.mul(parentMatrices.get(i));
+		
+		position.set(0);
+		rotation.set(0);
+		scale.set(1);
+		
+		for (int i = parentModels.size() - 1; i >= 0; i--) {
+			SadModel model1 = parentModels.get(i);
+			position.mul(model1.getScale()).add(model1.getPosition());
+			rotation.add(model1.getRotation());
+			scale.mul(model1.getScale());
+			
 			if (textureFound)
 				continue;
 			
@@ -158,13 +160,15 @@ public class SadRenderer {
 			}
 		}
 		
-		boolean renderBack = model.isRenderBack();
+		shader.uploadColor(model.getColor());
+		
+		boolean renderBack = model.isRenderBack() || lastTexture.isRenderBack();
 		if (renderBack)
 			SadGL.enableBackRendering();
 		mesh.loadVao(true);
 		
-		for (String entityName : entityNames) {
-			renderEntity(content.getEntity(entityName), mesh);
+		for (SadEntity entity : entities) {
+			renderEntity(entity, mesh);
 		}
 		
 		mesh.loadVao(false);
@@ -173,9 +177,21 @@ public class SadRenderer {
 	}
 	
 	private void renderEntity(SadEntity entity, SadMesh mesh) {
-		entityMatrix.set(modelMatrix);
-		entity.writeToMatrix(entityMatrix);
-		shader.uploadTransformationMatrix(entityMatrix);
+		System.out.println(entity.getName());
+		entityPosition.set(position).mul(entity.getScale()).add(entity.getPosition());
+		entityRotation.set(rotation).add(entity.getRotation());
+		entityScale.set(scale).mul(entity.getScale());
+		
+		matrix.identity();
+		
+		matrix.translate(entityPosition.toVector3f());
+		matrix.rotateXYZ(
+				toRadians(entityRotation.x()),
+				toRadians(entityRotation.y()),
+				toRadians(entityRotation.z()));
+		matrix.scale(entityScale.toVector3f());
+		
+		shader.uploadTransformationMatrix(matrix);
 		
 		mesh.draw();
 	}
@@ -188,6 +204,15 @@ public class SadRenderer {
 		//noinspection ConstantConditions
 		glfwSetErrorCallback(null).free();
 	}
+	
+	boolean shouldClose() {
+		return glWindow.shouldClose();
+	}
+	
+	void stop() {
+		glWindow.close();
+	}
+	
 	/*
 	//cursor = input.getCursor().getNormalizedPosition();
 	

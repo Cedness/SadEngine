@@ -5,20 +5,19 @@ import de.ced.sadengine.utils.SadIntro;
 import de.ced.threadpool.Task;
 import de.ced.threadpool.ThreadPool;
 
-import static de.ced.sadengine.utils.SadIntro.Stage.ALPHA;
-import static de.ced.sadengine.utils.SadValue.KEY_ESCAPE;
+import static de.ced.sadengine.utils.SadIntro.Stage.BETA;
 
 public class SadLoop implements Task {
 	
 	private final ThreadPool threadPool;
 	
-	private final SadMainLogic logic;
-	private final Saddings settings;
+	private final SadEngine engine;
 	private final Sadness sadness;
-	private final SadWindow window;
+	private final SadFrame window;
 	private final SadContent content;
 	private final SadInput input;
-	private final SadRenderer renderer;
+	private SadRenderer renderer;
+	private SadMover mover;
 	
 	private static final long LOOP_SECOND = 1000;
 	
@@ -27,32 +26,29 @@ public class SadLoop implements Task {
 	private long t1, t2;
 	private double currentOffset = interval;
 	
-	private int currentFrame = 0;
-	private int fpsDivider;
-	
 	private float secInterval;
 	
 	private final SadHelpTask helpTask;
+	private final SadMoveTask moveTask;
 	private final SadLogicTask logicTask;
 	private final SadInputTask inputTask;
 	private final SadRenderTask renderTask;
 	
-	SadLoop(SadMainLogic logic, Saddings settings) {
+	SadLoop(SadEngine engine) {
 		ThreadPool threadPool = new ThreadPool(new boolean[]{false, false});
 		threadPool.lockWorker(0, true);
-		threadPool.addTask(new SadIntro(ALPHA, "0.8.1"));
+		threadPool.addTask(new SadIntro(BETA, "0.10.3"));
 		this.threadPool = threadPool;
-		this.logic = logic;
-		this.settings = settings;
+		this.engine = engine;
 		sadness = new Sadness();
 		content = sadness.getContent();
 		window = sadness.getWindow();
 		input = sadness.getInput();
-		renderer = new SadRenderer();
 		
-		interval = LOOP_SECOND / (double) settings.getUps();
+		interval = LOOP_SECOND / (double) engine.getUps();
 		
 		helpTask = new SadHelpTask();
+		moveTask = new SadMoveTask();
 		logicTask = new SadLogicTask();
 		inputTask = new SadInputTask();
 		renderTask = new SadRenderTask();
@@ -62,13 +58,18 @@ public class SadLoop implements Task {
 	
 	@Override
 	public void run() {
-		renderer.setup(window, content, settings, input);
+		renderer = new SadRenderer(window, content, input, engine);
+		mover = new SadMover(window, content, input, engine);
 		input.update();
-		logic.setup(sadness);
+		engine.getLogic().setup(sadness);
 		content.getActionHandler().setup();
 		input.update();
 		
 		threadPool.addTask(helpTask, 0);
+	}
+	
+	void stop() {
+		renderer.stop();
 	}
 	
 	private long now() {
@@ -79,15 +80,23 @@ public class SadLoop implements Task {
 		@Override
 		public void run() {
 			if (currentOffset < interval) {
-				interval = LOOP_SECOND / (double) settings.getUps();
-				fpsDivider = settings.getFpsDivider();
+				interval = LOOP_SECOND / (double) engine.getUps();
 				
-				secInterval = 1.0f / (float) settings.getUps();
+				secInterval = 1.0f / (float) engine.getUps();
 			}
 			
 			t1 = now();
 			
 			currentOffset -= interval;
+			
+			threadPool.addTask(moveTask, 0);
+		}
+	}
+	
+	public class SadMoveTask implements Task {
+		@Override
+		public void run() {
+			mover.invoke();
 			
 			threadPool.addTask(logicTask, 0);
 		}
@@ -97,9 +106,9 @@ public class SadLoop implements Task {
 		@Override
 		public void run() {
 			content.update(secInterval);
-			logic.update(sadness);
+			engine.getLogic().update(sadness);
 			content.getActionHandler().update();
-			logic.updateFinally(sadness);
+			engine.getLogic().updateFinally(sadness);
 			
 			threadPool.addTask(inputTask, 0);
 		}
@@ -110,15 +119,17 @@ public class SadLoop implements Task {
 		public void run() {
 			input.update();
 			
-			if (input.isPressed(KEY_ESCAPE)) {
-				logic.preTerminate(sadness);
+			if (renderer.shouldClose()) {
+				engine.getLogic().preTerminate(sadness);
 				content.getActionHandler().terminate();
-				logic.terminate(sadness);
+				engine.getLogic().terminate(sadness);
 				
 				renderer.release();
 				
-				System.out.println("SadEngine3D");
-				System.out.println("(ɔ) 2018-2019 by Ced");
+				synchronized (System.out) {
+					System.out.println("SadEngine3D");
+					System.out.println("(ɔ) 2018-2019 by Ced");
+				}
 				
 				threadPool.destroy();
 				return;
@@ -132,20 +143,10 @@ public class SadLoop implements Task {
 		@Override
 		public void run() {
 			if (currentOffset < interval) {
-				
-				if (currentFrame == 0) {
-					renderer.render();
-				}
-				
-				currentFrame++;
-				if (currentFrame >= fpsDivider)
-					currentFrame = 0;
-				
-				renderer.updateWindow();
+				renderer.invoke();
 			}
 			
 			t2 = now();
-			
 			currentOffset += (t2 - t1);
 			
 			threadPool.addTask(helpTask, 0);

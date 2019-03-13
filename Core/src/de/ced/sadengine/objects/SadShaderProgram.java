@@ -1,23 +1,22 @@
-package de.ced.sadengine.shader;
+package de.ced.sadengine.objects;
 
-import de.ced.sadengine.objects.SadGL;
-import de.ced.sadengine.objects.SadTexture;
 import de.ced.sadengine.utils.SadVector;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import static org.lwjgl.opengl.GL20.*;
 
-public abstract class SadShaderProgram {
+@SuppressWarnings("unused")
+abstract class SadShaderProgram {
 	
 	private static final float[] MATRIX_BUFFER = new float[16];
 	
-	protected int program;
+	private int program;
 	
 	private int vertexShader;
 	private int fragmentShader;
 	
-	public SadShaderProgram(String vertexFile, String fragmentFile) {
+	SadShaderProgram(String vertexFile, String fragmentFile) {
 		vertexShader = SadGL.loadShader(vertexFile, GL_VERTEX_SHADER);
 		fragmentShader = SadGL.loadShader(fragmentFile, GL_FRAGMENT_SHADER);
 		program = glCreateProgram();
@@ -25,7 +24,7 @@ public abstract class SadShaderProgram {
 		glAttachShader(program, vertexShader);
 		glAttachShader(program, fragmentShader);
 		
-		bindAttributes();
+		bindAllAttributes();
 		
 		glLinkProgram(program);
 		glValidateProgram(program);
@@ -33,27 +32,32 @@ public abstract class SadShaderProgram {
 		getAllUniformLocations();
 	}
 	
-	protected abstract void bindAttributes();
+	abstract void bindAllAttributes();
 	
-	protected void bindAttribute(int attribute, String variable) {
+	void bindAttribute(int attribute, String variable) {
 		glBindAttribLocation(program, attribute, variable);
 	}
 	
-	public void enable(boolean enable) {
+	void enable(boolean enable) {
 		glUseProgram(enable ? program : 0);
 	}
 	
-	protected abstract void getAllUniformLocations();
+	abstract void getAllUniformLocations();
 	
-	protected int getUniformLocation(String uniformName) {
+	int getUniformLocation(String uniformName) {
 		return glGetUniformLocation(program, uniformName);
 	}
 	
-	protected void loadFloat(int location, float value) {
+	void loadFloat(int location, float value) {
 		glUniform1f(location, value);
 	}
 	
-	protected void loadVector(int location, SadVector value) {
+	void loadVector(int location, SadVector value) {
+		if (value.getDimension() > 3) loadVector4(location, value);
+		else loadVector3(location, value);
+	}
+	
+	void loadVector3(int location, SadVector value) {
 		glUniform3f(location,
 				value.x(),
 				value.y(),
@@ -61,26 +65,35 @@ public abstract class SadShaderProgram {
 		);
 	}
 	
-	protected void loadMatrix(int location, Matrix4f value) {
+	void loadVector4(int location, SadVector value) {
+		glUniform4f(location,
+				value.x(),
+				value.y(),
+				value.z(),
+				value.a()
+		);
+	}
+	
+	void loadMatrix(int location, Matrix4f value) {
 		float[] val = value.get(MATRIX_BUFFER);
 		glUniformMatrix4fv(location, false, val);
 	}
 	
-	protected void loadMatrix(int location, Matrix3f value) {
+	void loadMatrix(int location, Matrix3f value) {
 		glUniformMatrix4fv(location, false, value.get(MATRIX_BUFFER));
 	}
 	
-	protected void loadBoolean(int location, boolean value) {
+	void loadBoolean(int location, boolean value) {
 		glUniform1f(location, value ? 1 : 0);
 	}
 	
-	protected void loadTexture(int location, SadTexture texture, int textureSlot) {
+	void loadTexture(int location, SadTexture texture, int textureSlot) {
 		glUniform1i(location, textureSlot);
 		glActiveTexture(GL_TEXTURE0 + textureSlot);
 		glBindTexture(GL_TEXTURE_2D, texture != null ? texture.getTextureID() : 0);
 	}
 	
-	public void release() {
+	void release() {
 		enable(false);
 		
 		glDetachShader(program, vertexShader);

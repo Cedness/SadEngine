@@ -1,5 +1,13 @@
 package de.ced.sadengine.objects;
 
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.PatternSyntaxException;
+
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
@@ -22,8 +30,8 @@ import static org.lwjgl.opengl.GL30.*;
  */
 public class SadMesh extends SadObject implements SadMeshI {
 	
-	private int[] indices = null;
-	private float[] positions;
+	private int[] indices = new int[0];
+	private float[] positions = new float[0];
 	private float[] textureCoordinates = null;
 	private float[] normals = null;
 	
@@ -35,29 +43,199 @@ public class SadMesh extends SadObject implements SadMeshI {
 	
 	private float radius = 0f;
 	
-	@Deprecated
-	public SadMesh(String name, float[] positions) {
-		super(name);
-		this.positions = positions;
+	public SadMesh(File file) {
+		InputStream stream;
+		try {
+			stream = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			meshException("OBJFile " + file.getAbsolutePath() + " not found.", e);
+			return;
+		}
+		InputStreamReader streamReader = new InputStreamReader(stream);
+		BufferedReader reader = new BufferedReader(streamReader);
+		
+		List<Integer> indices = new ArrayList<>();
+		List<Vector3f> positions = new ArrayList<>();
+		List<Vector2f> textureCoordinates = new ArrayList<>();
+		List<Vector3f> normals = new ArrayList<>();
+		
+		String line;
+		String[] parts;
+		while (true) {
+			try {
+				if (!reader.ready())
+					break;
+				line = reader.readLine();
+			} catch (IOException e) {
+				meshException("Reading Error in OBJFile " + file.getAbsolutePath() + ".", e);
+				return;
+			}
+			try {
+				parts = line.split(" ");
+			} catch (PatternSyntaxException e) {
+				meshDataException("Positions, texture coordinates or normals", file, e);
+				return;
+			}
+			
+			if (line.startsWith("v ")) {
+				try {
+					positions.add(new Vector3f(
+							Float.parseFloat(parts[1]),
+							Float.parseFloat(parts[2]),
+							Float.parseFloat(parts[3])
+					));
+				} catch (NumberFormatException e) {
+					meshDataException("Positions", file, e);
+					return;
+				}
+			} else if (line.startsWith("vt ")) {
+				try {
+					textureCoordinates.add(new Vector2f(
+							Float.parseFloat(parts[1]),
+							Float.parseFloat(parts[2])
+					));
+				} catch (NumberFormatException e) {
+					meshDataException("Texture coordinates", file, e);
+					return;
+				}
+			} else if (line.startsWith("vn ")) {
+				try {
+					normals.add(new Vector3f(
+							Float.parseFloat(parts[1]),
+							Float.parseFloat(parts[2]),
+							Float.parseFloat(parts[3])
+					));
+				} catch (NumberFormatException e) {
+					meshDataException("Normals", file, e);
+					return;
+				}
+			}
+		}
+		
+		
+		boolean isTextured = textureCoordinates.size() > 0;
+		boolean hasNormals = normals.size() > 0;
+		
+		
+		float[] positionsArray = new float[positions.size() * 3];
+		float[] textureCoordinatesArray = isTextured ? new float[positions.size() * 2] : null;
+		float[] normalsArray = new float[positions.size() * 3];
+		try {
+			stream = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			meshException("OBJFile " + file.getAbsolutePath() + " not found.", e);
+			return;
+		}
+		streamReader = new InputStreamReader(stream);
+		reader = new BufferedReader(streamReader);
+		/*
+		try {
+			reader.reset();
+		} catch (IOException e) {
+			System.out.println("reeeeee");
+		}
+		*/
+		
+		while (true) {
+			try {
+				if (!reader.ready())
+					break;
+				line = reader.readLine();
+			} catch (IOException e) {
+				meshException("Reading Error in OBJFile " + file.getAbsolutePath() + ".", e);
+				return;
+			}
+			if (!line.startsWith("f"))
+				continue;
+			
+			try {
+				parts = line.split(" ");
+				
+				for (int i = 1; i < parts.length; i++) {
+					String[] part = parts[i].split("/");
+					
+					int index = Integer.parseInt(part[0]) - 1;
+					indices.add(index);
+					
+					if (isTextured) {
+						Vector2f textureCoordinate = textureCoordinates.get(Integer.parseInt(part[1]) - 1);
+						textureCoordinatesArray[index * 2] = textureCoordinate.x;
+						textureCoordinatesArray[index * 2 + 1] = textureCoordinate.y;
+					}
+					
+					if (hasNormals) {
+						Vector3f normal = normals.get(Integer.parseInt(part[2]) - 1);
+						normalsArray[index * 3] = normal.x;
+						normalsArray[index * 3 + 1] = normal.y;
+						normalsArray[index * 3 + 2] = normal.z;
+					}
+				}
+			} catch (PatternSyntaxException | NumberFormatException e) {
+				meshDataException("Indices", file, e);
+				return;
+			}
+		}
+		
+		try {
+			reader.close();
+		} catch (IOException e) {
+			meshException("Reading Error in OBJFile " + file.getAbsolutePath() + ".", e);
+			return;
+		}
+		
+		int[] indicesArray = new int[indices.size()];
+		
+		for (int i = 0; i < positions.size(); i++) {
+			positionsArray[i * 3] = positions.get(i).x;
+			positionsArray[i * 3 + 1] = positions.get(i).y;
+			positionsArray[i * 3 + 2] = positions.get(i).z;
+		}
+		
+		for (int i = 0; i < indices.size(); i++) {
+			indicesArray[i] = indices.get(i);
+		}
+		
+		if (hasNormals)
+			this.normals = normalsArray;
+		if (isTextured)
+			this.textureCoordinates = textureCoordinatesArray;
+		this.positions = positionsArray;
+		this.indices = indicesArray;
 		bind();
 	}
 	
-	public SadMesh(String name, int[] indices, float[] positions) {
-		this(name, indices, positions, null);
+	private static void meshDataException(String data, File file, Exception e) {
+		meshException(data + " in OBJFile " + file.getAbsolutePath() + " are invalid.", e);
+	}
+	
+	private static void meshException(String output, Exception e) {
+		System.out.println(output);
+		e.printStackTrace();
+	}
+	
+	SadMesh(int[] indices, float[] positions) {
+		this(indices, positions, null);
 		//System.out.println(positions.length + " " + indices.length);
 	}
 	
-	public SadMesh(String name, int[] indices, float[] positions, float[] textureCoordinates) {
-		this(name, indices, positions, textureCoordinates, null);
+	SadMesh(int[] indices, float[] positions, float[] textureCoordinates) {
+		this(indices, positions, textureCoordinates, null);
 	}
 	
-	public SadMesh(String name, int[] indices, float[] positions, float[] textureCoordinates, float[] normals) {
-		super(name);
+	SadMesh(int[] indices, float[] positions, float[] textureCoordinates, float[] normals) {
 		this.indices = indices;
 		this.positions = positions;
 		this.textureCoordinates = textureCoordinates;
 		this.normals = normals;
 		bind();
+	}
+	
+	int[] getIndices() {
+		return indices;
+	}
+	
+	float[] getPositions() {
+		return positions;
 	}
 	
 	private void bind() {
@@ -146,7 +324,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 	}
 	
 	@Override
-	public void release() {
+	void release() {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDeleteVertexArrays(vaoId);
 		for (int id : vboIds) {

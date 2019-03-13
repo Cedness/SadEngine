@@ -3,7 +3,7 @@ package de.ced.sadengine.objects;
 import de.ced.sadengine.utils.SadVector;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess", "BooleanMethodIsAlwaysInverted"})
-public interface SadCameraI extends SadPositionableI {
+interface SadCameraI extends SadPositionableI {
 	
 	float getFov();
 	
@@ -37,11 +37,11 @@ public interface SadCameraI extends SadPositionableI {
 	
 	SadLevel getLevel();
 	
-	SadCamera setLevel(String name);
+	SadCamera setLevel(SadLevel level);
 	
 	SadEntity getWindow();
 	
-	SadCamera setWindow(String name);
+	SadCamera setWindow(SadEntity window);
 	
 	SadVector getViewerPosition();
 }

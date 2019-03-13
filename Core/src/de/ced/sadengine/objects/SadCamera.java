@@ -15,17 +15,13 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	private SadVector direction = new SadVector(3);
 	private SadVector target = new SadVector(3);
 	private boolean windowMode = false;
-	private String window = null;
+	private SadEntity window = null;
 	private SadVector viewerPosition = new SadVector(3);
 	private boolean ortho = false;
 	private boolean lookingAtPosition = false;
 	private float distanceToPosition = 1f;
 	private SadVector cursorVector = new SadVector();
-	private String level = null;
-	
-	public SadCamera(String name, SadContent content) {
-		super(name, content);
-	}
+	private SadLevel level = null;
 	
 	@Override
 	public float getFov() {
@@ -95,6 +91,7 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 		this.ortho = ortho;
 		return this;
 	}
+	
 	
 	@SuppressWarnings("ALL")
 	public void update(float width, float height) {
@@ -196,33 +193,41 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 		this.cursorVector = cursorVector;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public SadLevel getLevel() {
-		return content.getLevel(level);
+		return level;
 	}
 	
 	@Override
-	public SadCamera setLevel(String name) {
-		level = name;
+	public SadCamera setLevel(SadLevel level) {
+		this.level = level;
 		return this;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public SadEntity getWindow() {
-		return content.getEntity(window);
+		return window;
 	}
 	
 	@Override
-	public SadCamera setWindow(String name) {
-		window = name;
+	public SadCamera setWindow(SadEntity window) {
+		this.window = window;
 		return this;
 	}
 	
 	@Override
 	public SadVector getViewerPosition() {
 		return viewerPosition;
+	}
+	
+	@SuppressWarnings("unused")
+	public enum SadDirection {
+		FORWARD,
+		BACKWARD,
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
 	}
 	
 	/*
