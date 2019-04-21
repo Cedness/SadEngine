@@ -25,7 +25,7 @@ interface SadModelI extends SadPositionableI {
 	
 	boolean isRenderBack();
 	
-	void setRenderBack(boolean renderBack);
+	SadModel setRenderBack(boolean renderBack);
 	
 	SadVector getColor();
 }

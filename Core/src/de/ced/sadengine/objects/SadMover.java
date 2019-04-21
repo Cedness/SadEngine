@@ -1,26 +1,90 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.objects.input.SadInput;
-
 import java.util.ArrayList;
+import java.util.List;
 
-import static de.ced.sadengine.objects.SadMovement.DISABLED;
-import static de.ced.sadengine.objects.SadMovement.ENABLED;
-
-class SadMover extends SadProcessor {
+public class SadMover {
 	
-	private ArrayList<SadPositionable> displayedPositionables;
-	private ArrayList<SadPositionable> enabledPositionables;
-	private ArrayList<SadObject> done;
-	private float secInterval;
+	private List<SadPositionable> positionables = new ArrayList<>();
+	private List<SadLevel> levels = new ArrayList<>();
+	private List<SadPositionable> done = new ArrayList<>();
+	private float interval;
 	
-	SadMover(SadFrame window, SadContent content, SadInput input, SadEngine engine) {
-		super(window, content, input, engine);
+	SadMover() {
 	}
 	
-	@Override
-	void invoke() {
-		this.secInterval = content.getInterval();
+	public void add(SadPositionable positionable) {
+		if (positionables.contains(positionable))
+			return;
+		positionables.add(positionable);
+	}
+	
+	public void remove(SadPositionable positionable) {
+		positionables.remove(positionable);
+	}
+	
+	public boolean contains(SadPositionable positionable) {
+		return positionables.contains(positionable);
+	}
+	
+	public void add(SadLevel level) {
+		if (levels.contains(level))
+			return;
+		levels.add(level);
+	}
+	
+	public void remove(SadLevel level) {
+		levels.remove(level);
+	}
+	
+	public boolean contains(SadLevel level) {
+		return levels.contains(level);
+	}
+	
+	public void clear() {
+		positionables = new ArrayList<>();
+		levels = new ArrayList<>();
+	}
+	
+	void invoke(float interval) {
+		this.interval = interval;
+		done = new ArrayList<>();
+		for (SadPositionable positionable : positionables) {
+			movePositionable(positionable);
+		}
+		for (SadLevel level : levels) {
+			moveLevel(level);
+		}
+	}
+	
+	private void moveLevel(SadLevel level) {
+		for (SadEntity entity : level.getEntities()) {
+			checkMovePositionable(entity);
+		}
+		for (SadCamera camera : level.getCameras()) {
+			checkMovePositionable(camera);
+		}
+	}
+	
+	private void checkMovePositionable(SadPositionable positionable) {
+		if (done.contains(positionable))
+			return;
+		movePositionable(positionable);
+	}
+	
+	private void movePositionable(SadPositionable positionable) {
+		SadPositionable velocity = positionable.getVelocity();
+		if (velocity == null)
+			return;
+		movePositionable(velocity);
+		positionable.getPosition().add(velocity.getPosition().clone().mul(interval));
+		positionable.getRotation().add(velocity.getRotation().clone().mul(interval));
+		positionable.getScale().add(velocity.getScale().clone().mul(interval));
+		done.add(positionable);
+	}
+	
+	/*void invoke_OLD(float interval) {
+		this.interval = interval;
 		displayedPositionables = new ArrayList<>();
 		enabledPositionables = new ArrayList<>();
 		done = new ArrayList<>();
@@ -133,8 +197,8 @@ class SadMover extends SadProcessor {
 		SadMovement movement = transformer.getMovement();
 		if (movement == DISABLED || !(displayed || enabled || movement == ENABLED))
 			return;
-		positionable.getPosition().add(transformer.getPosition().clone().mul(secInterval));
-		positionable.getRotation().add(transformer.getRotation().clone().mul(secInterval));
+		positionable.getPosition().add(transformer.getPosition().clone().mul(interval));
+		positionable.getRotation().add(transformer.getRotation().clone().mul(interval));
 		positionable.getScale().mul(transformer.getScale().clone());
-	}
+	}*/
 }

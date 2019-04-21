@@ -1,6 +1,4 @@
-package de.ced.sadengine.objects.action;
-
-import de.ced.sadengine.objects.SadRunnableI;
+package de.ced.sadengine.objects;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
 public interface SadActionI extends SadRunnableI {

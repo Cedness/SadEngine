@@ -22,7 +22,7 @@ public abstract class SadObject implements SadObjectI {
 	}
 	
 	@Override
-	public final String toString() {
+	public String toString() {
 		return getName();
 	}
 	

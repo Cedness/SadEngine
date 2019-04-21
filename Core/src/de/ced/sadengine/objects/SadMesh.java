@@ -1,9 +1,10 @@
 package de.ced.sadengine.objects;
 
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import de.ced.sadengine.utils.SadVector;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
@@ -43,6 +44,18 @@ public class SadMesh extends SadObject implements SadMeshI {
 	
 	private float radius = 0f;
 	
+	public SadMesh(URL url) {
+		this(url.getFile());
+	}
+	
+	public SadMesh(URI uri) {
+		this(uri.getPath());
+	}
+	
+	public SadMesh(String path) {
+		this(new File(path));
+	}
+	
 	public SadMesh(File file) {
 		InputStream stream;
 		try {
@@ -55,9 +68,9 @@ public class SadMesh extends SadObject implements SadMeshI {
 		BufferedReader reader = new BufferedReader(streamReader);
 		
 		List<Integer> indices = new ArrayList<>();
-		List<Vector3f> positions = new ArrayList<>();
-		List<Vector2f> textureCoordinates = new ArrayList<>();
-		List<Vector3f> normals = new ArrayList<>();
+		List<SadVector> positions = new ArrayList<>();
+		List<SadVector> textureCoordinates = new ArrayList<>();
+		List<SadVector> normals = new ArrayList<>();
 		
 		String line;
 		String[] parts;
@@ -79,7 +92,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 			
 			if (line.startsWith("v ")) {
 				try {
-					positions.add(new Vector3f(
+					positions.add(new SadVector(
 							Float.parseFloat(parts[1]),
 							Float.parseFloat(parts[2]),
 							Float.parseFloat(parts[3])
@@ -90,7 +103,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 				}
 			} else if (line.startsWith("vt ")) {
 				try {
-					textureCoordinates.add(new Vector2f(
+					textureCoordinates.add(new SadVector(
 							Float.parseFloat(parts[1]),
 							Float.parseFloat(parts[2])
 					));
@@ -100,7 +113,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 				}
 			} else if (line.startsWith("vn ")) {
 				try {
-					normals.add(new Vector3f(
+					normals.add(new SadVector(
 							Float.parseFloat(parts[1]),
 							Float.parseFloat(parts[2]),
 							Float.parseFloat(parts[3])
@@ -158,16 +171,16 @@ public class SadMesh extends SadObject implements SadMeshI {
 					indices.add(index);
 					
 					if (isTextured) {
-						Vector2f textureCoordinate = textureCoordinates.get(Integer.parseInt(part[1]) - 1);
-						textureCoordinatesArray[index * 2] = textureCoordinate.x;
-						textureCoordinatesArray[index * 2 + 1] = textureCoordinate.y;
+						SadVector textureCoordinate = textureCoordinates.get(Integer.parseInt(part[1]) - 1);
+						textureCoordinatesArray[index * 2] = textureCoordinate.x();
+						textureCoordinatesArray[index * 2 + 1] = textureCoordinate.y();
 					}
 					
 					if (hasNormals) {
-						Vector3f normal = normals.get(Integer.parseInt(part[2]) - 1);
-						normalsArray[index * 3] = normal.x;
-						normalsArray[index * 3 + 1] = normal.y;
-						normalsArray[index * 3 + 2] = normal.z;
+						SadVector normal = normals.get(Integer.parseInt(part[2]) - 1);
+						normalsArray[index * 3] = normal.x();
+						normalsArray[index * 3 + 1] = normal.y();
+						normalsArray[index * 3 + 2] = normal.z();
 					}
 				}
 			} catch (PatternSyntaxException | NumberFormatException e) {
@@ -186,9 +199,9 @@ public class SadMesh extends SadObject implements SadMeshI {
 		int[] indicesArray = new int[indices.size()];
 		
 		for (int i = 0; i < positions.size(); i++) {
-			positionsArray[i * 3] = positions.get(i).x;
-			positionsArray[i * 3 + 1] = positions.get(i).y;
-			positionsArray[i * 3 + 2] = positions.get(i).z;
+			positionsArray[i * 3] = positions.get(i).x();
+			positionsArray[i * 3 + 1] = positions.get(i).y();
+			positionsArray[i * 3 + 2] = positions.get(i).z();
 		}
 		
 		for (int i = 0; i < indices.size(); i++) {

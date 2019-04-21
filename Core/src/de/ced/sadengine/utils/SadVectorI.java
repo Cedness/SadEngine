@@ -5,6 +5,8 @@ import org.joml.Vector3f;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public interface SadVectorI {
 	
+	SadVector identify();
+	
 	float getLength();
 	
 	float getSquaredLength();

@@ -72,8 +72,9 @@ public class SadModel extends SadPositionable implements SadModelI {
 	}
 	
 	@Override
-	public void setRenderBack(boolean renderBack) {
+	public SadModel setRenderBack(boolean renderBack) {
 		this.renderBack = renderBack;
+		return this;
 	}
 	
 	@Override

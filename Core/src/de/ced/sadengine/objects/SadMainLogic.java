@@ -5,17 +5,17 @@ package de.ced.sadengine.objects;
  * Only one instance of this per instance of the engine is allowed.
  */
 @SuppressWarnings("unused")
-public interface SadMainLogic extends SadIllogic {
+public interface SadMainLogic extends SadLogic {
 	
 	/**
 	 * Called after all SadAction objects have been updated.
 	 */
-	default void updateFinally(Sadness sadness) {
+	default void updateFinally() {
 	}
 	
 	/**
 	 * Called before all SadAction objects terminate.
 	 */
-	default void preTerminate(Sadness sadness) {
+	default void preTerminate() {
 	}
 }

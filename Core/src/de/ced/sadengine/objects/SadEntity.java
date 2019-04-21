@@ -7,11 +7,36 @@ public class SadEntity extends SadPositionable implements SadEntityI {
 	
 	private List<SadLevel> levels = new ArrayList<>();
 	
+	private boolean enabled = true;
+	
+	private boolean visible = true;
 	private SadModel model;
 	private SadBody body;
 	
 	List<SadLevel> getLevels() {
 		return levels;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	@Override
+	public SadEntity setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		return this;
+	}
+	
+	@Override
+	public boolean isVisible() {
+		return visible;
+	}
+	
+	@Override
+	public SadEntity setVisible(boolean visible) {
+		this.visible = visible;
+		return this;
 	}
 	
 	@Override

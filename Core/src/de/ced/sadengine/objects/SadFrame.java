@@ -24,7 +24,7 @@ public class SadFrame extends SadTexture implements SadFrameI {
 	}
 	
 	SadFrame() {
-		super(new int[]{0, 1280, 720, 3});
+		super(new int[]{0, 0, 0, 3});
 		fboID = 0;
 		depthID = 0;
 	}

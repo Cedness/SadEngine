@@ -180,6 +180,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd/lwjgl-zstd-natives-linux.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd/lwjgl-zstd-natives-macos.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd/lwjgl-zstd-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ThreadPool.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

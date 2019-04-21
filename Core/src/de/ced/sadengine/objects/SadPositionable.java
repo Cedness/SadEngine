@@ -5,13 +5,18 @@ import de.ced.sadengine.utils.SadVector;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public abstract class SadPositionable extends SadObject implements SadPositionableI {
+public class SadPositionable extends SadObject implements SadPositionableI {
 	
 	private boolean usePitchWhenMoving;
 	
 	SadVector position = new SadVector(3);
 	SadVector rotation = new SadRotationVector(3);
 	SadVector scale = new SadVector(1f, 1f, 1f);
+	
+	SadPositionable velocity = null;
+	
+	SadPositionable() {
+	}
 	
 	@Override
 	public SadVector getPosition() {
@@ -26,6 +31,23 @@ public abstract class SadPositionable extends SadObject implements SadPositionab
 	@Override
 	public SadVector getScale() {
 		return scale;
+	}
+	
+	@Override
+	public void setVelocityEnabled(boolean enabled) {
+		if (!enabled) {
+			velocity = null;
+			return;
+		}
+		if (velocity != null)
+			return;
+		velocity = new SadPositionable();
+		velocity.getScale().set(0);
+	}
+	
+	@Override
+	public SadPositionable getVelocity() {
+		return velocity;
 	}
 	
 	@Override

@@ -6,5 +6,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lwjgl" level="project" />
+    <orderEntry type="library" exported="" name="ThreadPool" level="project" />
   </component>
 </module>

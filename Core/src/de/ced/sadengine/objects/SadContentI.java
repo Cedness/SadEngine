@@ -1,7 +1,5 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.objects.action.SadAction;
-import de.ced.sadengine.objects.action.SadActionLogic;
 import de.ced.sadengine.objects.time.SadClock;
 
 import java.io.File;

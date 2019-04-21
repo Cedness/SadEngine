@@ -1,8 +1,6 @@
 package de.ced.sadengine.trash;
 
 import de.ced.sadengine.objects.SadMainLogic;
-import de.ced.sadengine.objects.Sadness;
-import de.ced.sadengine.objects.SadContent;
 
 public class ForestGump implements SadMainLogic {
 	
@@ -19,8 +17,7 @@ public class ForestGump implements SadMainLogic {
 	}
 	
 	@Override
-	public void setup(Sadness sadness) {
-		SadContent content = sadness.getContent();
+	public void setup() {
 		/*
 		content.createTexture("Baum", new File("./Core/res/textures/Baum.jpg"));
 		content.createTexture("Cube", new File("./Core/res/textures/Wood.jpg"));
@@ -34,7 +31,7 @@ public class ForestGump implements SadMainLogic {
 		camera.getScale().set(0.3f);
 		camera.setOrtho(true);
 		camera.setLevel("Level");
-		content.createFrame("Frame", width, height).setCamera("Camera");
+		content.createFrame("Frame", getWidth, getHeight).setCamera("Camera");
 		sadness.getWindow().addFrame("Frame");
 		
 		Forest forest = new Forest(10, 8);
@@ -49,7 +46,7 @@ public class ForestGump implements SadMainLogic {
 	}
 	
 	@Override
-	public void update(Sadness sadness) {
+	public void update() {
 		
 	}
 	

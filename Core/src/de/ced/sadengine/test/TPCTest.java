@@ -1,7 +1,6 @@
 package de.ced.sadengine.test;
 
 import de.ced.sadengine.objects.SadEngine;
-import de.ced.sadengine.objects.Sadness;
 
 public class TPCTest extends SadEngine {
 	
@@ -10,7 +9,7 @@ public class TPCTest extends SadEngine {
 	}
 	
 	@Override
-	public void setup(Sadness sadness) {
+	public void setup() {
 		/*
 		SadContent c = sadness.getContent();
 		SadWindow w = sadness.getWindow();

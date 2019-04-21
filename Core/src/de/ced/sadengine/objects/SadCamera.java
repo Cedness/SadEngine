@@ -200,7 +200,11 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	
 	@Override
 	public SadCamera setLevel(SadLevel level) {
+		if (level != null)
+			level.removeCamera(this);
 		this.level = level;
+		if (level != null)
+			level.addCamera(this);
 		return this;
 	}
 	
@@ -232,7 +236,7 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	
 	/*
 	@Override
-	public void end(float width, float height) {
+	public void end(float getWidth, float getHeight) {
 		while (rotation.y() > 180) {
 			rotation.add(0, -360, 0);
 		}
@@ -246,7 +250,7 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 			rotation.x(-89.9999f);
 		}
 		
-		super.end(width, height);
+		super.end(getWidth, getHeight);
 	}
 	*/
 }

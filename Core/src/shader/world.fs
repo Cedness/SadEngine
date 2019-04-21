@@ -38,7 +38,7 @@ void main() {
         final = final * tex;
     }
 
-    if (final.a < 0.5) {
+    if (final.a < 0.1) {
         discard;
     }
 

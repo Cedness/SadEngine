@@ -1,128 +1,123 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.SadEngine;
-import de.ced.sadengine.objects.Sadness;
+import de.ced.sadengine.objects.*;
+import de.ced.sadengine.utils.SadVector;
+
+import java.io.File;
+
+import static de.ced.sadengine.utils.SadValue.*;
 
 public class Main extends SadEngine {
 	
 	private int x = 0;
+	private SadFrame window, frame;
+	private SadCamera camera, camera2;
+	private SadLevel level, level2;
+	private SadEntity portalEntity, dragonEntity, twoEntity;
 	
-	private Main() {
-		start();
+	@Override
+	public void setup() {
+		camera = new SadCamera();
+		window.setCamera(camera);
+		level = new SadLevel();
+		camera.setLevel(level);
+		camera.getPosition().set(0, 0, -5);
+		
+		frame = new SadFrame(1280, 720);
+		camera2 = new SadCamera();
+		frame.setCamera(camera2);
+		frame.getColor().set(0.4f, 0.4f, 0.4f, 1f);
+		level2 = new SadLevel();
+		camera2.setLevel(level2);
+		camera.setLookingAtPosition(false);
+		camera.setDistanceToPosition(10);
+		camera2.getPosition().set(0, 0, -5);
+		
+		
+		SadTexture wood = new SadTexture(new File("./Core/res/textures/Wood.jpg"));
+		SadMesh rect = new SadMesh(new File("./Core/res/models/Rect.obj"));
+		SadMesh dragon = new SadMesh(new File("./Core/res/models/dragon.obj"));
+		SadModel dragonModel = new SadModel();
+		dragonModel.setMesh(dragon).getScale().setLength(2f).set(4f, 2f, 2f);
+		dragonEntity = new SadEntity();
+		dragonEntity.setModel(dragonModel).getPosition().z(3f);
+		
+		SadModel portalModel = new SadModel().setMesh(rect).setTexture(frame).setRenderBack(true);
+		portalEntity = new SadEntity().setModel(portalModel);
+		portalEntity.getRotation().z(180f);
+		portalEntity.getScale().set(16, 9, 0).setLength(12);
+		
+		SadModel twoModel = new SadModel().setTexture(wood).setMesh(rect);
+		twoEntity = new SadEntity().setModel(twoModel);
+		twoEntity.getPosition().set(0f, -1f, -2f);
+		level.addEntity(twoEntity);
+		
+		level2.addEntity(portalEntity);
+		level2.addEntity(dragonEntity);
+		
+		level.addEntity(portalEntity);
 	}
 	
 	@Override
-	public void setup(Sadness sadness) {
-		/*
-		SadContent c = sadness.getContent();
-		SadWindow window = sadness.getWindow();
-		c.createCamera("camera");
-		window.setCamera("camera");
-		c.createLevel("level");
-		c.getCamera("camera").setLevel("level");
-		c.getCamera("camera").getPosition().set(0, 0, -5);
-		
-		c.createFrame("frame", 1280, 720);
-		c.createCamera("camera2");
-		c.getFrame("frame").setCamera("camera2");
-		c.getFrame("frame").getColor().set(0.4f, 0.4f, 0.4f, 1f);
-		c.createLevel("level2");
-		c.getCamera("camera2").setLevel("level2");
-		c.getCamera("camera").setLookingAtPosition(false);
-		c.getCamera("camera").setDistanceToPosition(10);
-		c.getCamera("camera2").getPosition().set(0, 0, -5);
-		
-		
-		c.createTexture("CubeT", new File("./Core/res/textures/Wood.jpg"));
-		c.createMesh("CubeM", new File("./Core/res/models/Rect.obj"));
-		c.createMesh("mesh", new File("./Core/res/models/dragon.obj"));
-		c.createModel("CubeMo").setMesh("CubeM").getScale().setLength(2f).set(4f, 2f, 2f);
-		c.createEntity("Cube").setModel("CubeMo").getPosition().z(3);
-		
-		c.createModel("PortalM").setMesh("CubeM").setTexture("frame");
-		c.createEntity("Portal").setModel("PortalM");
-		c.getEntity("Portal").getRotation().z(180);
-		c.getEntity("Portal").getModel().setRenderBack(true);
-		c.getEntity("Portal").getScale().set(16, 9, 0).setLength(12);
-		
-		c.createModel("TwoStepsModel").setTexture("CubeT").setMesh("CubeM");
-		c.createEntity("TwoSteps").setModel("TwoStepsModel").getPosition().set(0, -1, -2);
-		c.getLevel("level").addEntity("TwoSteps");
-		
-		c.getLevel("level2").addEntity("Portal");
-		c.getLevel("level2").addEntity("Cube");
-		
-		c.getLevel("level").addEntity("Portal");
-		*/
-	}
-	
-	@Override
-	public void update(Sadness sadness) {
-		/*
-		SadContent c = sadness.getContent();
-		SadInput i = sadness.getInput();
-		
-		c.getEntity("Cube").getRotation().addY(1f);
-		c.getEntity("TwoSteps").getRotation().addY(1f);
+	public void update() {
+		dragonEntity.getRotation().addY(1f);
+		twoEntity.getRotation().addY(1f);
 		
 		//c.getEntity("Portal").getRotation().add(1);
 		
 		//c.getCamera("camera2").getRotation().set(c.getEntity("Portal").getRotation()).negate();
 		
-		if (i.isJustReleased(KEY_O))
-			c.getCamera("camera").setOrtho(!c.getCamera("camera").isOrtho());
+		if (getInput().isJustReleased(KEY_O))
+			camera.setOrtho(!camera.isOrtho());
 		
-		if (i.isJustReleased(KEY_T))
-			c.getCamera("camera").setLookingAtPosition(!c.getCamera("camera").isLookingAtPosition());
+		if (getInput().isJustReleased(KEY_T))
+			camera.setLookingAtPosition(!camera.isLookingAtPosition());
 		
-		SadVector r = c.getEntity("Portal").getRotation();
-		float vP = (i.isPressed(KEY_KP_0) ? 30f : 10f) * c.getInterval();
+		SadVector r = portalEntity.getRotation();
+		float vP = (getInput().isPressed(KEY_KP_0) ? 30f : 10f) * getInterval();
 		
-		if (i.isPressed(KEY_KP_1))
+		if (getInput().isPressed(KEY_KP_1))
 			r.addX(-vP);
-		if (i.isPressed(KEY_KP_2))
+		if (getInput().isPressed(KEY_KP_2))
 			r.addY(-vP);
-		if (i.isPressed(KEY_KP_3))
+		if (getInput().isPressed(KEY_KP_3))
 			r.addZ(-vP);
-		if (i.isPressed(KEY_KP_4))
+		if (getInput().isPressed(KEY_KP_4))
 			r.addX(vP);
-		if (i.isPressed(KEY_KP_5))
+		if (getInput().isPressed(KEY_KP_5))
 			r.addY(vP);
-		if (i.isPressed(KEY_KP_6))
+		if (getInput().isPressed(KEY_KP_6))
 			r.addZ(vP);
 		
-		SadCamera camera = c.getCamera("camera");
 		SadVector pC = camera.getPosition();
 		SadVector dC = camera.getYawDirection().mul(0.1f);
 		SadVector dCN = new SadVector(-dC.z(), dC.y(), dC.x());
 		
-		float vC = 15f * c.getInterval();
+		float vC = 15f * getInterval();
 		
-		if (i.isPressed(KEY_D))
+		if (getInput().isPressed(KEY_D))
 			pC.add(dCN);
-		if (i.isPressed(KEY_A))
+		if (getInput().isPressed(KEY_A))
 			pC.add(dCN.negate());
-		if (i.isPressed(KEY_S))
+		if (getInput().isPressed(KEY_S))
 			pC.add(dC.clone().negate());
-		if (i.isPressed(KEY_W))
+		if (getInput().isPressed(KEY_W))
 			pC.add(dC);
 		
 		SadVector rC = camera.getRotation();
-		float vrC = 40f * c.getInterval();
+		float vrC = 40f * getInterval();
 		
-		if (i.isPressed(KEY_LEFT))
+		if (getInput().isPressed(KEY_LEFT))
 			rC.addY(vrC);
-		if (i.isPressed(KEY_RIGHT))
+		if (getInput().isPressed(KEY_RIGHT))
 			rC.addY(-vrC);
-		if (i.isPressed(KEY_UP))
+		if (getInput().isPressed(KEY_UP))
 			rC.addX(vrC);
-		if (i.isPressed(KEY_DOWN))
+		if (getInput().isPressed(KEY_DOWN))
 			rC.addX(-vrC);
 		
-		SadCamera camera2 = c.getCamera("camera2");
-		SadEntity portal = c.getEntity("Portal");
 		//camera2.getRotation().set(camera.getRotation());
-		//camera2.setDistanceToPosition(camera.getPosition().clone().negate().add(portal.getPosition()).getLength());
+		//camera2.setDistanceToPosition(camera.getPosition().clone().negate().add(portalEntity.getPosition()).getLength());
 		
 		
 		if (x++ >= 100) {
@@ -131,7 +126,6 @@ public class Main extends SadEngine {
 			System.out.println(camera.getRotation());
 			System.out.println(camera.getDistanceToPosition());
 		}
-		*/
 	}
 	
 	public static void main(String[] args) {

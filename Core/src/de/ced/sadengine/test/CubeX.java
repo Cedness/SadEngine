@@ -1,12 +1,11 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.Sadness;
-import de.ced.sadengine.objects.action.SadActionLogic;
+import de.ced.sadengine.objects.SadActionLogic;
 
 public class CubeX implements SadActionLogic {
 	
 	@Override
-	public void setup(Sadness sadness) {
+	public void setup() {
 		/*
 		SadContent content = sadness.getContent();
 		System.out.println("LUUUUUUUL");
@@ -21,7 +20,7 @@ public class CubeX implements SadActionLogic {
 	}
 	
 	@Override
-	public void update(Sadness sadness) {
+	public void update() {
 		/*
 		SadContent content = sadness.getContent();
 		SadInput input = sadness.getInput();

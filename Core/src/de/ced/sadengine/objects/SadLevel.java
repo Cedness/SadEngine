@@ -11,6 +11,19 @@ public class SadLevel extends SadObject implements SadLevelI {
 	private ArrayList<SadEntity> entities = new ArrayList<>();
 	private HashMap<SadModel, ArrayList<SadEntity>> index = new HashMap<>();
 	private SadMovement movement = WHEN_DISPLAYED;
+	private List<SadCamera> cameras = new ArrayList<>();
+	
+	void addCamera(SadCamera camera) {
+		cameras.add(camera);
+	}
+	
+	void removeCamera(SadCamera camera) {
+		cameras.remove(camera);
+	}
+	
+	List<SadCamera> getCameras() {
+		return cameras;
+	}
 	
 	@Override
 	public SadLevel addEntity(SadEntity entity) {
@@ -40,7 +53,7 @@ public class SadLevel extends SadObject implements SadLevelI {
 		SadModel model = entity.getModel();
 		if (!index.containsKey(model))
 			return;
-		if (!(index.get(model).size() == 1)) {
+		if (index.get(model).size() == 1) {
 			index.remove(model);
 		} else {
 			index.get(model).remove(entity);

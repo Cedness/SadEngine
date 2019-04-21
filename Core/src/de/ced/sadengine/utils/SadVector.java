@@ -31,6 +31,11 @@ public class SadVector implements SadVectorI {
 	}
 	
 	@Override
+	public SadVector identify() {
+		return set(0);
+	}
+	
+	@Override
 	public float getLength() {
 		return (float) Math.sqrt(getSquaredLength());
 	}

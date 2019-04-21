@@ -1,6 +1,4 @@
-package de.ced.sadengine.objects.action;
-
-import de.ced.sadengine.objects.SadRunnable;
+package de.ced.sadengine.objects;
 
 public class SadAction extends SadRunnable implements SadActionI {
 	

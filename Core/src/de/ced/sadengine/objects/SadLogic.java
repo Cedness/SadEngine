@@ -4,7 +4,7 @@ package de.ced.sadengine.objects;
  * Just for inheritance.
  * Do not use directly!
  */
-public interface SadIllogic {
+public interface SadLogic {
 	
 	/**
 	 * Main logic:
@@ -13,7 +13,7 @@ public interface SadIllogic {
 	 * Action:
 	 * Called after the SadAction object has been created.
 	 */
-	default void setup(Sadness sadness) {
+	default void setup() {
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public interface SadIllogic {
 	 * Actions:
 	 * Only called if the SadAction object's isRunning() method returns true.
 	 */
-	default void update(Sadness sadness) {
+	default void update() {
 	}
 	
 	/**
@@ -37,6 +37,6 @@ public interface SadIllogic {
 	 * Main logic:
 	 * Called after all SadAction objects have been terminated.
 	 */
-	default void terminate(Sadness sadness) {
+	default void terminate() {
 	}
 }

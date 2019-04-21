@@ -1,10 +1,6 @@
 package de.ced.sadengine.test;
 
-import de.ced.sadengine.objects.SadContent;
 import de.ced.sadengine.objects.SadEngine;
-import de.ced.sadengine.objects.SadFrame;
-import de.ced.sadengine.objects.Sadness;
-import de.ced.sadengine.objects.input.SadInput;
 
 public class Serkan extends SadEngine {
 	
@@ -17,7 +13,7 @@ public class Serkan extends SadEngine {
 	}
 	
 	@Override
-	public void setup(Sadness sadness) {
+	public void setup() {
 		/*
 		SadContent c = sadness.getContent();
 		SadWindow w = sadness.getWindow();
@@ -58,10 +54,7 @@ public class Serkan extends SadEngine {
 	}
 	
 	@Override
-	public void update(Sadness sadness) {
-		SadContent c = sadness.getContent();
-		SadFrame w = sadness.getWindow();
-		SadInput i = sadness.getInput();
+	public void update() {
 		
 		//System.out.println(c.getEntity("entity").getRotation());
 	}

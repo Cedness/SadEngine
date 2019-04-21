@@ -1,12 +1,11 @@
 package de.ced.sadengine.test;
 
 import de.ced.sadengine.objects.SadEngine;
-import de.ced.sadengine.objects.Sadness;
 
 public class Cube extends SadEngine {
 	
 	@Override
-	public void setup(Sadness sadness) {
+	public void setup() {
 		/*
 		SadContent content = sadness.getContent();
 		
@@ -26,9 +25,9 @@ public class Cube extends SadEngine {
 		
 		///*
 		float scale = 0.5f;
-		content.createFrame("Frame", width, height).setCamera("Camera").getScale().mul(scale);
-		content.createFrame("FrameL", width, height).setCamera("Camera").getScale().mul(scale);
-		content.createFrame("FrameR", width, height).setCamera("Camera").getScale().mul(scale);
+		content.createFrame("Frame", getWidth, getHeight).setCamera("Camera").getScale().mul(scale);
+		content.createFrame("FrameL", getWidth, getHeight).setCamera("Camera").getScale().mul(scale);
+		content.createFrame("FrameR", getWidth, getHeight).setCamera("Camera").getScale().mul(scale);
 		float offset = 4f;
 		content.getFrame("FrameL").getRotation().z(-90);
 		content.getFrame("FrameL").getPosition().x(-offset);
@@ -53,7 +52,7 @@ public class Cube extends SadEngine {
 	}
 	
 	@Override
-	public void update(Sadness sadness) {
+	public void update() {
 		/*
 		SadContent content = sadness.getContent();
 		SadEntity cube = content.getEntity("Cube");

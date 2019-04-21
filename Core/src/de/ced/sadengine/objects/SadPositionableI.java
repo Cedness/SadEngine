@@ -11,6 +11,10 @@ interface SadPositionableI extends SadObjectI {
 	
 	SadVector getScale();
 	
+	void setVelocityEnabled(boolean enabled);
+	
+	SadPositionable getVelocity();
+	
 	SadVector getYawDirection(SadVector yawDirection);
 	
 	SadVector getYawDirection();

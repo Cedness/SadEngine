@@ -1,6 +1,7 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.objects.input.SadInput;
+import de.ced.sadengine.objects.time.SadClockwork;
 import de.ced.sadengine.utils.SadIntro;
 import de.ced.threadpool.Task;
 import de.ced.threadpool.ThreadPool;
@@ -11,11 +12,10 @@ public class SadLoop implements Task {
 	
 	private final ThreadPool threadPool;
 	
-	private final SadEngine engine;
-	private final Sadness sadness;
-	private final SadFrame window;
-	private final SadContent content;
-	private final SadInput input;
+	private SadEngine window;
+	private SadActionHandler actionHandler;
+	private SadClockwork clockwork;
+	private SadInput input;
 	private SadRenderer renderer;
 	private SadMover mover;
 	
@@ -29,7 +29,6 @@ public class SadLoop implements Task {
 	private float secInterval;
 	
 	private final SadHelpTask helpTask;
-	private final SadMoveTask moveTask;
 	private final SadLogicTask logicTask;
 	private final SadInputTask inputTask;
 	private final SadRenderTask renderTask;
@@ -37,18 +36,13 @@ public class SadLoop implements Task {
 	SadLoop(SadEngine engine) {
 		ThreadPool threadPool = new ThreadPool(new boolean[]{false, false});
 		threadPool.lockWorker(0, true);
-		threadPool.addTask(new SadIntro(BETA, "0.10.3"));
+		threadPool.addTask(new SadIntro(BETA, "1.1.13"));
 		this.threadPool = threadPool;
-		this.engine = engine;
-		sadness = new Sadness();
-		content = sadness.getContent();
-		window = sadness.getWindow();
-		input = sadness.getInput();
+		window = engine;
 		
 		interval = LOOP_SECOND / (double) engine.getUps();
 		
 		helpTask = new SadHelpTask();
-		moveTask = new SadMoveTask();
 		logicTask = new SadLogicTask();
 		inputTask = new SadInputTask();
 		renderTask = new SadRenderTask();
@@ -58,12 +52,18 @@ public class SadLoop implements Task {
 	
 	@Override
 	public void run() {
-		renderer = new SadRenderer(window, content, input, engine);
-		mover = new SadMover(window, content, input, engine);
-		input.update();
-		engine.getLogic().setup(sadness);
-		content.getActionHandler().setup();
-		input.update();
+		input = new SadInput();
+		mover = new SadMover();
+		actionHandler = new SadActionHandler();
+		renderer = new SadRenderer(window, input);
+		clockwork = new SadClockwork();
+		window.setup(renderer, mover, input, actionHandler, clockwork);
+		window.setStartTime(now());
+		input.setup2(secInterval);
+		input.update(0);
+		window.getLogic().setup();
+		actionHandler.setup();
+		input.update(0);
 		
 		threadPool.addTask(helpTask, 0);
 	}
@@ -80,23 +80,14 @@ public class SadLoop implements Task {
 		@Override
 		public void run() {
 			if (currentOffset < interval) {
-				interval = LOOP_SECOND / (double) engine.getUps();
+				interval = LOOP_SECOND / (double) window.getUps();
 				
-				secInterval = 1.0f / (float) engine.getUps();
+				secInterval = 1.0f / (float) window.getUps();
 			}
 			
 			t1 = now();
 			
 			currentOffset -= interval;
-			
-			threadPool.addTask(moveTask, 0);
-		}
-	}
-	
-	public class SadMoveTask implements Task {
-		@Override
-		public void run() {
-			mover.invoke();
 			
 			threadPool.addTask(logicTask, 0);
 		}
@@ -105,10 +96,12 @@ public class SadLoop implements Task {
 	public class SadLogicTask implements Task {
 		@Override
 		public void run() {
-			content.update(secInterval);
-			engine.getLogic().update(sadness);
-			content.getActionHandler().update();
-			engine.getLogic().updateFinally(sadness);
+			mover.invoke(secInterval);
+			clockwork.increaseClocks(secInterval);
+			window.setInterval(secInterval);
+			window.getLogic().update();
+			actionHandler.update();
+			window.getLogic().updateFinally();
 			
 			threadPool.addTask(inputTask, 0);
 		}
@@ -117,12 +110,12 @@ public class SadLoop implements Task {
 	public class SadInputTask implements Task {
 		@Override
 		public void run() {
-			input.update();
+			input.update(secInterval);
 			
 			if (renderer.shouldClose()) {
-				engine.getLogic().preTerminate(sadness);
-				content.getActionHandler().terminate();
-				engine.getLogic().terminate(sadness);
+				window.getLogic().preTerminate();
+				actionHandler.terminate();
+				window.getLogic().terminate();
 				
 				renderer.release();
 				

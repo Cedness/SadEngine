@@ -8,8 +8,8 @@ public class SadWindow implements SadFrameI {
 	private int height;
 	
 	public void setup(SadEngine engine) {
-		width = engine.width();
-		height = engine.height();
+		width = engine.getWidth();
+		height = engine.getHeight();
 	}
 	
 	@Override

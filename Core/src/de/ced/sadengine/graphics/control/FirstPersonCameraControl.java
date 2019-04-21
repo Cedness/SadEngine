@@ -1,17 +1,8 @@
 package de.ced.sadengine.graphics.control;
 
-import de.ced.sadengine.objects.input.SadInput;
-import de.ced.sadengine.objects.SadCamera;
-import de.ced.sadengine.objects.SadContent;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-
-import java.util.HashMap;
-
-import static de.ced.sadengine.utils.SadValue.PI;
-
-public class FirstPersonCameraControl extends SadCameraControl {
+public class FirstPersonCameraControl {
 	
+	/*
 	private SadCamera camera;
 	
 	private boolean flyMode = true;
@@ -144,4 +135,5 @@ public class FirstPersonCameraControl extends SadCameraControl {
 	public void setLookAcceleration(float acceleration) {
 		this.lookAcceleration = acceleration;
 	}
+	*/
 }

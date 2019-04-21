@@ -1,20 +1,28 @@
 package de.ced.sadengine.objects.time;
 
-import de.ced.sadengine.objects.SadObject;
-
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SadClockwork {
 	
-	private final HashMap<String, SadObject> clocks;
+	private List<SadClock> clocks = new ArrayList<>();
 	
-	public SadClockwork(HashMap<String, SadObject> clocks) {
-		this.clocks = clocks;
+	public void add(SadClock clock) {
+		if (clocks.contains(clock))
+			return;
+		clocks.add(clock);
+	}
+	
+	public void remove(SadClock clock) {
+		clocks.remove(clock);
+	}
+	
+	public void removeAll() {
+		clocks = new ArrayList<>();
 	}
 	
 	public void increaseClocks(float interval) {
-		for (SadObject obj : clocks.values()) {
-			SadClock clock = (SadClock) obj;
+		for (SadClock clock : clocks) {
 			if (!clock.isRunning())
 				continue;
 			float incr = clock.getIncrPerSec() * interval;

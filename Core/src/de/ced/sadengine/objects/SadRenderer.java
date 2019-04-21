@@ -13,7 +13,9 @@ import java.util.List;
 import static de.ced.sadengine.utils.SadValue.toRadians;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class SadRenderer extends SadProcessor {
+public class SadRenderer {
+	
+	private final SadFrame window;
 	
 	private SadGlWindow glWindow;
 	private SadShader shader;
@@ -21,6 +23,7 @@ public class SadRenderer extends SadProcessor {
 	@SuppressWarnings("deprecation")
 	private SadLight light = new SadLight(new SadVector(1f, 1f, 1f), new SadVector(0f, 5f, 0f));
 	
+	private SadTexture currentTexture = null;
 	private SadTexture lastTexture = null;
 	private Matrix4f matrix = new Matrix4f();
 	private List<SadModel> parentModels;
@@ -34,16 +37,15 @@ public class SadRenderer extends SadProcessor {
 	private SadVector entityRotation = new SadRotationVector(3);
 	private SadVector entityScale = new SadVector(3);
 	
-	SadRenderer(SadFrame window, SadContent content, SadInput input, SadEngine engine) {
-		super(window, content, input, engine);
+	SadRenderer(SadEngine window, SadInput input) {
+		this.window = window;
 		
 		glWindow = new SadGlWindow();
-		glWindow.setup(engine, input);
+		glWindow.setup(window, input);
 		
 		shader = new SadShader();
 	}
 	
-	@Override
 	void invoke() {
 		renderFrame(window);
 		glWindow.update();
@@ -145,7 +147,7 @@ public class SadRenderer extends SadProcessor {
 			if (textureFound)
 				continue;
 			
-			SadTexture currentTexture = parentTextures.get(i);
+			currentTexture = parentTextures.get(i);
 			if (currentTexture == null)
 				continue;
 			
@@ -153,16 +155,16 @@ public class SadRenderer extends SadProcessor {
 				return;
 			
 			textureFound = true;
-			
-			if (lastTexture != currentTexture) {
-				shader.uploadTexture(currentTexture, 0);
-				lastTexture = currentTexture;
-			}
+		}
+		
+		if (lastTexture != currentTexture) {
+			shader.uploadTexture(currentTexture, 0);
+			lastTexture = currentTexture;
 		}
 		
 		shader.uploadColor(model.getColor());
 		
-		boolean renderBack = model.isRenderBack() || lastTexture.isRenderBack();
+		boolean renderBack = model.isRenderBack() || lastTexture != null && lastTexture.isRenderBack();
 		if (renderBack)
 			SadGL.enableBackRendering();
 		mesh.loadVao(true);
@@ -177,7 +179,6 @@ public class SadRenderer extends SadProcessor {
 	}
 	
 	private void renderEntity(SadEntity entity, SadMesh mesh) {
-		System.out.println(entity.getName());
 		entityPosition.set(position).mul(entity.getScale()).add(entity.getPosition());
 		entityRotation.set(rotation).add(entity.getRotation());
 		entityScale.set(scale).mul(entity.getScale());
@@ -196,7 +197,7 @@ public class SadRenderer extends SadProcessor {
 		mesh.draw();
 	}
 	
-	public void release() {
+	void release() {
 		shader.release();
 		
 		glfwSetWindowShouldClose(glWindow.getGlWindow(), true);

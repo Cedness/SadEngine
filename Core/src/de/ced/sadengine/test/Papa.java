@@ -1,9 +1,6 @@
 package de.ced.sadengine.test;
 
 import de.ced.sadengine.objects.*;
-import de.ced.sadengine.objects.input.SadInput;
-
-import java.io.File;
 
 public class Papa extends SadEngine {
 	
@@ -11,30 +8,47 @@ public class Papa extends SadEngine {
 		new Papa();
 	}
 	
+	private Papa() {
+		super(0);
+		setName("Dennis");
+		setFullscreen(true);
+		setWidth(1920);
+		setHeight(1080);
+		start();
+	}
+	
 	@Override
-	public void setup(Sadness sadness) {
-		SadContent c = sadness.getContent();
-		SadFrame w = sadness.getWindow();
-		SadInput i = sadness.getInput();
-		
+	public void setup() {
 		SadCamera camera = new SadCamera();
-		w.setCamera(camera);
+		setCamera(camera);
 		SadLevel level = new SadLevel();
 		camera.setLevel(level);
-		SadMesh mesh = new SadMesh(new File("./Core/res/models/Rect.obj"));
-		SadTexture texture = new SadTexture(new File("./Core/res/textures/Wood.jpg"));
+		SadMesh mesh = new SadMesh("./Core/res/models/Rect.obj");
 		SadEntity entity = new SadEntity();
 		SadModel model = new SadModel();
 		entity.setModel(model);
 		model.setMesh(mesh);
+		SadTexture texture = new SadTexture("./Core/res/textures/images/mauer.gif");
 		model.setTexture(texture);
-		camera.getPosition().z(-5);
+		model.getColor().set(0.1f);
+		camera.getPosition().z(-5f);
 		level.addEntity(entity);
-		w.getColor().set(0.5f);
+		getColor().set(1f, 0.7f, 1f);
+		entity.getRotation().y(-40f);
+		entity.getScale().set(1f);
+		entity.setVelocityEnabled(true);
+		//entity.getVelocity().getScale().set(0.1f);
+		getMover().add(entity);
+		entity.getVelocity().setVelocityEnabled(true);
+		//entity.getVelocity().getVelocity().getScale().set(0.1f);
+		getMover().add(entity.getVelocity());
+		model.setRenderBack(true);
+		entity.getVelocity().getRotation().y(10.5f);
+		getInput().getCursor().setHidden(true);
 	}
 	
 	@Override
-	public void update(Sadness sadness) {
-	
+	public void update() {
+		//System.out.println(getWidth() + " " + getHeight());
 	}
 }

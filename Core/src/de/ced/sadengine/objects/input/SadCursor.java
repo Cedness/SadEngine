@@ -10,8 +10,8 @@ import static org.lwjgl.glfw.GLFW.*;
 public class SadCursor {
 	
 	private SadGlWindow window;
-	private GLFWCursorPosCallback posCallback;
-	private GLFWCursorEnterCallback enterCallback;
+	private GLFWCursorPosCallback posCallback = new CursorPosCallback();
+	private GLFWCursorEnterCallback enterCallback = new CursorEnterCallback();
 	private SadVector position = new SadVector(3), positionLast = new SadVector(3);
 	private boolean hidden, hiddenLast;
 	private boolean locked, lockedLast;
@@ -19,8 +19,6 @@ public class SadCursor {
 	
 	public void setup(SadGlWindow window) {
 		this.window = window;
-		posCallback = new CursorPosCallback();
-		enterCallback = new CursorEnterCallback();
 		//posCallback = new SadCursorCallback(window, position, positionLast);
 	}
 	

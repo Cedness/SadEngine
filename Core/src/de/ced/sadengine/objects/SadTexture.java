@@ -1,6 +1,8 @@
 package de.ced.sadengine.objects;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 
 import static org.lwjgl.opengl.GL11.glDeleteTextures;
 
@@ -16,8 +18,21 @@ public class SadTexture extends SadObject implements SadTextureI {
 	private float lightDamper;
 	private float reflectivity;
 	
+	public SadTexture(URL url) {
+		this(url.getFile());
+	}
+	
+	public SadTexture(URI uri) {
+		this(uri.getPath());
+	}
+	
+	public SadTexture(String path) {
+		this(new File(path));
+	}
+	
 	public SadTexture(File file) {
 		this(SadGL.loadTexture(file));
+		setName(file.getAbsolutePath());
 	}
 	
 	SadTexture(int[] data) {
@@ -25,6 +40,7 @@ public class SadTexture extends SadObject implements SadTextureI {
 		width = data[1];
 		height = data[2];
 		transparent = data[3] > 3;
+		
 	}
 	
 	public int getTextureID() {

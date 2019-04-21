@@ -1,19 +1,12 @@
 package de.ced.sadengine.objects;
 
-import de.ced.sadengine.objects.action.SadAction;
-import de.ced.sadengine.objects.action.SadActionHandler;
-import de.ced.sadengine.objects.time.SadClock;
-import de.ced.sadengine.objects.time.SadClockwork;
-
-import java.util.Collection;
-import java.util.HashMap;
-
 /**
  * Contains all the stuff processed by the engine.
  * Objects in here won't be processed directly, they first have to be added to the SadWindow instance.
  */
 public class SadContent {
 	
+	/*
 	private float interval;
 	private final HashMap<Class<? extends SadObject>, HashMap<String, SadObject>> contents = new HashMap<>();
 	
@@ -93,8 +86,6 @@ public class SadContent {
 	public float getInterval() {
 		return interval;
 	}
-	
-	/*
 	
 	@Override
 	public SadPositionable getPositionable(String name) {
@@ -254,10 +245,10 @@ public class SadContent {
 	}
 	
 	@Override
-	public SadFrame createFrame(String name, int width, int height) {
+	public SadFrame createFrame(String name, int getWidth, int getHeight) {
 		deleteTexture(name);
-		SadFrame frame = new SadFrame(name, this, SadGL.createFrameBuffer(), SadGL.createTextureAttachment(width, height),
-				SadGL.createDepthBufferAttachment(width, height), width, height);
+		SadFrame frame = new SadFrame(name, this, SadGL.createFrameBuffer(), SadGL.createTextureAttachment(getWidth, getHeight),
+				SadGL.createDepthBufferAttachment(getWidth, getHeight), getWidth, getHeight);
 		put(frame);
 		return frame;
 	}
