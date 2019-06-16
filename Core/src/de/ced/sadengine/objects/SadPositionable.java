@@ -5,44 +5,41 @@ import de.ced.sadengine.utils.SadVector;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class SadPositionable extends SadObject implements SadPositionableI {
+public class SadPositionable extends SadVectorset implements SadPositionableI {
 	
-	private boolean usePitchWhenMoving;
+	private boolean directionalRotation = false;
 	
-	SadVector position = new SadVector(3);
-	SadVector rotation = new SadRotationVector(3);
-	SadVector scale = new SadVector(1f, 1f, 1f);
-	
-	SadPositionable velocity = null;
-	
-	SadPositionable() {
+	public SadPositionable() {
+		position = new SadVector(3);
+		rotation = new SadRotationVector(3);
+		scale = new SadVector(3).set(1f);
 	}
 	
 	@Override
-	public SadVector getPosition() {
-		return position;
+	
+	public boolean isDirectionalRotation() {
+		return directionalRotation;
 	}
 	
 	@Override
-	public SadVector getRotation() {
-		return rotation;
+	public SadPositionable setDirectionalRotation(boolean directionalRotation) {
+		if (this.directionalRotation == directionalRotation)
+			return this;
+		this.directionalRotation = directionalRotation;
+		rotation = directionalRotation ? new SadVector(3).z(1f) : new SadRotationVector(3);
+		return this;
 	}
 	
 	@Override
-	public SadVector getScale() {
-		return scale;
-	}
-	
-	@Override
-	public void setVelocityEnabled(boolean enabled) {
+	public SadPositionable setVelocityEnabled(boolean enabled) {
 		if (!enabled) {
 			velocity = null;
-			return;
+			return this;
 		}
 		if (velocity != null)
-			return;
-		velocity = new SadPositionable();
-		velocity.getScale().set(0);
+			return this;
+		velocity = new SadVelocity();
+		return this;
 	}
 	
 	@Override
@@ -71,7 +68,6 @@ public class SadPositionable extends SadObject implements SadPositionableI {
 			return direction;
 		float pitch = toRadians(rotation.x());
 		float yaw = toRadians(rotation.y());
-		//float roll = toRadians(rotation.z());
 		float cosPitch = cos(pitch);
 		direction.x(cosPitch * sin(yaw));
 		direction.y(sin(pitch));
@@ -83,28 +79,4 @@ public class SadPositionable extends SadObject implements SadPositionableI {
 	public SadVector getDirection() {
 		return getDirection(new SadVector(3));
 	}
-	
-	@Override
-	public boolean isUsePitchWhenMoving() {
-		return usePitchWhenMoving;
-	}
-	
-	@Override
-	public SadPositionable setUsePitchWhenMoving(boolean usePitchWhenMoving) {
-		this.usePitchWhenMoving = usePitchWhenMoving;
-		return this;
-	}
-	
-	/*
-	protected boolean physicsEnabled = false;
-	protected SadPhysics physics = new SadPhysics();
-	
-	public SadPhysics getPhysics() {
-		return physics;
-	}
-	
-	public void enablePhysics(boolean enable) {
-		physicsEnabled = enable;
-	}
-	*/
 }

@@ -18,7 +18,7 @@ public class Main extends SadEngine {
 	@Override
 	public void setup() {
 		camera = new SadCamera();
-		window.setCamera(camera);
+		setCamera(camera);
 		level = new SadLevel();
 		camera.setLevel(level);
 		camera.getPosition().set(0, 0, -5);
@@ -35,8 +35,8 @@ public class Main extends SadEngine {
 		
 		
 		SadTexture wood = new SadTexture(new File("./Core/res/textures/Wood.jpg"));
-		SadMesh rect = new SadMesh(new File("./Core/res/models/Rect.obj"));
-		SadMesh dragon = new SadMesh(new File("./Core/res/models/dragon.obj"));
+		SadOBJMesh rect = new SadOBJMesh(new File("./Core/res/models/Rect.obj"));
+		SadOBJMesh dragon = new SadOBJMesh(new File("./Core/res/models/dragon.obj"));
 		SadModel dragonModel = new SadModel();
 		dragonModel.setMesh(dragon).getScale().setLength(2f).set(4f, 2f, 2f);
 		dragonEntity = new SadEntity();
@@ -65,7 +65,7 @@ public class Main extends SadEngine {
 		
 		//c.getEntity("Portal").getRotation().add(1);
 		
-		//c.getCamera("camera2").getRotation().set(c.getEntity("Portal").getRotation()).negate();
+		//c.getCamera("camera2").getRotation().set(c.getEntity("Portal").getRotation()).invert();
 		
 		if (getInput().isJustReleased(KEY_O))
 			camera.setOrtho(!camera.isOrtho());
@@ -98,9 +98,9 @@ public class Main extends SadEngine {
 		if (getInput().isPressed(KEY_D))
 			pC.add(dCN);
 		if (getInput().isPressed(KEY_A))
-			pC.add(dCN.negate());
+			pC.add(dCN.invert());
 		if (getInput().isPressed(KEY_S))
-			pC.add(dC.clone().negate());
+			pC.add(dC.clone().invert());
 		if (getInput().isPressed(KEY_W))
 			pC.add(dC);
 		
@@ -117,7 +117,7 @@ public class Main extends SadEngine {
 			rC.addX(-vrC);
 		
 		//camera2.getRotation().set(camera.getRotation());
-		//camera2.setDistanceToPosition(camera.getPosition().clone().negate().add(portalEntity.getPosition()).getLength());
+		//camera2.setDistanceToPosition(camera.getPosition().clone().invert().add(portalEntity.getPosition()).getLength());
 		
 		
 		if (x++ >= 100) {

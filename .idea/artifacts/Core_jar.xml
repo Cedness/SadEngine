@@ -3,7 +3,6 @@
     <output-path>$USER_HOME$/Desktop/Core_jar</output-path>
     <root id="archive" name="Core.jar">
       <element id="module-output" name="Core" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/joml-1.9.11.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/lwjgl/lwjgl.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/lwjgl/lwjgl-javadoc.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lwjgl-3.2.0/lwjgl/lwjgl-sources.jar" path-in-jar="/" />

@@ -2,22 +2,23 @@ package de.ced.sadengine.objects;
 
 import de.ced.sadengine.objects.input.SadInput;
 import de.ced.sadengine.objects.light.SadLight;
+import de.ced.sadengine.utils.SadGLMatrix;
 import de.ced.sadengine.utils.SadRotationVector;
 import de.ced.sadengine.utils.SadVector;
-import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static de.ced.sadengine.utils.SadValue.toRadians;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.*;
 
 public class SadRenderer {
 	
 	private final SadFrame window;
 	
-	private SadGlWindow glWindow;
+	private SadWindow glWindow;
 	private SadShader shader;
 	
 	@SuppressWarnings("deprecation")
@@ -25,7 +26,7 @@ public class SadRenderer {
 	
 	private SadTexture currentTexture = null;
 	private SadTexture lastTexture = null;
-	private Matrix4f matrix = new Matrix4f();
+	private SadGLMatrix matrix = new SadGLMatrix().identity();
 	private List<SadModel> parentModels;
 	private List<SadTexture> parentTextures;
 	
@@ -40,7 +41,7 @@ public class SadRenderer {
 	SadRenderer(SadEngine window, SadInput input) {
 		this.window = window;
 		
-		glWindow = new SadGlWindow();
+		glWindow = new SadWindow();
 		glWindow.setup(window, input);
 		
 		shader = new SadShader();
@@ -64,8 +65,8 @@ public class SadRenderer {
 		frame.setGeniousParadoxPreventer(geniousParadoxPreventer + 1);
 		
 		if (geniousParadoxPreventer == 0) {
-			SadGL.bindFrameBuffer(frame);
-			SadGL.clear(frame);
+			bindFrameBuffer(frame);
+			clear(frame);
 			frame.setRendered(false);
 		}
 		
@@ -77,7 +78,7 @@ public class SadRenderer {
 		
 		boolean renderOnlyFrames = frame.isRendered();
 		
-		SadGL.bindFrameBuffer(frame);
+		bindFrameBuffer(frame);
 		lastTexture = null;
 		shader.enable(true);
 		camera.update(frame.getWidth(), frame.getHeight());
@@ -127,7 +128,7 @@ public class SadRenderer {
 	}
 	
 	private void renderMesh(SadModel model, List<SadEntity> entities, boolean renderOnlyFrames) {
-		SadMesh mesh = model.getMesh();
+		SadOBJMesh mesh = model.getMesh();
 		if (mesh == null)
 			return;
 		
@@ -166,32 +167,24 @@ public class SadRenderer {
 		
 		boolean renderBack = model.isRenderBack() || lastTexture != null && lastTexture.isRenderBack();
 		if (renderBack)
-			SadGL.enableBackRendering();
-		mesh.loadVao(true);
+			enableBackRendering();
+		mesh.loadVao();
 		
 		for (SadEntity entity : entities) {
 			renderEntity(entity, mesh);
 		}
 		
-		mesh.loadVao(false);
+		mesh.unloadVao();
 		if (renderBack)
-			SadGL.disableBackRendering();
+			disableBackRendering();
 	}
 	
-	private void renderEntity(SadEntity entity, SadMesh mesh) {
+	private void renderEntity(SadEntity entity, SadOBJMesh mesh) {
 		entityPosition.set(position).mul(entity.getScale()).add(entity.getPosition());
 		entityRotation.set(rotation).add(entity.getRotation());
 		entityScale.set(scale).mul(entity.getScale());
 		
-		matrix.identity();
-		
-		matrix.translate(entityPosition.toVector3f());
-		matrix.rotateXYZ(
-				toRadians(entityRotation.x()),
-				toRadians(entityRotation.y()),
-				toRadians(entityRotation.z()));
-		matrix.scale(entityScale.toVector3f());
-		
+		matrix.transformationMatrix(entityPosition, entityRotation, entityScale);
 		shader.uploadTransformationMatrix(matrix);
 		
 		mesh.draw();
@@ -200,7 +193,7 @@ public class SadRenderer {
 	void release() {
 		shader.release();
 		
-		glfwSetWindowShouldClose(glWindow.getGlWindow(), true);
+		glfwSetWindowShouldClose(glWindow.getWindowID(), true);
 		glfwTerminate();
 		//noinspection ConstantConditions
 		glfwSetErrorCallback(null).free();
@@ -212,6 +205,35 @@ public class SadRenderer {
 	
 	void stop() {
 		glWindow.close();
+	}
+	
+	private static void bindFrameBuffer(SadFrame frame) {
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, frame.getFboID());
+		glBindRenderbuffer(GL_RENDERBUFFER, frame.getDepthID());
+		glViewport(0, 0, frame.getWidth(), frame.getHeight());
+	}
+	
+	@SuppressWarnings("unused")
+	private static void unbindFrameBuffer(SadWindow glWindow) {
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		glViewport(0, 0, glWindow.getWidth(), glWindow.getHeight());
+	}
+	
+	private static void clear(SadFrame frame) {
+		bindFrameBuffer(frame);
+		SadVector c = frame.getColor();
+		glClearColor(c.get(0), c.get(1), c.get(2), c.get(3));
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+	
+	private static void enableBackRendering() {
+		glDisable(GL_CULL_FACE);
+	}
+	
+	private static void disableBackRendering() {
+		glEnable(GL_CULL_FACE);
 	}
 	
 	/*
@@ -257,12 +279,12 @@ public class SadRenderer {
 		
 		//shader.uploadFrameMatrix(frameMatrix);
 			shader.uploadProjectionMatrix(camera.getProjectionMatrix());
-			shader.uploadViewMatrix(camera.getViewMatrix());
+			shader.uploadViewMatrix(camera.getViewMatrix_OLD());
 			shader.uploadLight(light);
 			
 			//Vector3f vector = new Vector3f();
 			//Matrix4f invProj = new Matrix4f(camera.getProjectionMatrix()).invert();
-			//Matrix4f invView = new Matrix4f(camera.getViewMatrix()).invert();
+			//Matrix4f invView = new Matrix4f(camera.getViewMatrix_OLD()).invert();
 			//vector.mulProject(invProj);
 			//vector.mulPosition(invView);
 		

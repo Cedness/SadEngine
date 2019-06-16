@@ -12,7 +12,7 @@ import java.util.List;
 public class SadModel extends SadPositionable implements SadModelI {
 	
 	private ArrayList<SadModel> models = new ArrayList<>();
-	private SadMesh mesh = null;
+	private SadOBJMesh mesh = null;
 	private SadTexture texture = null;
 	private SadVector color = new SadVector(1f, 1f, 1f, 1f);
 	private boolean renderBack = false;
@@ -44,12 +44,12 @@ public class SadModel extends SadPositionable implements SadModelI {
 	}
 	
 	@Override
-	public SadMesh getMesh() {
+	public SadOBJMesh getMesh() {
 		return mesh;
 	}
 	
 	@Override
-	public SadModel setMesh(SadMesh mesh) {
+	public SadModel setMesh(SadOBJMesh mesh) {
 		this.mesh = mesh;
 		return this;
 	}

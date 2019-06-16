@@ -12,7 +12,7 @@ public class Hurensohn extends SadEngine {
 	public void setup(Sadness sadness) {
 		/*
 		SadContent content = sadness.getContent();
-		SadWindow window = sadness.getWindow();
+		SadWindi window = sadness.getWindow();
 		
 		content.createLevel("Level");
 		content.createCamera("Camera").setLevel("Level").setOrtho(true);

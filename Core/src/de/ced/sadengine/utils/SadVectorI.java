@@ -1,7 +1,5 @@
 package de.ced.sadengine.utils;
 
-import org.joml.Vector3f;
-
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public interface SadVectorI {
 	
@@ -75,7 +73,7 @@ public interface SadVectorI {
 	
 	SadVector mul(SadVector vector);
 	
-	SadVector negate();
+	SadVector invert();
 	
 	SadVector addX(float x);
 	
@@ -95,6 +93,14 @@ public interface SadVectorI {
 	
 	SadVector rot(int i, float radAngle);
 	
+	boolean dimensionEquals(SadVector vector);
+	
+	boolean dimensionEquals(float[] values);
+	
+	boolean contentEquals(SadVector vector);
+	
+	boolean contentEquals(float[] values);
+	
 	SadVector sync(SadVector vector);
 	
 	SadVector unSync();
@@ -103,8 +109,4 @@ public interface SadVectorI {
 	
 	@Override
 	String toString();
-	
-	boolean contentEquals(SadVector vector);
-	
-	Vector3f toVector3f();
 }

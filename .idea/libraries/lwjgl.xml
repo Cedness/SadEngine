@@ -33,7 +33,6 @@
       <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-xxhash" />
       <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-yoga" />
       <root url="file://$PROJECT_DIR$/lwjgl-3.2.0/lwjgl-zstd" />
-      <root url="jar://$PROJECT_DIR$/lwjgl-3.2.0/joml-1.9.11.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

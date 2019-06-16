@@ -1,8 +1,11 @@
 package de.ced.sadengine.objects;
 
+import de.ced.sadengine.utils.SadGLMatrix;
 import de.ced.sadengine.utils.SadVector;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import static org.lwjgl.opengl.GL20.*;
 
@@ -17,8 +20,8 @@ abstract class SadShaderProgram {
 	private int fragmentShader;
 	
 	SadShaderProgram(String vertexFile, String fragmentFile) {
-		vertexShader = SadGL.loadShader(vertexFile, GL_VERTEX_SHADER);
-		fragmentShader = SadGL.loadShader(fragmentFile, GL_FRAGMENT_SHADER);
+		vertexShader = loadShader(vertexFile, GL_VERTEX_SHADER);
+		fragmentShader = loadShader(fragmentFile, GL_FRAGMENT_SHADER);
 		program = glCreateProgram();
 		
 		glAttachShader(program, vertexShader);
@@ -74,6 +77,11 @@ abstract class SadShaderProgram {
 		);
 	}
 	
+	void loadMatrix(int location, SadGLMatrix value) {
+		glUniformMatrix4fv(location, false, value.toArray());
+	}
+	
+	/*
 	void loadMatrix(int location, Matrix4f value) {
 		float[] val = value.get(MATRIX_BUFFER);
 		glUniformMatrix4fv(location, false, val);
@@ -82,6 +90,7 @@ abstract class SadShaderProgram {
 	void loadMatrix(int location, Matrix3f value) {
 		glUniformMatrix4fv(location, false, value.get(MATRIX_BUFFER));
 	}
+	*/
 	
 	void loadBoolean(int location, boolean value) {
 		glUniform1f(location, value ? 1 : 0);
@@ -102,5 +111,28 @@ abstract class SadShaderProgram {
 		glDeleteShader(fragmentShader);
 		
 		glDeleteProgram(program);
+	}
+	
+	//Shader Loading
+	
+	private static int loadShader(String path, int shaderType) {
+		StringBuilder builder = new StringBuilder();
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(SadShaderProgram.class.getResourceAsStream("/shader/" + path)));
+			while (reader.ready()) {
+				builder.append(reader.readLine()).append(System.lineSeparator());
+			}
+			reader.close();
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		}
+		
+		int id = glCreateShader(shaderType);
+		glShaderSource(id, builder);
+		glCompileShader(id);
+		if (glGetShaderi(id, GL_COMPILE_STATUS) == GL_FALSE)
+			throw new RuntimeException("Failed to compile SadShader" + System.lineSeparator() + glGetShaderInfoLog(id));
+		
+		return id;
 	}
 }

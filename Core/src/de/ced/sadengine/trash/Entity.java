@@ -1,18 +1,18 @@
-package de.ced.sadengine.trash;
+/*package de.ced.sadengine.trash;
 
-import de.ced.sadengine.objects.SadMesh;
+import de.ced.sadengine.objects.SadOBJMesh;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class Entity {
 	
-	private SadMesh mesh;
+	private SadOBJMesh mesh;
 	private Vector3f position;
 	private Vector3f rotation;
 	public float scale;
 	private Matrix4f transformationMatrix;
 	
-	public Entity(SadMesh mesh) {
+	public Entity(SadOBJMesh mesh) {
 		this.mesh = mesh;
 		position = new Vector3f();
 		rotation = new Vector3f();
@@ -31,7 +31,7 @@ public class Entity {
 		transformationMatrix.scale(scale);
 	}
 	
-	public SadMesh getMesh() {
+	public SadOBJMesh getMesh() {
 		return mesh;
 	}
 	
@@ -47,3 +47,4 @@ public class Entity {
 		return transformationMatrix;
 	}
 }
+*/

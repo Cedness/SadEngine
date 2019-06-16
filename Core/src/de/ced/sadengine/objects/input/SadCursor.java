@@ -1,6 +1,6 @@
 package de.ced.sadengine.objects.input;
 
-import de.ced.sadengine.objects.SadGlWindow;
+import de.ced.sadengine.objects.SadWindow;
 import de.ced.sadengine.utils.SadVector;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
@@ -9,7 +9,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class SadCursor {
 	
-	private SadGlWindow window;
+	private SadWindow window;
 	private GLFWCursorPosCallback posCallback = new CursorPosCallback();
 	private GLFWCursorEnterCallback enterCallback = new CursorEnterCallback();
 	private SadVector position = new SadVector(3), positionLast = new SadVector(3);
@@ -17,7 +17,7 @@ public class SadCursor {
 	private boolean locked, lockedLast;
 	private boolean inside, insideChanged;
 	
-	public void setup(SadGlWindow window) {
+	public void setup(SadWindow window) {
 		this.window = window;
 		//posCallback = new SadCursorCallback(window, position, positionLast);
 	}
@@ -25,13 +25,13 @@ public class SadCursor {
 	void update() {
 		if (!position.contentEquals(positionLast)) {
 			positionLast.set(position);
-			glfwSetCursorPos(window.getGlWindow(), position.x() / 2f + window.getWidth() / 2f, position.y() / 2f + window.getHeight() / 2f);
+			glfwSetCursorPos(window.getWindowID(), position.x() / 2f + window.getWidth() / 2f, position.y() / 2f + window.getHeight() / 2f);
 		}
 		
 		if (hidden ^ hiddenLast || locked ^ lockedLast) {
 			hiddenLast = hidden;
 			lockedLast = locked;
-			glfwSetInputMode(window.getGlWindow(), GLFW_CURSOR, locked ? GLFW_CURSOR_DISABLED : (hidden ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL));
+			glfwSetInputMode(window.getWindowID(), GLFW_CURSOR, locked ? GLFW_CURSOR_DISABLED : (hidden ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL));
 		}
 		
 		if (insideChanged)

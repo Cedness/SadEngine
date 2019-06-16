@@ -1,11 +1,11 @@
 package de.ced.sadengine.objects;
 
-import org.joml.Vector3f;
+import de.ced.sadengine.utils.SadVector;
 
 public class SadPhysics {
 	
 	private float mass = 1f;
-	private Vector3f velocity = new Vector3f();
+	private SadVector velocity = new SadVector(3);
 	
 	public float getMass() {
 		return mass;
@@ -16,11 +16,11 @@ public class SadPhysics {
 		return this;
 	}
 	
-	public Vector3f getVelocity() {
+	public SadVector getVelocity() {
 		return velocity;
 	}
 	
-	public Vector3f getImpulse() {
-		return new Vector3f(velocity).mul(mass);
+	public SadVector getImpulse() {
+		return new SadVector(velocity).mul(mass);
 	}
 }

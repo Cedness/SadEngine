@@ -12,7 +12,7 @@ public class TPCTest extends SadEngine {
 	public void setup() {
 		/*
 		SadContent c = sadness.getContent();
-		SadWindow w = sadness.getWindow();
+		SadWindi w = sadness.getWindow();
 		SadInput i = sadness.getInput();
 		
 		SadCamera camera = c.createCamera("camera");
@@ -21,7 +21,7 @@ public class TPCTest extends SadEngine {
 		camera.setLevel(level.getName());
 		camera.getPosition().set(0f, 0f, -10f);
 		SadEntity entity = c.createEntity("entity");
-		SadMesh rect = c.createMesh("rect", new File("./Core/res/models/Rect.obj"));
+		SadOBJMesh rect = c.createMesh("rect", new File("./Core/res/models/Rect.obj"));
 		SadTexture wood = c.createTexture("wood", new File("./Core/res/textures/Wood.jpg"));
 		SadModel model = c.createModel("model");
 		model.setMesh(rect.getName()).setTexture(wood.getName());

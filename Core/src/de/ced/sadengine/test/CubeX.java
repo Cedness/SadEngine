@@ -9,7 +9,7 @@ public class CubeX implements SadActionLogic {
 		/*
 		SadContent content = sadness.getContent();
 		System.out.println("LUUUUUUUL");
-		SadMesh mesh = content.createMesh("CubeX", new File("./Core/res/models/Cube.obj"));
+		SadOBJMesh mesh = content.createMesh("CubeX", new File("./Core/res/models/Cube.obj"));
 		SadModel model = content.createModel("CubeX").setMesh("CubeX");
 		SadEntity entity = content.createEntity("CubeX").setModel("CubeX");
 		entity.getPosition().set(0, 0.4f, 5);
@@ -28,7 +28,7 @@ public class CubeX implements SadActionLogic {
 		SadEntity entity = content.getEntity("CubeX");
 		System.out.println("lol");
 		float speed = 3f;
-		SadVector pos = entity.getPosition();
+		SadVelocity pos = entity.getPosition();
 		if (input.isPressed(KEY_LEFT)) {
 			pos.x(pos.x() + content.getInterval() * speed);
 		}

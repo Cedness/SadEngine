@@ -34,9 +34,9 @@ public class SadLoop implements Task {
 	private final SadRenderTask renderTask;
 	
 	SadLoop(SadEngine engine) {
-		ThreadPool threadPool = new ThreadPool(new boolean[]{false, false});
+		ThreadPool threadPool = new ThreadPool();
 		threadPool.lockWorker(0, true);
-		threadPool.addTask(new SadIntro(BETA, "1.1.13"));
+		threadPool.addTask(new SadIntro(BETA, "1.3.07"));
 		this.threadPool = threadPool;
 		window = engine;
 		

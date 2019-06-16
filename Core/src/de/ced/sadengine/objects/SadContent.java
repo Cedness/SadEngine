@@ -2,7 +2,7 @@ package de.ced.sadengine.objects;
 
 /**
  * Contains all the stuff processed by the engine.
- * Objects in here won't be processed directly, they first have to be added to the SadWindow instance.
+ * Objects in here won't be processed directly, they first have to be added to the SadWindi instance.
  */
 public class SadContent {
 	
@@ -17,7 +17,7 @@ public class SadContent {
 		contents.put(SadEntity.class, new HashMap<>());
 		contents.put(SadBody.class, new HashMap<>());
 		contents.put(SadModel.class, new HashMap<>());
-		contents.put(SadMesh.class, new HashMap<>());
+		contents.put(SadOBJMesh.class, new HashMap<>());
 		contents.put(SadTexture.class, new HashMap<>());
 		contents.put(SadLevel.class, new HashMap<>());
 		contents.put(SadCamera.class, new HashMap<>());
@@ -117,8 +117,8 @@ public class SadContent {
 	}
 	
 	@Override
-	public SadMesh createMesh(String name, File file) {
-		SadMesh mesh = SadGL.loadMesh(name, file);
+	public SadOBJMesh createMesh(String name, File file) {
+		SadOBJMesh mesh = SadGL.loadMesh(name, file);
 		if (mesh == null)
 			return null;
 		put(mesh);
@@ -126,13 +126,13 @@ public class SadContent {
 	}
 	
 	@Override
-	public SadMesh getMesh(String name) {
-		return (SadMesh) get(SadMesh.class, name);
+	public SadOBJMesh getMesh(String name) {
+		return (SadOBJMesh) get(SadOBJMesh.class, name);
 	}
 	
 	@Override
 	public void deleteMesh(String name) {
-		delete(SadMesh.class, name);
+		delete(SadOBJMesh.class, name);
 	}
 	
 	@Override

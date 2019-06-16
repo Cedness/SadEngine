@@ -1,13 +1,10 @@
 package de.ced.sadengine.utils;
 
-import org.joml.Vector3f;
-
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class SadValue {
 	
 	public static final float PI = 3.14159265358979323846f;
 	public static final double PId = 3.14159265358979323846;
-	public static final Vector3f UP_VECTOR = new Vector3f(0, 1, 0);
 	
 	public static float abs(float v) {
 		return v < 0 ? v * -1f : v;

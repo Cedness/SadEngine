@@ -5,9 +5,15 @@ import de.ced.sadengine.utils.SadVector;
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess", "BooleanMethodIsAlwaysInverted"})
 interface SadCameraI extends SadPositionableI {
 	
+	SadVector getUpWorld();
+	
 	float getFov();
 	
 	SadCamera setFov(float fov);
+	
+	boolean isHorizontalFov();
+	
+	SadCamera setHorizontalFov(boolean horizontalFov);
 	
 	float getNear();
 	
@@ -16,6 +22,12 @@ interface SadCameraI extends SadPositionableI {
 	float getFar();
 	
 	SadCamera setFar(float far);
+	
+	SadVector getForward();
+	
+	SadVector getUp();
+	
+	SadVector getLeft();
 	
 	boolean isWindowMode();
 	
@@ -32,6 +44,8 @@ interface SadCameraI extends SadPositionableI {
 	float getDistanceToPosition();
 	
 	SadCamera setDistanceToPosition(float distanceToPosition);
+	
+	SadVector getRay(SadVector ndc);
 	
 	SadVector getCursorVector();
 	

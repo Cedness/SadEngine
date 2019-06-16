@@ -1,5 +1,5 @@
 package de.ced.sadengine.objects;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
-interface SadMeshI extends SadObjectI {
+interface SadOBJMeshI extends SadObjectI {
 }

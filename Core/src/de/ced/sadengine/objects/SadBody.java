@@ -10,7 +10,7 @@ class SadBody extends SadObject {
 	private SadVector v1;
 	private SadVector v2;
 	
-	private void iterateMesh(SadMesh mesh, SadVector pos, SadVector rot, SadVector scale) {
+	private void iterateMesh(SadOBJMesh mesh, SadVector pos, SadVector rot, SadVector scale) {
 		float[] positions = mesh.getPositions();
 		SadVector currentPosition = new SadVector(3);
 		for (int i = 0; i < positions.length; i += 3) {
@@ -28,7 +28,7 @@ class SadBody extends SadObject {
 		for (SadModel subModel : model.getModels()) {
 			if (subModel == null)
 				continue;
-			SadMesh mesh = subModel.getMesh();
+			SadOBJMesh mesh = subModel.getMesh();
 			if (mesh == null)
 				continue;
 			

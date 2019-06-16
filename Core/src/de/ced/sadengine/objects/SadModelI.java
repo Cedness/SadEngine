@@ -15,9 +15,9 @@ interface SadModelI extends SadPositionableI {
 	
 	List<SadModel> getModels();
 	
-	SadMesh getMesh();
+	SadOBJMesh getMesh();
 	
-	SadModel setMesh(SadMesh mesh);
+	SadModel setMesh(SadOBJMesh mesh);
 	
 	SadTexture getTexture();
 	

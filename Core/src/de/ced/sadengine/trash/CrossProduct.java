@@ -42,13 +42,13 @@ public class CrossProduct {
 		System.out.println(cosBetaR);
 		System.out.println(p);
 		
-		SadVector pointR = pointA.clone().negate().add(pointB).setLength(r).add(pointA);
+		SadVector pointR = pointA.clone().invert().add(pointB).setLength(r).add(pointA);
 		
-		SadVector pointQ = pointA.clone().negate().add(pointD).setLength(p).add(pointA);
+		SadVector pointQ = pointA.clone().invert().add(pointD).setLength(p).add(pointA);
 		
 		SadVector zero = pointR.clone().add(pointQ);
 		
-		near = zero.clone().negate().add(viewerPosition).getLength();
+		near = zero.clone().invert().add(viewerPosition).getLength();
 		
 		left = -r;
 		right = left + cr;

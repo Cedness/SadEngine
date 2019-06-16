@@ -1,8 +1,8 @@
 package de.ced.sadengine.objects;
 
 import de.ced.sadengine.objects.light.SadLight;
+import de.ced.sadengine.utils.SadGLMatrix;
 import de.ced.sadengine.utils.SadVector;
-import org.joml.Matrix4f;
 
 @SuppressWarnings("unused")
 class SadShader extends SadShaderProgram {
@@ -48,15 +48,15 @@ class SadShader extends SadShaderProgram {
 		reflectivity = super.getUniformLocation("reflectivity");
 	}
 	
-	void uploadTransformationMatrix(Matrix4f matrix) {
+	void uploadTransformationMatrix(SadGLMatrix matrix) {
 		super.loadMatrix(transformationMatrix, matrix);
 	}
 	
-	void uploadViewMatrix(Matrix4f matrix) {
+	void uploadViewMatrix(SadGLMatrix matrix) {
 		super.loadMatrix(viewMatrix, matrix);
 	}
 	
-	void uploadProjectionMatrix(Matrix4f matrix) {
+	void uploadProjectionMatrix(SadGLMatrix matrix) {
 		super.loadMatrix(projectionMatrix, matrix);
 	}
 	

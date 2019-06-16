@@ -40,7 +40,7 @@ public class Sekokengine extends SadEngine {
 	
 	@Override
 	public void setup() {
-		SadMesh mesh = new SadMesh("./Core/res/models/Cube.obj");
+		SadOBJMesh mesh = new SadOBJMesh("./Core/res/models/Cube.obj");
 		for (int h = 0; h < IMAGE_NAMES.length; h++) {
 			for (int i = 0; i < IMAGE_NAMES[0].length; i++) {
 				if (IMAGE_NAMES[h][i] == null || IMAGE_NAMES[h][i].equals("hintergrund.gif"))
@@ -194,7 +194,7 @@ public class Sekokengine extends SadEngine {
 		SadVector target = new SadVector((float) xTarget, yTarget);
 		targets.get(currentLevel).get(entity).set(target);
 		//entity.getPosition().set(target);
-		entity.getVelocity().getPosition().set(target.add(entity.getPosition().clone().negate()).mul(4f));
+		entity.getVelocity().getPosition().set(target.add(entity.getPosition().clone().invert()).mul(4f));
 		movingEntities.put(entity, 0.3f);
 	}
 }

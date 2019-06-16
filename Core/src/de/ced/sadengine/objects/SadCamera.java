@@ -1,19 +1,29 @@
 package de.ced.sadengine.objects;
 
+import de.ced.sadengine.utils.SadGLMatrix;
 import de.ced.sadengine.utils.SadVector;
-import org.joml.Matrix4f;
+import de.ced.sadengine.utils.SadVectorListener;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class SadCamera extends SadPositionable implements SadCameraI {
+public class SadCamera extends SadPositionable implements SadCameraI, SadVectorListener {
 	
+	private SadVector upWorld = new SadVector(0f, 1f, 0f);
 	private float fov = 70f;
+	private boolean horizontalFov = false;
 	private float near = 0.1f;
 	private float far = 1000f;
-	private Matrix4f projectionMatrix = new Matrix4f();
-	private Matrix4f viewMatrix = new Matrix4f();
-	private SadVector direction = new SadVector(3);
-	private SadVector target = new SadVector(3);
+	private float aspectRatio = 16f / 9f;
+	
+	private SadVector l = new SadVector(-1f, 0f, 0f);
+	private SadVector u = new SadVector(0f, 1f, 0f);
+	private SadVector f = new SadVector(0f, 0f, 1f);
+	private boolean viewChanged = true;
+	private boolean projectionChanged = true;
+	
+	private SadGLMatrix projectionMatrix = new SadGLMatrix();
+	private SadGLMatrix viewMatrix = new SadGLMatrix().identity();
+	
 	private boolean windowMode = false;
 	private SadEntity window = null;
 	private SadVector viewerPosition = new SadVector(3);
@@ -22,6 +32,18 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	private float distanceToPosition = 1f;
 	private SadVector cursorVector = new SadVector();
 	private SadLevel level = null;
+	
+	public SadCamera() {
+		position.setListener(this);
+		rotation.setListener(this);
+		scale.setListener(this);
+		upWorld.setListener(this);
+	}
+	
+	@Override
+	public SadVector getUpWorld() {
+		return upWorld;
+	}
 	
 	@Override
 	public float getFov() {
@@ -32,7 +54,20 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	public SadCamera setFov(float fov) {
 		if (fov <= 0 || fov > 180)
 			return this;
+		projectionChanged = true;
 		this.fov = fov;
+		return this;
+	}
+	
+	@Override
+	public boolean isHorizontalFov() {
+		return horizontalFov;
+	}
+	
+	@Override
+	public SadCamera setHorizontalFov(boolean horizontalFov) {
+		projectionChanged = true;
+		this.horizontalFov = horizontalFov;
 		return this;
 	}
 	
@@ -45,6 +80,7 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	public SadCamera setNear(float near) {
 		if (near <= 0 || near >= far)
 			return this;
+		projectionChanged = true;
 		this.near = near;
 		return this;
 	}
@@ -58,15 +94,31 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	public SadCamera setFar(float far) {
 		if (far <= near)
 			return this;
+		projectionChanged = true;
 		this.far = far;
 		return this;
 	}
 	
-	Matrix4f getProjectionMatrix() {
+	@Override
+	public SadVector getForward() {
+		return f;
+	}
+	
+	@Override
+	public SadVector getUp() {
+		return u;
+	}
+	
+	@Override
+	public SadVector getLeft() {
+		return l;
+	}
+	
+	SadGLMatrix getProjectionMatrix() {
 		return projectionMatrix;
 	}
 	
-	Matrix4f getViewMatrix() {
+	SadGLMatrix getViewMatrix() {
 		return viewMatrix;
 	}
 	
@@ -88,6 +140,7 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	
 	@Override
 	public SadCamera setOrtho(boolean ortho) {
+		projectionChanged = true;
 		this.ortho = ortho;
 		return this;
 	}
@@ -95,14 +148,6 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	
 	@SuppressWarnings("ALL")
 	public void update(float width, float height) {
-		/*SadVector3 position = new SadVector3(this.position);
-		SadVector3 rotation = new SadVector3(this.position);
-		SadEntity entity = getEntity();
-		if (entity != null) {
-			position.add(entity.getPosition());
-			rotation.add(entity.getRotation());
-		}*/
-		getDirection(direction);
 		
 		SadVector position = this.position.clone();
 		if (lookingAtPosition) {
@@ -113,13 +158,15 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 			float flatDistance = cos(beta) * distanceToPosition;
 			thirdPersonOffset.x(sin(alpha) * flatDistance);
 			thirdPersonOffset.z(cos(alpha) * flatDistance);
-			position.add(thirdPersonOffset.negate());
+			position.add(thirdPersonOffset.invert());
 		}
 		
-		viewMatrix.setLookAt(position.toVector3f(), position.toVector3f().add(direction.toVector3f(), target.toVector3f()), UP_VECTOR);
+		if (viewChanged) {
+			viewMatrix.viewMatrix(this, l, u, f);
+			viewChanged = false;
+		}
 		
-		float aspectRatio = width / height;
-		projectionMatrix.identity();
+		aspectRatio = width / height;
 		float left, right, bottom, top, near, far;
 		
 		if (windowMode) {
@@ -135,29 +182,26 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 			float betaP = acos(pow(bp) - pow(cp) - pow(ap)) / (-2f * cp * ap);
 			float p = bp * cos(betaP);
 			
-			SadVector pointR = pointA.clone().negate().add(pointB).setLength(r).add(pointA);
+			SadVector pointR = pointA.clone().invert().add(pointB).setLength(r).add(pointA);
 			
-			SadVector pointQ = pointA.clone().negate().add(pointD).setLength(p).add(pointA);
+			SadVector pointQ = pointA.clone().invert().add(pointD).setLength(p).add(pointA);
 			
 			SadVector zero = pointR.clone().add(pointQ);
 			
-			near = zero.clone().negate().add(viewerPosition).getLength();
+			near = zero.clone().invert().add(viewerPosition).getLength();
 			
 			left = -r;
 			right = left + cr;
 			bottom = -p;
 			top = bottom + cp;
-		} else {
-			
 		}
 		
-		if (ortho) {
-			float lr = 1 / scale.x() * aspectRatio;
-			float bt = 1 / scale.y();
-			projectionMatrix.setOrtho(-lr, lr, -bt, bt, this.near, this.far);
-		} else {
-			//projectionMatrix.setFrustum(left, right, bottom, top, near, far);
-			projectionMatrix.setPerspective((float) Math.toRadians(fov), aspectRatio, this.near, this.far);
+		
+		float lr = 1 / scale.x() * aspectRatio;
+		float bt = 1 / scale.y();
+		if (projectionChanged) {
+			projectionMatrix.projectionMatrix(this, aspectRatio);
+			projectionChanged = false;
 		}
 	}
 	
@@ -181,6 +225,24 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	public SadCamera setDistanceToPosition(float distanceToPosition) {
 		this.distanceToPosition = distanceToPosition;
 		return this;
+	}
+	
+	@Override
+	public SadVector getRay(SadVector ndc) {
+		float t = tan(toRadians(fov)) * near;
+		if (horizontalFov) {
+			t /= aspectRatio;
+		}
+		float r = t * aspectRatio;
+		
+		ndc = ndc.clone();
+		ndc.mul(r, t);
+		
+		SadVector ray = f.clone();
+		ray.add(u.clone().mul(ndc.y()));
+		ray.add(l.clone().mul(ndc.x()));
+		
+		return ray.normalize();
 	}
 	
 	@Override
@@ -222,6 +284,11 @@ public class SadCamera extends SadPositionable implements SadCameraI {
 	@Override
 	public SadVector getViewerPosition() {
 		return viewerPosition;
+	}
+	
+	@Override
+	public void changeEvent() {
+		viewChanged = true;
 	}
 	
 	@SuppressWarnings("unused")

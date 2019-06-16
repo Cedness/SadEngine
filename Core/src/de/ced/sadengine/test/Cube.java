@@ -56,7 +56,7 @@ public class Cube extends SadEngine {
 		/*
 		SadContent content = sadness.getContent();
 		SadEntity cube = content.getEntity("Cube");
-		SadVector cubeRot = cube.getRotation();
+		SadVelocity cubeRot = cube.getRotation();
 		SadInput input = sadness.getInput();
 		float interval = content.getInterval();
 		float speed = 100f;

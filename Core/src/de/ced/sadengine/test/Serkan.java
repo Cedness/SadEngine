@@ -16,7 +16,7 @@ public class Serkan extends SadEngine {
 	public void setup() {
 		/*
 		SadContent c = sadness.getContent();
-		SadWindow w = sadness.getWindow();
+		SadWindi w = sadness.getWindow();
 		SadInput i = sadness.getInput();
 		
 		SadCamera camera = c.createCamera("camera");
@@ -28,7 +28,7 @@ public class Serkan extends SadEngine {
 		
 		camera.setLevel(level.getName());
 		
-		SadMesh mesh = c.createMesh("mesh", new File("./Core/res/models/Rect.obj"));
+		SadOBJMesh mesh = c.createMesh("mesh", new File("./Core/res/models/Rect.obj"));
 		SadTexture texture = c.createTexture("texture", new File("./Core/res/textures/TwoStepsFromHell.jpg"));
 		SadModel model = c.createModel("model");
 		model.setMesh(mesh.getName());

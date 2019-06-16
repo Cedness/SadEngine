@@ -5,13 +5,11 @@ import de.ced.sadengine.utils.SadVector;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 interface SadPositionableI extends SadObjectI {
 	
-	SadVector getPosition();
+	boolean isDirectionalRotation();
 	
-	SadVector getRotation();
+	SadPositionable setDirectionalRotation(boolean directionalRotation);
 	
-	SadVector getScale();
-	
-	void setVelocityEnabled(boolean enabled);
+	SadPositionable setVelocityEnabled(boolean enabled);
 	
 	SadPositionable getVelocity();
 	
@@ -22,8 +20,4 @@ interface SadPositionableI extends SadObjectI {
 	SadVector getDirection(SadVector direction);
 	
 	SadVector getDirection();
-	
-	boolean isUsePitchWhenMoving();
-	
-	SadPositionable setUsePitchWhenMoving(boolean usePitchWhenMoving);
 }

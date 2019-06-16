@@ -1,6 +1,6 @@
-package de.ced.sadengine.trash;
+/*package de.ced.sadengine.trash;
 
-import de.ced.sadengine.objects.SadMesh;
+import de.ced.sadengine.objects.SadOBJMesh;
 import de.ced.sadengine.objects.light.SadLight;
 import de.ced.sadengine.utils.SadVector;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class World {
 	
-	private HashMap<SadMesh, List<Entity>> indexEntities = new HashMap<>();
+	private HashMap<SadOBJMesh, List<Entity>> indexEntities = new HashMap<>();
 	private List<Entity> entities = new ArrayList<>();
 	
 	private SadLight light = new SadLight(new SadVector(1f, 0f, 0f), new SadVector(0, 0, -20));
@@ -20,7 +20,7 @@ public class World {
 		return entities;
 	}
 	
-	public HashMap<SadMesh, List<Entity>> getIndexEntities() {
+	public HashMap<SadOBJMesh, List<Entity>> getIndexEntities() {
 		return indexEntities;
 	}
 	
@@ -84,10 +84,11 @@ public class World {
 	}
 	
 	public void release() {
-		for (SadMesh mesh : indexEntities.keySet()) {
+		for (SadOBJMesh mesh : indexEntities.keySet()) {
 			//mesh.release();
 		}
 		indexEntities = new HashMap<>();
 		entities = new ArrayList<>();
 	}
 }
+*/

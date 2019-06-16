@@ -1,6 +1,6 @@
 package de.ced.sadengine.objects.input;
 
-import de.ced.sadengine.objects.SadGlWindow;
+import de.ced.sadengine.objects.SadWindow;
 import de.ced.sadengine.utils.SadVector;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
@@ -30,7 +30,7 @@ public class SadInput {
 	private SadVector scrollState = new SadVector(2);
 	private SadVector scrolled = new SadVector(2);
 	
-	public void setup(SadGlWindow window) {
+	public void setup(SadWindow window) {
 		cursor.setup(window);
 	}
 	

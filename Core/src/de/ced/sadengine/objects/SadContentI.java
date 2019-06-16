@@ -17,9 +17,9 @@ interface SadContentI {
 	
 	void deleteEntity(String name);
 	
-	SadMesh createMesh(String name, File file);
+	SadOBJMesh createMesh(String name, File file);
 	
-	SadMesh getMesh(String name);
+	SadOBJMesh getMesh(String name);
 	
 	void deleteMesh(String name);
 	

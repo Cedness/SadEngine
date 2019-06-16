@@ -1,13 +1,13 @@
 package de.ced.sadengine.utils;
 
-import org.joml.Vector3f;
-
 import static de.ced.sadengine.utils.SadValue.*;
 
 public class SadVector implements SadVectorI {
 	
 	@SuppressWarnings("WeakerAccess")
 	protected float[] values;
+	@SuppressWarnings("WeakerAccess")
+	protected SadVectorListener listener;
 	
 	public SadVector(int dimension) {
 		values = new float[dimension];
@@ -28,6 +28,10 @@ public class SadVector implements SadVectorI {
 	
 	public SadVector(SadVector vector) {
 		this(vector.getDimension(), vector);
+	}
+	
+	public void setListener(SadVectorListener listener) {
+		this.listener = listener;
 	}
 	
 	@Override
@@ -90,11 +94,9 @@ public class SadVector implements SadVectorI {
 	@Override
 	public SadVector crossProduct(float... values) {
 		float[] a = this.values.clone();
-		if (a.length == 3 && values.length == 3) {
-			this.values[0] = a[1] * values[2] - a[2] * values[1];
-			this.values[1] = a[2] * values[0] - a[0] * values[2];
-			this.values[2] = a[0] * values[1] - a[1] * values[0];
-		}
+		this.values[0] = a[1] * values[2] - a[2] * values[1];
+		this.values[1] = a[2] * values[0] - a[0] * values[2];
+		this.values[2] = a[0] * values[1] - a[1] * values[0];
 		return end();
 	}
 	
@@ -246,7 +248,7 @@ public class SadVector implements SadVectorI {
 	}
 	
 	@Override
-	public SadVector negate() {
+	public SadVector invert() {
 		return mul(-1f);
 	}
 	
@@ -330,6 +332,32 @@ public class SadVector implements SadVectorI {
 	}
 	
 	@Override
+	public boolean dimensionEquals(SadVector vector) {
+		return dimensionEquals(vector.values);
+	}
+	
+	@Override
+	public boolean dimensionEquals(float[] values) {
+		return this.values.length == values.length;
+	}
+	
+	@Override
+	public boolean contentEquals(SadVector vector) {
+		return contentEquals(vector.values);
+	}
+	
+	@Override
+	public boolean contentEquals(float[] values) {
+		if (!dimensionEquals(values))
+			return false;
+		for (int i = 0; i < values.length; i++) {
+			if (this.values[i] != values[i])
+				return false;
+		}
+		return true;
+	}
+	
+	@Override
 	public SadVector sync(SadVector vector) {
 		if (vector == null)
 			return unSync();
@@ -346,6 +374,8 @@ public class SadVector implements SadVectorI {
 	
 	protected final SadVector end() {
 		update();
+		if (listener != null)
+			listener.changeEvent();
 		return this;
 	}
 	
@@ -365,22 +395,5 @@ public class SadVector implements SadVectorI {
 			builder.append(value).append(" ");
 		}
 		return builder.deleteCharAt(builder.length() - 1).toString();
-	}
-	
-	@Override
-	public boolean contentEquals(SadVector vector) {
-		float[] values = vector.values;
-		if (this.values.length != values.length)
-			return false;
-		for (int i = 0; i < values.length; i++) {
-			if (this.values[i] != values[i])
-				return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public Vector3f toVector3f() {
-		return new Vector3f(values[0], values[1], values[2]);
 	}
 }

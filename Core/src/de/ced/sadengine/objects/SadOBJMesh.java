@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 @SuppressWarnings("WeakerAccess")
-public class SadMesh extends SadObject implements SadMeshI {
+public class SadOBJMesh extends SadMesh implements SadOBJMeshI {
 	
 	private int[] indices = null;
 	private float[] positions = null;
@@ -30,19 +30,39 @@ public class SadMesh extends SadObject implements SadMeshI {
 	
 	private float radius = 0f;
 	
-	public SadMesh(URL url) {
+	public SadOBJMesh(SadPositionable offset, URL url) {
+		this(offset, url.getFile());
+	}
+	
+	public SadOBJMesh(SadPositionable offset, URI uri) {
+		this(offset, uri.getPath());
+	}
+	
+	public SadOBJMesh(SadPositionable offset, String path) {
+		this(offset, new File(path));
+	}
+	
+	public SadOBJMesh(SadPositionable offset, File file) {
+		this(offset.getPosition(), offset.getRotation(), offset.getDirection(), file);
+	}
+	
+	public SadOBJMesh(File file) {
+		this(new SadPositionable(), file);
+	}
+	
+	public SadOBJMesh(URL url) {
 		this(url.getFile());
 	}
 	
-	public SadMesh(URI uri) {
+	public SadOBJMesh(URI uri) {
 		this(uri.getPath());
 	}
 	
-	public SadMesh(String path) {
+	public SadOBJMesh(String path) {
 		this(new File(path));
 	}
 	
-	public SadMesh(File file) {
+	private SadOBJMesh(SadVector pos, SadVector rot, SadVector scl, File file) {
 		InputStream stream;
 		try {
 			stream = new FileInputStream(file);
@@ -185,16 +205,16 @@ public class SadMesh extends SadObject implements SadMeshI {
 		e.printStackTrace();
 	}
 	
-	SadMesh(int[] indices, float[] positions) {
+	SadOBJMesh(int[] indices, float[] positions) {
 		this(indices, positions, null);
 		//System.out.println(positions.length + " " + indices.length);
 	}
 	
-	SadMesh(int[] indices, float[] positions, float[] textureCoordinates) {
+	SadOBJMesh(int[] indices, float[] positions, float[] textureCoordinates) {
 		this(indices, positions, textureCoordinates, null);
 	}
 	
-	SadMesh(int[] indices, float[] positions, float[] textureCoordinates, float[] normals) {
+	SadOBJMesh(int[] indices, float[] positions, float[] textureCoordinates, float[] normals) {
 		this.indices = indices;
 		this.positions = positions;
 		this.textureCoordinates = textureCoordinates;
@@ -274,6 +294,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 		vboIds = new int[]{positionVBO, textureCoordsVBO, normalsVBO};
 	}
 	
+	@Override
 	void loadVao() {
 		glBindVertexArray(vaoId);
 		for (int i = 0; i < vboIds.length; i++) {
@@ -281,6 +302,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 		}
 	}
 	
+	@Override
 	void unloadVao() {
 		for (int i = 0; i < vboIds.length; i++) {
 			glDisableVertexAttribArray(i);
@@ -288,6 +310,7 @@ public class SadMesh extends SadObject implements SadMeshI {
 		glBindVertexArray(0);
 	}
 	
+	@Override
 	void draw() {
 		if (useIndices)
 			glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);

@@ -1,4 +1,4 @@
-package de.ced.sadengine.trash;
+/*package de.ced.sadengine.trash;
 
 import de.ced.sadengine.objects.SadTexture;
 import org.joml.Matrix4f;
@@ -101,3 +101,4 @@ public class GLSLProgramXXX {
 		glDeleteShader(id);
 	}
 }
+*/

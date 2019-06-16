@@ -1,37 +1,38 @@
 package de.ced.sadengine.utils;
 
 @SuppressWarnings("unused")
-public class SadRotationVector extends SadVector {
+public class SadNotifyingVector extends SadVector {
 	
-	public SadRotationVector(int dimension) {
+	private final SadVectorListener listener;
+	
+	public SadNotifyingVector(SadVectorListener listener, int dimension) {
 		super(dimension);
+		this.listener = listener;
 	}
 	
-	public SadRotationVector(int dimension, float... values) {
+	public SadNotifyingVector(SadVectorListener listener, int dimension, float... values) {
 		super(dimension, values);
+		this.listener = listener;
 	}
 	
-	public SadRotationVector(float... values) {
+	public SadNotifyingVector(SadVectorListener listener, float... values) {
 		super(values);
+		this.listener = listener;
 	}
 	
-	public SadRotationVector(int dimension, SadVector vector) {
+	public SadNotifyingVector(SadVectorListener listener, int dimension, SadVector vector) {
 		super(dimension, vector);
+		this.listener = listener;
 	}
 	
-	public SadRotationVector(SadVector vector) {
+	public SadNotifyingVector(SadVectorListener listener, SadVector vector) {
 		super(vector);
+		this.listener = listener;
 	}
 	
 	@Override
 	protected void update() {
-		for (int i = 0; i < values.length; i++) {
-			while (values[i] >= 360) {
-				values[i] -= 360;
-			}
-			while (values[i] < 0) {
-				values[i] += 360;
-			}
-		}
+		if (listener != null)
+			listener.changeEvent();
 	}
 }
