@@ -1,6 +1,6 @@
 package de.ced.sadengine.objects;
 
-public abstract class SadObject implements SadObjectI {
+public abstract class SadObject {
 	
 	protected String name;
 	
@@ -8,17 +8,14 @@ public abstract class SadObject implements SadObjectI {
 		this.name = String.valueOf(hashCode());
 	}
 	
-	@Override
 	public String getName() {
 		return name;
 	}
 	
-	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	@Override
 	public String toString() {
 		return getName();
 	}

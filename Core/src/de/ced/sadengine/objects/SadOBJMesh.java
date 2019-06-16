@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 @SuppressWarnings("WeakerAccess")
-public class SadOBJMesh extends SadMesh implements SadOBJMeshI {
+public class SadOBJMesh extends SadMesh {
 	
 	private int[] indices = null;
 	private float[] positions = null;

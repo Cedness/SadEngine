@@ -1,21 +1,22 @@
-package de.ced.sadengine.objects;
+package de.ced.sadengine.trash;
 
+import de.ced.sadengine.objects.SadCamera;
+import de.ced.sadengine.objects.SadMovement;
+import de.ced.sadengine.objects.SadPositionable;
 import de.ced.sadengine.utils.SadVector;
 
 import static de.ced.sadengine.objects.SadMovement.WHEN_DISPLAYED;
 
 @SuppressWarnings("ConstantConditions")
-public class SadTransformer extends SadPositionable implements SadTransformerI {
+public class SadTransformer extends SadPositionable {
 	
 	private SadPositionable positionable = null;
 	private SadMovement movement = WHEN_DISPLAYED;
 	
-	@Override
 	public SadPositionable getPositionable() {
 		return positionable;
 	}
 	
-	@Override
 	public SadTransformer setPositionable(SadPositionable positionable) {
 		this.positionable = positionable;
 		return this;
@@ -31,12 +32,10 @@ public class SadTransformer extends SadPositionable implements SadTransformerI {
 		return this;
 	}
 	
-	@Override
 	public SadMovement getMovement() {
 		return movement;
 	}
 	
-	@Override
 	public SadTransformer setMovement(SadMovement movement) {
 		this.movement = movement;
 		return this;

@@ -1,6 +1,6 @@
 package de.ced.sadengine.objects;
 
-public abstract class SadMesh extends SadObject implements SadMeshI {
+public abstract class SadMesh extends SadObject {
 	
 	abstract void draw();
 	

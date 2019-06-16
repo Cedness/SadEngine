@@ -5,7 +5,7 @@ import de.ced.sadengine.utils.SadVector;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class SadPositionable extends SadVectorset implements SadPositionableI {
+public class SadPositionable extends SadVectorset {
 	
 	private boolean directionalRotation = false;
 	
@@ -15,13 +15,10 @@ public class SadPositionable extends SadVectorset implements SadPositionableI {
 		scale = new SadVector(3).set(1f);
 	}
 	
-	@Override
-	
 	public boolean isDirectionalRotation() {
 		return directionalRotation;
 	}
 	
-	@Override
 	public SadPositionable setDirectionalRotation(boolean directionalRotation) {
 		if (this.directionalRotation == directionalRotation)
 			return this;
@@ -30,7 +27,6 @@ public class SadPositionable extends SadVectorset implements SadPositionableI {
 		return this;
 	}
 	
-	@Override
 	public SadPositionable setVelocityEnabled(boolean enabled) {
 		if (!enabled) {
 			velocity = null;
@@ -42,12 +38,10 @@ public class SadPositionable extends SadVectorset implements SadPositionableI {
 		return this;
 	}
 	
-	@Override
 	public SadPositionable getVelocity() {
 		return velocity;
 	}
 	
-	@Override
 	public SadVector getYawDirection(SadVector yawDirection) {
 		if (yawDirection.getDimension() < 3)
 			return yawDirection;
@@ -57,12 +51,10 @@ public class SadPositionable extends SadVectorset implements SadPositionableI {
 		return yawDirection;
 	}
 	
-	@Override
 	public SadVector getYawDirection() {
 		return getYawDirection(new SadVector(3));
 	}
 	
-	@Override
 	public SadVector getDirection(SadVector direction) {
 		if (direction.getDimension() < 3)
 			return direction;
@@ -75,7 +67,6 @@ public class SadPositionable extends SadVectorset implements SadPositionableI {
 		return direction;
 	}
 	
-	@Override
 	public SadVector getDirection() {
 		return getDirection(new SadVector(3));
 	}

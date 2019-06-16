@@ -2,7 +2,7 @@ package de.ced.sadengine.objects;
 
 import de.ced.sadengine.utils.SadVector;
 
-public abstract class SadVectorset extends SadObject implements SadVectorsetI {
+public abstract class SadVectorset extends SadObject {
 	
 	SadVector position;
 	SadVector rotation;
@@ -10,17 +10,14 @@ public abstract class SadVectorset extends SadObject implements SadVectorsetI {
 	
 	SadPositionable velocity = null;
 	
-	@Override
 	public SadVector getPosition() {
 		return position;
 	}
 	
-	@Override
 	public SadVector getRotation() {
 		return rotation;
 	}
 	
-	@Override
 	public SadVector getScale() {
 		return scale;
 	}

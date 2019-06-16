@@ -6,7 +6,7 @@ import de.ced.sadengine.utils.SadVectorListener;
 
 import static de.ced.sadengine.utils.SadValue.*;
 
-public class SadCamera extends SadPositionable implements SadCameraI, SadVectorListener {
+public class SadCamera extends SadPositionable implements SadVectorListener {
 	
 	private SadVector upWorld = new SadVector(0f, 1f, 0f);
 	private float fov = 70f;
@@ -40,17 +40,14 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		upWorld.setListener(this);
 	}
 	
-	@Override
 	public SadVector getUpWorld() {
 		return upWorld;
 	}
 	
-	@Override
 	public float getFov() {
 		return fov;
 	}
 	
-	@Override
 	public SadCamera setFov(float fov) {
 		if (fov <= 0 || fov > 180)
 			return this;
@@ -59,24 +56,20 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		return this;
 	}
 	
-	@Override
 	public boolean isHorizontalFov() {
 		return horizontalFov;
 	}
 	
-	@Override
 	public SadCamera setHorizontalFov(boolean horizontalFov) {
 		projectionChanged = true;
 		this.horizontalFov = horizontalFov;
 		return this;
 	}
 	
-	@Override
 	public float getNear() {
 		return near;
 	}
 	
-	@Override
 	public SadCamera setNear(float near) {
 		if (near <= 0 || near >= far)
 			return this;
@@ -85,12 +78,10 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		return this;
 	}
 	
-	@Override
 	public float getFar() {
 		return far;
 	}
 	
-	@Override
 	public SadCamera setFar(float far) {
 		if (far <= near)
 			return this;
@@ -99,17 +90,14 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		return this;
 	}
 	
-	@Override
 	public SadVector getForward() {
 		return f;
 	}
 	
-	@Override
 	public SadVector getUp() {
 		return u;
 	}
 	
-	@Override
 	public SadVector getLeft() {
 		return l;
 	}
@@ -122,23 +110,19 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		return viewMatrix;
 	}
 	
-	@Override
 	public boolean isWindowMode() {
 		return windowMode;
 	}
 	
-	@Override
 	public SadCamera setWindowMode(boolean windowMode) {
 		this.windowMode = windowMode;
 		return this;
 	}
 	
-	@Override
 	public boolean isOrtho() {
 		return ortho;
 	}
 	
-	@Override
 	public SadCamera setOrtho(boolean ortho) {
 		projectionChanged = true;
 		this.ortho = ortho;
@@ -205,29 +189,24 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		}
 	}
 	
-	@Override
 	public boolean isLookingAtPosition() {
 		return lookingAtPosition;
 	}
 	
-	@Override
 	public SadCamera setLookingAtPosition(boolean lookingAtPosition) {
 		this.lookingAtPosition = lookingAtPosition;
 		return this;
 	}
 	
-	@Override
 	public float getDistanceToPosition() {
 		return distanceToPosition;
 	}
 	
-	@Override
 	public SadCamera setDistanceToPosition(float distanceToPosition) {
 		this.distanceToPosition = distanceToPosition;
 		return this;
 	}
 	
-	@Override
 	public SadVector getRay(SadVector ndc) {
 		float t = tan(toRadians(fov)) * near;
 		if (horizontalFov) {
@@ -245,7 +224,6 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		return ray.normalize();
 	}
 	
-	@Override
 	public SadVector getCursorVector() {
 		return cursorVector;
 	}
@@ -255,12 +233,10 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		this.cursorVector = cursorVector;
 	}
 	
-	@Override
 	public SadLevel getLevel() {
 		return level;
 	}
 	
-	@Override
 	public SadCamera setLevel(SadLevel level) {
 		if (level != null)
 			level.removeCamera(this);
@@ -270,23 +246,19 @@ public class SadCamera extends SadPositionable implements SadCameraI, SadVectorL
 		return this;
 	}
 	
-	@Override
 	public SadEntity getWindow() {
 		return window;
 	}
 	
-	@Override
 	public SadCamera setWindow(SadEntity window) {
 		this.window = window;
 		return this;
 	}
 	
-	@Override
 	public SadVector getViewerPosition() {
 		return viewerPosition;
 	}
 	
-	@Override
 	public void changeEvent() {
 		viewChanged = true;
 	}

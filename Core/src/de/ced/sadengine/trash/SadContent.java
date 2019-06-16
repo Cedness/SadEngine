@@ -1,4 +1,4 @@
-package de.ced.sadengine.objects;
+package de.ced.sadengine.trash;
 
 /**
  * Contains all the stuff processed by the engine.

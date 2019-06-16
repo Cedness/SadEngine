@@ -1,6 +1,6 @@
 package de.ced.sadengine.objects;
 
-public class SadAction extends SadRunnable implements SadActionI {
+public class SadAction extends SadRunnable {
 	
 	private final SadActionLogic logic;
 	private boolean runningLast = false;

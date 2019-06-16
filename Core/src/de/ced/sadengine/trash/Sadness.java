@@ -1,5 +1,9 @@
-package de.ced.sadengine.objects;
+package de.ced.sadengine.trash;
 
+import de.ced.sadengine.objects.SadActionHandler;
+import de.ced.sadengine.objects.SadFrame;
+import de.ced.sadengine.objects.SadMover;
+import de.ced.sadengine.objects.SadRenderer;
 import de.ced.sadengine.objects.input.SadInput;
 import de.ced.sadengine.objects.time.SadClockwork;
 

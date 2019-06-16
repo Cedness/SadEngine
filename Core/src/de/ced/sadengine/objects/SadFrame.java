@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL14.GL_DEPTH_COMPONENT32;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL32.glFramebufferTexture;
 
-public class SadFrame extends SadTexture implements SadFrameI {
+public class SadFrame extends SadTexture {
 	
 	private final int fboID;
 	private final int depthID;
@@ -36,18 +36,15 @@ public class SadFrame extends SadTexture implements SadFrameI {
 	
 	//Camera
 	
-	@Override
 	public SadCamera getCamera() {
 		return camera;
 	}
 	
-	@Override
 	public SadFrame setCamera(SadCamera camera) {
 		this.camera = camera;
 		return this;
 	}
 	
-	@Override
 	public SadVector getColor() {
 		return color;
 	}
@@ -68,12 +65,10 @@ public class SadFrame extends SadTexture implements SadFrameI {
 		this.rendered = rendered;
 	}
 	
-	@Override
 	public int getGeniousParadoxPreventer() {
 		return geniousParadoxPreventer;
 	}
 	
-	@Override
 	public void setGeniousParadoxPreventer(int geniousParadoxPreventer) {
 		this.geniousParadoxPreventer = geniousParadoxPreventer;
 	}

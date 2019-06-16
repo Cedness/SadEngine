@@ -17,7 +17,7 @@ import java.nio.channels.ReadableByteChannel;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
 
-public class SadTexture extends SadObject implements SadTextureI {
+public class SadTexture extends SadObject {
 	
 	private final int textureID;
 	final int width;
@@ -57,48 +57,39 @@ public class SadTexture extends SadObject implements SadTextureI {
 		return textureID;
 	}
 	
-	@Override
 	public int getWidth() {
 		return width;
 	}
 	
-	@Override
 	public int getHeight() {
 		return height;
 	}
 	
-	@Override
 	public boolean isTransparent() {
 		return transparent;
 	}
 	
-	@Override
 	public boolean isRenderBack() {
 		return renderBack;
 	}
 	
-	@Override
 	public void setRenderBack(boolean renderBack) {
 		this.renderBack = renderBack;
 	}
 	
-	@Override
 	public float getLightDamper() {
 		return lightDamper;
 	}
 	
-	@Override
 	public SadTexture setLightDamper(float lightDamper) {
 		this.lightDamper = lightDamper;
 		return this;
 	}
 	
-	@Override
 	public float getReflectivity() {
 		return reflectivity;
 	}
 	
-	@Override
 	public SadTexture setReflectivity(float reflectivity) {
 		this.reflectivity = reflectivity;
 		return this;

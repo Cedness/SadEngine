@@ -1,7 +1,7 @@
 package de.ced.sadengine.test;
 
 import de.ced.sadengine.objects.SadEngine;
-import de.ced.sadengine.objects.Sadness;
+import de.ced.sadengine.trash.Sadness;
 
 public class Hurensohn extends SadEngine {
 	
