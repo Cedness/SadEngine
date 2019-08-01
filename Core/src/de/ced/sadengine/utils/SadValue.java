@@ -7,7 +7,7 @@ public class SadValue {
 	public static final double PId = 3.14159265358979323846;
 	
 	public static float abs(float v) {
-		return v < 0 ? v * -1f : v;
+		return v < 0 ? -v : v;
 	}
 	
 	public static float min(float v1, float v2) {
