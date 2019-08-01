@@ -30,25 +30,7 @@ public class SadOBJMesh extends SadMesh {
 	
 	private float radius = 0f;
 	
-	public SadOBJMesh(SadPositionable offset, URL url) {
-		this(offset, url.getFile());
-	}
-	
-	public SadOBJMesh(SadPositionable offset, URI uri) {
-		this(offset, uri.getPath());
-	}
-	
-	public SadOBJMesh(SadPositionable offset, String path) {
-		this(offset, new File(path));
-	}
-	
-	public SadOBJMesh(SadPositionable offset, File file) {
-		this(offset.getPosition(), offset.getRotation(), offset.getDirection(), file);
-	}
-	
-	public SadOBJMesh(File file) {
-		this(new SadPositionable(), file);
-	}
+	private String info = "";
 	
 	public SadOBJMesh(URL url) {
 		this(url.getFile());
@@ -59,17 +41,39 @@ public class SadOBJMesh extends SadMesh {
 	}
 	
 	public SadOBJMesh(String path) {
-		this(new File(path));
+		this(path, path);
 	}
 	
-	private SadOBJMesh(SadVector pos, SadVector rot, SadVector scl, File file) {
+	public SadOBJMesh(String path, String info) {
+		this(new File(path), info);
+	}
+	
+	public SadOBJMesh(File file) {
+		this(file, file.getAbsolutePath());
+	}
+	
+	public SadOBJMesh(File file, String info) {
+		this.info = info;
 		InputStream stream;
 		try {
 			stream = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
-			meshException("OBJFile " + file.getAbsolutePath() + " not found.", e);
+			meshException("OBJFile " + info + " not found.", e);
 			return;
 		}
+		load(stream);
+	}
+	
+	public SadOBJMesh(InputStream stream) {
+		this(stream, String.valueOf(stream.hashCode()));
+	}
+	
+	public SadOBJMesh(InputStream stream, String info) {
+		this.info = info;
+		load(stream);
+	}
+	
+	private void load(InputStream stream) {
 		InputStreamReader streamReader = new InputStreamReader(stream);
 		BufferedReader reader = new BufferedReader(streamReader);
 		
@@ -80,10 +84,13 @@ public class SadOBJMesh extends SadMesh {
 			}
 			reader.close();
 		} catch (IOException e) {
-			meshException("Reading Error in OBJFile " + file.getAbsolutePath() + ".", e);
+			meshException("Reading Error in OBJFile " + info + ".", e);
 			return;
 		}
-		
+		load(lines);
+	}
+	
+	private void load(List<String> lines) {
 		List<Integer> indices = new ArrayList<>();
 		List<SadVector> positions = new ArrayList<>();
 		List<SadVector> textureCoordinates = new ArrayList<>();
@@ -94,7 +101,7 @@ public class SadOBJMesh extends SadMesh {
 			try {
 				parts = line.split(" ");
 			} catch (PatternSyntaxException e) {
-				meshDataException("Positions, texture coordinates or normals", file, e);
+				meshDataException("Format", e);
 				return;
 			}
 			
@@ -106,7 +113,7 @@ public class SadOBJMesh extends SadMesh {
 							Float.parseFloat(parts[3])
 					));
 				} catch (NumberFormatException e) {
-					meshDataException("Positions", file, e);
+					meshDataException("Positions", e);
 					return;
 				}
 			} else if (line.startsWith("vt ")) {
@@ -116,7 +123,7 @@ public class SadOBJMesh extends SadMesh {
 							Float.parseFloat(parts[2])
 					));
 				} catch (NumberFormatException e) {
-					meshDataException("Texture coordinates", file, e);
+					meshDataException("Texture coordinates", e);
 					return;
 				}
 			} else if (line.startsWith("vn ")) {
@@ -127,7 +134,7 @@ public class SadOBJMesh extends SadMesh {
 							Float.parseFloat(parts[3])
 					));
 				} catch (NumberFormatException e) {
-					meshDataException("Normals", file, e);
+					meshDataException("Normals", e);
 					return;
 				}
 			}
@@ -170,7 +177,7 @@ public class SadOBJMesh extends SadMesh {
 					}
 				}
 			} catch (PatternSyntaxException | NumberFormatException e) {
-				meshDataException("Indices", file, e);
+				meshDataException("Indices", e);
 				return;
 			}
 		}
@@ -196,12 +203,12 @@ public class SadOBJMesh extends SadMesh {
 		bind();
 	}
 	
-	private static void meshDataException(String data, File file, Exception e) {
-		meshException(data + " in OBJFile " + file.getAbsolutePath() + " are invalid.", e);
+	private void meshDataException(String data, Exception e) {
+		meshException(data + " invalid.", e);
 	}
 	
-	private static void meshException(String output, Exception e) {
-		System.out.println(output);
+	private void meshException(String output, Exception e) {
+		System.out.println("Error while loading OBJFile " + info + ": " + output);
 		e.printStackTrace();
 	}
 	
