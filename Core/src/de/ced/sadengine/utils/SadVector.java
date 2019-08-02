@@ -83,10 +83,21 @@ public class SadVector {
 	}
 	
 	public SadVector crossProduct(float... values) {
-		float[] a = this.values.clone();
-		this.values[0] = a[1] * values[2] - a[2] * values[1];
-		this.values[1] = a[2] * values[0] - a[0] * values[2];
-		this.values[2] = a[0] * values[1] - a[1] * values[0];
+		switch (getDimension()) {
+			case 2:
+				float y = this.values[1];
+				this.values[1] = this.values[0];
+				this.values[0] = -y;
+				break;
+			case 3:
+				float[] a = this.values.clone();
+				int j, k;
+				for (int i = 0; i < getDimension(); i++) {
+					j = (i + 1) % 3;
+					k = (i + 2) % 3;
+					this.values[i] = a[j] * values[k] - a[k] * values[j];
+				}
+		}
 		return end();
 	}
 	
